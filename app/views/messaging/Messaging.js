@@ -35,6 +35,7 @@ export class Messaging extends Component {
 		this.props.navigation.addListener('willFocus', () => {
 			this.props.setLatestTimeStamp(new Date().getTime())
 		})
+
 	}
 
 	renderSeparator = ({ leadingItem }) => (
@@ -123,7 +124,7 @@ export class Messaging extends Component {
 					}
 				>
 					<View style={css.main_full_flex}>
-						<Text style={css.notifications_err}>There was a problem fetching your messages.{'\n\n'}Please try again soon.</Text>
+						{isLoading ?  null : (<Text style={css.notifications_err}>There was a problem fetching your messages.{'\n\n'}Please try again soon.</Text>)}
 					</View>
 				</ScrollView>
 			)

@@ -82,6 +82,7 @@ class PushNotificationContainer extends Component {
 
 	navigateToMessages() {
 		this.props.navigation.navigate('Messaging')
+		this.props.updateMessages()
 	}
 
 	showLocalNotification = (notif) => {
