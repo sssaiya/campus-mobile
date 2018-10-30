@@ -1,4 +1,4 @@
-import React from 'react'
+import { Component } from 'react'
 import {
 	Alert,
 	Platform,
@@ -6,11 +6,11 @@ import {
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import Permissions from 'react-native-permissions'
+import { withNavigation } from 'react-navigation'
 
-class PushNotificationContainer extends React.Component {
+class PushNotificationContainer extends Component {
 	componentDidMount() {
 		this.checkPermission()
-
 		this.onTokenRefreshListener = firebase.messaging().onTokenRefresh((fcmToken) => {
 			// Process your token as required
 			console.log('Firebase Token (refresh):', fcmToken)
@@ -28,6 +28,10 @@ class PushNotificationContainer extends React.Component {
 		this.notificationListener = firebase.notifications().onNotification((notification) => {
 			console.log('New notification received: ', notification)
 			this.props.updateMessages()
+		})
+
+		firebase.notifications().onNotificationOpened(() => {
+			this.navigateToMessages()
 		})
 	}
 
@@ -74,6 +78,10 @@ class PushNotificationContainer extends React.Component {
 					this.getNotificationToken()
 				}
 			})
+	}
+
+	navigateToMessages() {
+		this.props.navigation.navigate('Messaging')
 	}
 
 	showLocalNotification = (notif) => {
@@ -134,4 +142,4 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 	}
 )
 
-module.exports = connect(mapStateToProps, mapDispatchToProps)(PushNotificationContainer)
+module.exports = withNavigation(connect(mapStateToProps, mapDispatchToProps)(PushNotificationContainer))
