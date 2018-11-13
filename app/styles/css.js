@@ -494,6 +494,18 @@ const css = StyleSheet.create({
 	tabIconBadge: { position: 'absolute', zIndex: 10, top: platformIOS() ? 0 : 3, right: platformIOS() ? 2 : 3, width: round(18 * prm), height: round(18 * prm), backgroundColor: 'red', borderRadius: round(9 * prm), justifyContent: 'center', opacity: 1 },
 	tabIconBadgeText: { color: COLOR.WHITE, textAlign: 'center', fontSize: round(12 * prm), overflow: 'hidden', fontWeight: '700' },
 
+	//Parking notifications
+	notifications_full_container: { flex: 1, backgroundColor: COLOR.WHITE },
+	notifications_section_list: { flex: 1 },
+	notifications_row_view: { flexDirection: 'row', flex: 1, paddingLeft: 10, paddingRight: 10, alignItems: 'center', justifyContent: 'center', height: 35, borderBottomColor: COLOR.MGREY, borderBottomWidth: 1 },
+	notifications_parking_row_view: { flexDirection: 'row', flex: 1, paddingLeft: 10, paddingRight: 10, alignItems: 'center', justifyContent: 'center', height: 35 },
+	notifications_section_list_header_container: { flexDirection: 'row', alignItems: 'flex-end', justifyContent: 'center', height: 50, paddingBottom: 5, borderBottomColor: COLOR.MGREY, borderBottomWidth: 1 },
+	notifications_section_list_header_text: { flex: 1, paddingLeft: 5, fontSize: 23, color: COLOR.VDGREY },
+	notifications_row_text: { flex: 1, paddingRight: 10, paddingLeft: 10, fontSize: 19, color: COLOR.VDGREY },
+	notifications_selected_row_text: { flex: 1, paddingRight: 10, paddingLeft: 7.5, fontSize: 19, color: COLOR.VDGREY },
+	notifications_switch: { transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] },
+	notifications_parking_selected_row_text_container: { paddingLeft: 75, flexDirection: 'row', paddingRight: 60, alignItems: 'center' },
+
 	/**
 	 *  99 - Misc
 	 */

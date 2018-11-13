@@ -33,6 +33,7 @@ import ParkingSpotType from '../views/parking/ParkingSpotType'
 import ManageParkingLots from '../views/parking/ManageParkingLots'
 import Notifications from '../views/preferences/notifications/Notifications'
 import PushNotifciationContainer from '../containers/pushNotificationContainer'
+import ParkingNotifications from '../views/preferences/parking/Notifications'
 
 // TABS
 import TabIcons from './TabIcons'
@@ -161,6 +162,13 @@ const MainStack = StackNavigator(
 			screen: ManageParkingLots,
 			navigationOptions: {
 				title: 'Manage Lots',
+				headerRight: (<DummyView />)
+			}
+		},
+		ParkingNotifications: {
+			screen: ParkingNotifications,
+			navigationOptions: {
+				title: 'Notifications: Parking',
 				headerRight: (<DummyView />)
 			}
 		},
