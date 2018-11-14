@@ -23,6 +23,13 @@ exports[`renders without crashing 1`] = `
       title="Notifications"
     />
     <withNavigation(PreferencesItem)
+      icon="bell-o"
+      iconPack="FontAwesome"
+      link="ParkingNotifications"
+      linkType="internal"
+      title="Parking"
+    />
+    <withNavigation(PreferencesItem)
       icon="new-message"
       iconPack="Entypo"
       link="Feedback"
