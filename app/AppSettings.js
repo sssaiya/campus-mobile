@@ -1,7 +1,7 @@
 module.exports = {
 
 	/* APP CONFIG */
-	APP_NAME: 'APP_NAME_PH',
+	APP_NAME: 'Campus Mobile',
 	GOOGLE_ANALYTICS_ID: 'GOOGLE_ANALYTICS_ID_PH',
 
 	/* ENDPOINTS */
@@ -14,6 +14,8 @@ module.exports = {
 	MYMESSAGES_API_URL: 'https://api-qa.ucsd.edu:8243/mp-mymessages/1.0.0',
 	MP_REGISTRATION_API_URL: 'https://api-qa.ucsd.edu:8243/mp-registration/1.0.0',
 	MESSAGES_TOPICS_URL: 'https://s3-us-west-1.amazonaws.com/ucsd-mobile-dev/mock-apis/messaging/topics.json',
+	SHUTTLE_PATHS_URL: 'https://11wl1gc3v9.execute-api.us-west-2.amazonaws.com/dev/polylines/',
+
 	/* PROD */
 	// SHUTTLE
 	SHUTTLE_STOPS_API_URL: 'https://ies4wyrlx9.execute-api.us-west-2.amazonaws.com/prod/v2/stops/',

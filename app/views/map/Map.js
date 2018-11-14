@@ -35,6 +35,7 @@ export class Map extends React.Component {
 		super(props)
 
 		this.state = {
+			toggledRoute: null,
 			searchInput: null,
 			selectedResult: 0,
 			allowScroll: false,
@@ -52,6 +53,14 @@ export class Map extends React.Component {
 			checkGooglePlayServices((result) => {
 				if (result === 'update') {
 					this.setState({ updatedGoogle: false })
+				}
+			})
+		}
+
+		if (this.props.toggles) {
+			Object.keys(this.props.toggles).forEach((route) => {
+				if (this.props.toggles[route]) {
+					this.state.currentToggledRoute = route
 				}
 			})
 		}
@@ -240,7 +249,11 @@ export class Map extends React.Component {
 	toggleRoute = (route) => {
 		this.pressIcon()
 		this.props.toggle(route)
-		this.setState({	vehicles: {} })
+		if (this.state.currentToggledRoute === route) {
+			this.setState({ vehicles: {}, currentToggledRoute: null })
+		} else {
+			this.setState({	vehicles: {}, currentToggledRoute: route })
+		}
 	}
 
 	render() {
@@ -256,6 +269,10 @@ export class Map extends React.Component {
 				</View>
 			)
 		} else if (this.props.location.coords) {
+			let polylines = null
+			if (this.state.currentToggledRoute) {
+				polylines = this.props.routes[this.state.currentToggledRoute].polylines
+			}
 			return (
 				<View>
 					<SearchNavButton
@@ -299,6 +316,7 @@ export class Map extends React.Component {
 								}
 								shuttle={this.props.shuttle_stops}
 								vehicles={this.state.vehicles}
+								polylines={polylines}
 							/>
 						</View>
 						<View
@@ -350,6 +368,7 @@ const mapStateToProps = (state, props) => (
 		location: state.location.position,
 		locationPermission: state.location.permission,
 		toggles: state.shuttle.toggles,
+		routes: state.shuttle.routes,
 		shuttle_routes: state.shuttle.routes,
 		shuttle_stops: state.shuttle.stops,
 		vehicles: state.shuttle.vehicles,
