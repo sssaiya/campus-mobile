@@ -55,7 +55,13 @@ function parking(state = initialState, action) {
 			return newState
 		}
 		case 'SYNC_PARKING_LOTS_DATA': {
-			newState.selectedLots = [...action.prevSelectedParkingLots]
+			const temp = []
+			for (let i = 0; i < newState.parkingData.length; i++) {
+				if (action.preSelecteParkingLots.contains(newState.parkingData[i].LocationName)) {
+					temp.push(newState.parkingData[i].LocationName)
+				}
+			}
+			newState.selectedLots = [...temp]
 			return newState
 		}
 		default:
