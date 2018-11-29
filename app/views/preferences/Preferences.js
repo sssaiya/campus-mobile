@@ -26,8 +26,7 @@ class PreferencesView extends Component {
 					<UserAccount />
 					<CardPreferences toggleScroll={this.toggleScroll} />
 					<PreferencesItem title="Notifications" iconPack="FontAwesome" icon="bell-o" linkType="internal" link="Notifications" />
-					<PreferencesItem title="Parking" iconPack="FontAwesome"
-					icon="bell-o" linkType="internal" link="ParkingNotifications" />
+					<PreferencesItem title="Parking" iconPack="FontAwesome" icon="bell-o" linkType="internal" link="ParkingNotifications" />
 					<PreferencesItem title="Feedback" iconPack="Entypo" icon="new-message" linkType="internal" link="Feedback" />
 					<PreferencesItem title="Privacy Policy" iconPack="Feather" icon="lock" linkType="external" link={AppSettings.PRIVACY_POLICY_URL} />
 				</View>

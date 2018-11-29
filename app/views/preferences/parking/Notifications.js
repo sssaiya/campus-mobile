@@ -10,7 +10,9 @@ import {
 } from 'react-native'
 import DatePicker from 'react-native-datepicker'
 import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation'
 import css from '../../../styles/css'
+import SetDatesContainer from './SetDatesContainer'
 
 const jsonData = require('./Notifications.json')
 // this is just an example of dummy data
@@ -143,6 +145,7 @@ class Notifications extends Component {
 					</Text>
 					<DatePicker
 						style={{ width: 50 }}
+						customStyles={{ dateInput: { borderWidth: 0 } }}
 						mode="time"
 						confirmBtnText="confirm"
 						cancelBtnText="cancel"
@@ -156,6 +159,7 @@ class Notifications extends Component {
 					</Text>
 					<DatePicker
 						style={{ width: 50 }}
+						customStyles={{ dateInput: { borderWidth: 0 } }}
 						mode="time"
 						confirmBtnText="confirm"
 						cancelBtnText="cancel"
@@ -167,13 +171,7 @@ class Notifications extends Component {
 					<Text style={css.notifications_row_text}>
 						Set Days
 					</Text>
-					<DatePicker
-						style={{ width: 50 }}
-						mode="date"
-						confirmBtnText="confirm"
-						cancelBtnText="cancel"
-						showIcon={false}
-					/>
+					<SetDatesContainer />
 				</View>
 			</View>
 		)
@@ -258,5 +256,4 @@ const mapDispatchToProps = dispatch => (
 	}
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications)
-
+export default connect(mapStateToProps, mapDispatchToProps)(withNavigation(Notifications))
