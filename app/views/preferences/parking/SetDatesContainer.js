@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, TouchableOpacity, TouchableWithoutFeedback, Text, Modal } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import SetDates from './SetDates'
+import LAYOUT from '../../../styles/LayoutConstants'
 
 class SetDatesContainer extends Component {
 	constructor(props) {
@@ -21,11 +22,12 @@ class SetDatesContainer extends Component {
 					animationType="fade"
 					transparent={true}
 					visible={this.state.modalVisible}
+					style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
 				 >
 				 	<TouchableOpacity onPress={() => {
 						this.setModal(!this.state.modalVisible);
 						console.log("closed");
-					}} style={{ backgroundColor: 'blue', width: 50, height: 50, alignSelf: 'center' }}>
+					}} style={{ backgroundColor: 'rgba(19, 22, 22, 0.79)', width: LAYOUT.WINDOW_WIDTH, height: LAYOUT.WINDOW_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
 				 		<SetDates />
 					</TouchableOpacity>
 				 </Modal>
