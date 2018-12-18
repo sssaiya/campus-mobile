@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { View, Image, Text, TouchableWithoutFeedback } from 'react-native';
+import React, { Component } from 'react'
+import { View, Text, TouchableWithoutFeedback } from 'react-native'
 import { connect } from 'react-redux'
 import css from '../../../styles/css'
 import COLOR from '../../../styles/ColorConstants'
@@ -57,7 +57,7 @@ class SetDates extends Component {
 	}
 }
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
 	{
 
 	}
