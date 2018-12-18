@@ -12,24 +12,25 @@ class SetDatesContainer extends Component {
 	}
 
 	setModal(visibility) {
-		this.setState({ modalVisible: visibility })
+		if(visibility)
+		{
+			this.setState({ modalVisible: visibility })
+		}
 	}
 
 	render() {
 		return(
 			<View>
 				<Modal
-					animationType="fade"
+					animationType="none"
 					transparent={true}
 					visible={this.state.modalVisible}
 					style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
 				 >
-				 	<TouchableOpacity onPress={() => {
-						this.setModal(!this.state.modalVisible);
-						console.log("closed");
-					}} style={{ backgroundColor: 'rgba(19, 22, 22, 0.79)', width: LAYOUT.WINDOW_WIDTH, height: LAYOUT.WINDOW_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
+				 	<View
+						style={{ backgroundColor: 'rgba(19, 22, 22, 0.79)', width: LAYOUT.WINDOW_WIDTH, height: LAYOUT.WINDOW_HEIGHT, justifyContent: 'center', alignItems: 'center' }}>
 				 		<SetDates />
-					</TouchableOpacity>
+					</View>
 				 </Modal>
 				<TouchableWithoutFeedback onPress={() => {
 					this.setModal(!this.state.modalVisible);
