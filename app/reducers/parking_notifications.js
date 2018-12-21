@@ -2,7 +2,8 @@ const initialState = {
 	isActive: [false, false, false, false, false, false],
 	selectedParking: null,
 	parkingStartTimes: ['11am','11am','11am'],
-	parkingStopTimes: ['11pm', '11pm', '11pm']
+	parkingStopTimes: ['11pm', '11pm', '11pm'],
+	daysSelected: [false, false, false, false, false, false, false]
 }
 
 function notifications(state = initialState, action) {
@@ -26,6 +27,10 @@ function notifications(state = initialState, action) {
 		}
 		case 'SET_PARKING_STOP_TIME': {
 			newState.parkingStopTimes = action.parkingStopTimes
+			return newState
+		}
+		case 'SET_PARKING_DAYS': {
+			newState.daysSelected = action.daysSelected
 			return newState
 		}
 		default:
