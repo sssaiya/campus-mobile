@@ -3,7 +3,7 @@ const initialState = {
 	selectedParking: null,
 	parkingStartTimes: ['11am','11am','11am'],
 	parkingStopTimes: ['11pm', '11pm', '11pm'],
-	daysSelected: [false, false, false, false, false, false, false]
+	daysSelected: [false, true, false, false, false, true, false]
 }
 
 function notifications(state = initialState, action) {
