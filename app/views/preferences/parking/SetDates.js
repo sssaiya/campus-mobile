@@ -62,14 +62,14 @@ class SetDates extends Component {
 	renderDays(selected, i) {
 		if (selected) {
 			return(
-				<View style={[styles.circle,{ justifyContent: 'center', alignItems: 'center', marginRight: 20, position: 'relative' }]}>
+				<View style={[styles.selected_circle,{ justifyContent: 'center', alignItems: 'center', marginRight: 20, position: 'relative' }]}>
 					<Text style={{ fontSize: 25, color: COLOR.WHITE }}>{i}</Text>
 				</View>
 			)
 		}
 		else {
 			return(
-				<View style={{ marginRight: 20 }}>
+				<View style={[styles.unselected_circle,{ justifyContent: 'center', alignItems: 'center', marginRight: 20, position: 'relative' }]}>
 					<Text style={{ fontSize: 25, color: COLOR.DMGREY }}>{i}</Text>
 				</View>
 			)
@@ -124,11 +124,17 @@ class SetDates extends Component {
 }
 
 const styles = {
-	circle: {
+	selected_circle: {
 		width: 40,
 		height: 40,
 		borderRadius: 20,
 		backgroundColor: COLOR.PRIMARY
+	},
+	unselected_circle: {
+		width: 40,
+		height: 40,
+		borderRadius: 20,
+		backgroundColor: COLOR.WHITE
 	}
 }
 
