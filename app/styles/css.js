@@ -570,6 +570,8 @@ const css = StyleSheet.create({
 	notifications_set_date_setdays_text: { fontSize: 25, color: 'white' },
 	notifications_set_date_cancel_text: { color: COLOR.PRIMARY, fontSize: 17 },
 	notifications_set_date_confirm_text: { color: COLOR.PRIMARY, fontSize: 17 },
+	notifications_set_date_selected_textstyle: { fontSize: 25, color: COLOR.WHITE },
+	notifications_set_date_unselected_textstyle: { fontSize: 25, color: COLOR.DMGREY },
 
 	/**
 	 *  99 - Misc

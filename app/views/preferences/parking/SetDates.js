@@ -63,14 +63,14 @@ class SetDates extends Component {
 		if (selected) {
 			return(
 				<View style={[css.notifications_set_date_selected_circle,css.notifications_set_date_each_day]}>
-					<Text style={{ fontSize: 25, color: COLOR.WHITE }}>{i}</Text>
+					<Text style={css.notifications_set_date_selected_textstyle}>{i}</Text>
 				</View>
 			)
 		}
 		else {
 			return(
 				<View style={[css.notifications_set_date_unselected_circle,css.notifications_set_date_each_day]}>
-					<Text style={{ fontSize: 25, color: COLOR.DMGREY }}>{i}</Text>
+					<Text style={css.notifications_set_date_unselected_textstyle}>{i}</Text>
 				</View>
 			)
 		}
