@@ -560,6 +560,16 @@ const css = StyleSheet.create({
 	notifications_selected_row_text: { flex: 1, paddingRight: 10, paddingLeft: 7.5, fontSize: 19, color: COLOR.VDGREY },
 	notifications_switch: { transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }] },
 	notifications_parking_selected_row_text_container: { paddingLeft: 75, flexDirection: 'row', paddingRight: 60, alignItems: 'center' },
+	notifications_set_date_days: { flexDirection: 'row', justifyContent: 'center', marginTop: 15 },
+	notifications_set_date_confirm_options: { flexDirection: 'row', marginBottom: 10, marginTop: 20, justifyContent: 'space-around' },
+	notifications_set_date_white_container: { backgroundColor: 'white', width: LAYOUT.WINDOW_WIDTH - 100, height: LAYOUT.WINDOW_WIDTH / 2.5, justifyContent: 'center' },
+	notifications_set_date_blue_container: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.PRIMARY, color: 'white', height: LAYOUT.WINDOW_WIDTH / 8, width: LAYOUT.WINDOW_WIDTH - 100 },
+	notifications_set_date_selected_circle: { width: 40, height: 40, borderRadius: 20, backgroundColor: COLOR.PRIMARY },
+	notifications_set_date_unselected_circle: { width: 40, height: 40, borderRadius: 20, backgroundColor: COLOR.WHITE },
+	notifications_set_date_each_day: { justifyContent: 'center', alignItems: 'center', marginRight: 20, position: 'relative' },
+	notifications_set_date_setdays_text: { fontSize: 25, color: 'white' },
+	notifications_set_date_cancel_text: { color: COLOR.PRIMARY, fontSize: 17 },
+	notifications_set_date_confirm_text: { color: COLOR.PRIMARY, fontSize: 17 },
 
 	/**
 	 *  99 - Misc
@@ -579,6 +589,7 @@ const css = StyleSheet.create({
 	lrc_promptText: { fontSize: 14, color: COLOR.DGREY, paddingLeft: 6 },
 	lrc_button: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.PRIMARY, borderRadius: 3, marginTop: 14, padding: 10 },
 	lrc_buttonText: { color: COLOR.WHITE },
+
 
 
 })
