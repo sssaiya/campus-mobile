@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, TouchableWithoutFeedback, Text, Modal } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import SetDates from './SetDates'
+import css from '../../../styles/css'
 import LAYOUT from '../../../styles/LayoutConstants'
 
 class SetDatesContainer extends Component {
@@ -27,10 +28,10 @@ class SetDatesContainer extends Component {
 					animationType="none"
 					transparent={true}
 					visible={this.state.modalVisible}
-					style={{ justifyContent: 'center', alignItems: 'center', flex: 1 }}
+					style={css.notifications_set_date_container_modal}
 				>
 					<View
-						style={{ backgroundColor: 'rgba(19, 22, 22, 0.79)', width: LAYOUT.WINDOW_WIDTH, height: LAYOUT.WINDOW_HEIGHT, justifyContent: 'center', alignItems: 'center' }}
+						style={css.notifications_set_date_container}
 					>
 						<SetDates onTouch={this.handler} />
 					</View>

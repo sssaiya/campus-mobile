@@ -572,6 +572,8 @@ const css = StyleSheet.create({
 	notifications_set_date_confirm_text: { color: COLOR.PRIMARY, fontSize: 17 },
 	notifications_set_date_selected_textstyle: { fontSize: 25, color: COLOR.WHITE },
 	notifications_set_date_unselected_textstyle: { fontSize: 25, color: COLOR.DMGREY },
+	notifications_set_date_container_modal: { justifyContent: 'center', alignItems: 'center', flex: 1 },
+	notifications_set_date_container: { backgroundColor: 'rgba(19, 22, 22, 0.79)', width: LAYOUT.WINDOW_WIDTH, height: LAYOUT.WINDOW_HEIGHT, justifyContent: 'center', alignItems: 'center' },
 
 	/**
 	 *  99 - Misc
