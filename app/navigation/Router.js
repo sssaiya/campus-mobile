@@ -34,6 +34,7 @@ import ManageParkingLots from '../views/parking/ManageParkingLots'
 import Notifications from '../views/preferences/notifications/Notifications'
 import PushNotifciationContainer from '../containers/pushNotificationContainer'
 import ParkingNotifications from '../views/preferences/parking/Notifications'
+import CardPreferences from '../views/preferences/card/CardPreferences'
 
 // TABS
 import TabIcons from './TabIcons'
@@ -217,6 +218,13 @@ const MainStack = StackNavigator(
 			screen: Notifications,
 			navigationOptions: {
 				title: 'Notifications',
+				headerRight: (<DummyView />)
+			}
+		},
+		CardPreferences: {
+			screen: CardPreferences,
+			navigationOptions: {
+				title: 'Cards',
 				headerRight: (<DummyView />)
 			}
 		},

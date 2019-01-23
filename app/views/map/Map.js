@@ -35,7 +35,6 @@ export class Map extends React.Component {
 		super(props)
 
 		this.state = {
-			toggledRoute: null,
 			searchInput: null,
 			selectedResult: 0,
 			allowScroll: false,
@@ -269,10 +268,6 @@ export class Map extends React.Component {
 				</View>
 			)
 		} else if (this.props.location.coords) {
-			let polylines = null
-			if (this.state.currentToggledRoute) {
-				polylines = this.props.routes[this.state.currentToggledRoute].polylines
-			}
 			return (
 				<View>
 					<SearchNavButton
@@ -294,19 +289,12 @@ export class Map extends React.Component {
 						}
 					/>
 					<ScrollView
-						ref={
-							(ref) => {
-								this.scrollRef = ref
-							}
-						}
+						ref={(ref) => { this.scrollRef = ref }}
 						showsVerticalScrollIndicator={false}
 						scrollEnabled={this.state.allowScroll}
 						keyboardShouldPersistTaps="always"
 					>
-						<View
-							style={css.map_section}
-						>
-							<Text>MapHeight: {LAYOUT.MAP_HEIGHT}</Text>
+						<View style={css.map_section}>
 							<SearchMap
 								location={this.props.location}
 								selectedResult={
@@ -316,20 +304,15 @@ export class Map extends React.Component {
 								}
 								shuttle={this.props.shuttle_stops}
 								vehicles={this.state.vehicles}
-								polylines={polylines}
 							/>
 						</View>
-						<View
-							style={css.map_section}
-						>
+						<View style={css.map_section}>
 							<SearchResults
 								results={this.props.search_results}
 								onSelect={index => this.updateSelectedResult(index)}
 							/>
 						</View>
-						<View
-							style={css.map_section}
-						>
+						<View style={css.map_section}>
 							<SearchSuggest
 								onPress={this.updateSearchSuggest}
 							/>
@@ -341,9 +324,7 @@ export class Map extends React.Component {
 								/>
 							) : (null)}
 						</View>
-						<View
-							style={css.map_section}
-						>
+						<View style={css.map_section}>
 							<SearchShuttleMenu
 								shuttle_routes={this.props.shuttle_routes}
 								onToggle={this.toggleRoute}

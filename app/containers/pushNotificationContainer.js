@@ -12,12 +12,10 @@ class PushNotificationContainer extends Component {
 	componentDidMount() {
 		this.checkPermission()
 		this.onTokenRefreshListener = firebase.messaging().onTokenRefresh((fcmToken) => {
-			// Process your token as required
-			console.log('Firebase Token (refresh):', fcmToken)
-
-			// Subscribe to topics
+			/** Subscribe to topics **/
 			this.props.refreshSubscriptions()
 
+			/** If logged in, register token **/
 			if (this.props.user.isLoggedIn) this.props.registerToken(fcmToken)
 		})
 
@@ -26,7 +24,6 @@ class PushNotificationContainer extends Component {
 		})
 
 		this.notificationListener = firebase.notifications().onNotification((notification) => {
-			console.log('New notification received: ', notification)
 			this.props.updateMessages()
 		})
 
@@ -36,7 +33,6 @@ class PushNotificationContainer extends Component {
 	}
 
 	componentWillUnmount() {
-		// stop listening for events
 		this.onTokenRefreshListener()
 		this.messageListener()
 	}
@@ -45,9 +41,7 @@ class PushNotificationContainer extends Component {
 		firebase.messaging().getToken()
 			.then((fcmToken) => {
 				if (fcmToken) {
-					console.log('Firebase Token: ', fcmToken)
-
-					// Subscribe to topics
+					/** Subscribe to topics **/
 					this.props.refreshSubscriptions()
 				}
 			})
@@ -112,8 +106,6 @@ class PushNotificationContainer extends Component {
 
 	// Set device information along with app push ID token
 	updateServerToken = (token) => {
-		console.log('push token', token)
-
 		// TODO: send token to server so we can push notifications here
 	}
 
@@ -121,7 +113,8 @@ class PushNotificationContainer extends Component {
 		// When app launches, update messages for the first time
 		this.props.updateMessages()
 
-		return null // TODO: render error message if user does not allow location
+		// TODO: render error message if user does not allow location
+		return null
 	}
 }
 

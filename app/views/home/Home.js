@@ -28,7 +28,7 @@ export class Home extends React.Component {
 
 	constructor(props) {
 		super(props)
-		this.state = { updatedGoogle: true }
+		this.state = { updatedGoogle: true } // eslint-disable-line
 	}
 
 	componentWillMount() {
@@ -142,7 +142,7 @@ export class Home extends React.Component {
 	updateGooglePlay = () => {
 		checkGooglePlayServices((result) => {
 			if (result === 'update') {
-				this.setState({ updatedGoogle: false })
+				this.setState({ updatedGoogle: false }) // eslint-disable-line
 			}
 		})
 	}

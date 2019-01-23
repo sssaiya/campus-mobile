@@ -5,9 +5,9 @@ import logger from '../util/logger'
 
 const ScheduleService = {
 	* FetchSchedule(term) {
-		const data = [],
-			UN_API_URL = AppSettings.ACADEMIC_HISTORY_API_URL + '?academic_level=UN&term_code=' + term,
-			GR_API_URL = AppSettings.ACADEMIC_HISTORY_API_URL + '?academic_level=GR&term_code=' + term
+		const data = []
+		const UN_API_URL = AppSettings.ACADEMIC_HISTORY_API_URL + '?academic_level=UN&term_code=' + term
+		const GR_API_URL = AppSettings.ACADEMIC_HISTORY_API_URL + '?academic_level=GR&term_code=' + term
 
 		// Query api for undergrad classes
 		try {
@@ -36,14 +36,14 @@ const ScheduleService = {
 		return fetch(AppSettings.ACADEMIC_TERM_API_URL)
 			.then(response => response.json())
 			.then(responseData => responseData)
-			.catch((error) => { throw error })
+			.catch((err) => { throw err })
 	},
 
 	FetchFinals() {
 		return fetch(AppSettings.ACADEMIC_TERM_FINALS_API_URL)
 			.then(response => response.json())
 			.then(responseData => responseData)
-			.catch((error) => { throw error })
+			.catch((err) => { throw err })
 	}
 }
 

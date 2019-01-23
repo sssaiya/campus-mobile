@@ -62,10 +62,15 @@ function* doLogin(action) {
 			yield auth.storeAccessToken(response.access_token)
 
 			// Set up user profile
+			const isStudent = Boolean((response.pid) && (response.ucsdaffiliation.match(/(B|G|J|M|U)/)))
+
 			const newProfile = {
 				username,
 				pid: response.pid,
-				classifications: { student: Boolean(response.pid) }
+				ucsdaffiliation: response.ucsdaffiliation,
+				classifications: {
+					student: isStudent
+				}
 			}
 
 			// Post sign-in flow
@@ -119,6 +124,7 @@ function* queryUserData() {
 	if (profile.username) profileItems.username = profile.username
 	if (profile.classifications) profileItems.classifications = { ...profile.classifications }
 	if (profile.pid) profileItems.pid = profile.pid
+	if (profile.ucsdaffiliation) profileItems.ucsdaffiliation = profile.ucsdaffiliation
 
 	const modifyProfileAction = { profileItems }
 
@@ -179,8 +185,7 @@ function* refreshTokenRequest() {
 
 	if (response.error && response.error.appUpdateRequired) {
 		yield outOfDateAlert()
-	}
-	else if (response.access_token) {
+	} else if (response.access_token) {
 		yield auth.storeAccessToken(response.access_token)
 		// Clears any potential errors from being
 		// unable to automatically reauthorize a user

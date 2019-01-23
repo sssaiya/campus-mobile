@@ -1,4 +1,3 @@
-/* eslint object-curly-newline: 0, object-property-newline: 0 */
 /*  Master Stylesheet
 
 	All predefined campus-mobile styles should reside here.
@@ -25,15 +24,12 @@
 	99 - Misc
 */
 import { StyleSheet, Platform, Dimensions } from 'react-native'
-
 import { platformAndroid, deviceIphoneX, platformIOS, round } from '../util/general'
 import COLOR from './ColorConstants'
 import LAYOUT from './LayoutConstants'
 
-const windowWidth = Dimensions.get('window').width,
-	maxAppWidth = 414,
-	prm = windowWidth / maxAppWidth
-
+const windowWidth = Dimensions.get('window').width
+const prm = (windowWidth / LAYOUT.MAX_APP_WIDTH)
 const CC_LEFT = LAYOUT.MAX_CARD_WIDTH * 0.006
 const CC_RIGHT = LAYOUT.MAX_CARD_WIDTH * 0.004
 
@@ -42,16 +38,16 @@ const css = StyleSheet.create({
 	 *  01 - Main
 	 */
 	// Containers
-	main_container: { flex: 1 },
+	main: { flex: 1 },
 	main_full: { backgroundColor: COLOR.WHITE, paddingBottom: deviceIphoneX() ? LAYOUT.NAVIGATOR_HEIGHT : 0 },
-	main_full_flex: { flex: 1, backgroundColor: COLOR.WHITE, paddingBottom: deviceIphoneX() ? LAYOUT.NAVIGATOR_HEIGHT : 0 },
+	main_full_flex: { flexGrow: 1, backgroundColor: COLOR.WHITE, paddingBottom: deviceIphoneX() ? LAYOUT.NAVIGATOR_HEIGHT : 0 },
+	full_flex: { flexGrow: 1, backgroundColor: COLOR.WHITE },
 	scroll_default: { backgroundColor: COLOR.WHITE },
-	card_container: { backgroundColor: COLOR.WHITE, margin: 6 },
-	card_full_container: { backgroundColor: COLOR.WHITE, marginTop: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: COLOR.MGREY },
+	card_container: { backgroundColor: COLOR.WHITE, margin: 6, borderRadius: 3 },
+	card_full_container: { backgroundColor: COLOR.WHITE, marginBottom: 16, borderTopWidth: 1, borderBottomWidth: 1, borderColor: COLOR.MGREY },
 	main_full_lgrey: { flexGrow: 1, backgroundColor: COLOR.LGREY }, // special events
 	loginview_container: { flexGrow: 1, backgroundColor: COLOR.MGREY, marginTop: LAYOUT.NAVIGATOR_HEIGHT },
 	messaging_container: { flex: 1, paddingBottom: platformIOS() ? LAYOUT.NAVIGATOR_HEIGHT : 0 },
-
 	// Navigator
 	nav: { backgroundColor: COLOR.PRIMARY, height: LAYOUT.NAVIGATOR_HEIGHT, marginTop: deviceIphoneX() ? -13 : 0 },
 	navTitle: { flex: 1, fontSize: 24, fontWeight: '300', textAlign: 'center', alignSelf: 'center', marginTop: deviceIphoneX() ? 0 : -3 },
@@ -81,9 +77,9 @@ const css = StyleSheet.create({
 	ch_titleText: { flexGrow: 1, fontSize: 26, color: COLOR.DGREY, paddingLeft: 10, paddingVertical: 6 },
 	ch_titleImage: { height: 36, minWidth: 85, maxWidth: 150, marginTop: 6, marginLeft: 6 },
 	ch_filler: { flexGrow: 1 },
-	cm_menu: { flexDirection: 'row', justifyContent: 'flex-end', },
+	cm_menu: { flexDirection: 'row', justifyContent: 'flex-end' },
 	cm_option: { margin: 10, fontSize: 16 },
-	cm_trigger: { paddingTop: 9, paddingBottom: 6, paddingLeft: 12, paddingRight: 10, color: COLOR.DGREY, },
+	cm_trigger: { paddingTop: 9, paddingBottom: 6, paddingLeft: 12, paddingRight: 10, color: COLOR.DGREY },
 	scrollcard_main_marginBottom: { marginBottom: 6 },
 	scrollcard_dotStyle: { padding: 6, paddingTop: 3, backgroundColor: 'transparent', color: COLOR.DGREY },
 	scrollcard_dotsContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
@@ -93,25 +89,33 @@ const css = StyleSheet.create({
 	last_updated_err_icon: { fontSize: 16, marginRight: 6 },
 	last_updated_err_icon_warn: { color: COLOR.WARNING },
 	last_updated_err_icon_error: { color: COLOR.ERROR },
-
 	// Data
 	DataList_card_list: {  },
 	DataList_full_list: { top: -1 },
 	dataitem_descContainer: { flex: 1 },
 	dataitem_descText: { color: COLOR.VDGREY },
-	dataitem_touchableRow: { paddingVertical: 12, paddingHorizontal: 8, borderTopWidth: 1, borderTopColor: COLOR.MGREY, },
+	dataitem_touchableRow: { paddingVertical: 12, paddingHorizontal: 8, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
 	dataitem_titleText: { fontSize: 17 },
 	dataitem_listInfoContainer: { flexDirection: 'row', paddingVertical: 8 },
 	dataitem_dateText: { color: COLOR.PRIMARY, paddingTop: 8 },
 	dataitem_image: { width: 120, height: 70, marginLeft: 10, borderWidth: 1, borderColor: COLOR.LGREY },
 	dlc_list: { top: -1 },
 	dlc_content_load_err: { padding: 30, fontSize: 16, alignSelf: 'center'  },
-	dlc_cardcenter: { alignItems: 'center', justifyContent: 'center', width: LAYOUT.MAX_CARD_WIDTH },
+	dlc_cardcenter: { alignItems: 'center', justifyContent: 'center', padding: 20 },
+	// FlatList
+	fl_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 12, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	fl_row_title: { flex: 1, color: COLOR.VDGREY, fontSize: 18 },
+	fl_row_title_disabled: { flex: 1, color: COLOR.DMGREY, fontSize: 18 },
+	fl_row_arrow: { color: COLOR.CCC },
 	// Buttons
 	button_primary: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.PRIMARY, borderRadius: 3, marginTop: 20, padding: 10 },
 	button_primary_text: { fontSize: 16, color: COLOR.WHITE },
 	share_button: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.MGREY, borderRadius: 3, marginTop: 20, padding: 10 },
 	share_button_text: { fontSize: 16 },
+	// Checkbox
+	ccb_checkBoxContainer: { flexDirection: 'row', alignItems: 'center' },
+	ccb_center: { justifyContent: 'center', alignItems: 'center' },
+	ccb_checkBoxLabel: { fontSize: 18, fontWeight: '300', marginHorizontal: 10 },
 	// Media
 	eventdetail_readmore_container: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.PRIMARY, borderRadius: 3, marginTop: 20, padding: 10 },
 	eventdetail_readmore_text: { fontSize: 16, color: COLOR.WHITE },
@@ -134,6 +138,7 @@ const css = StyleSheet.create({
 	specialevents_filter_itemrow: { flexDirection: 'row', alignItems: 'center', backgroundColor: COLOR.WHITE, borderBottomWidth: 1, borderBottomColor: COLOR.LGREY, padding: 12 },
 	specialevents_filter_applybutton: { position: 'absolute', width: LAYOUT.WINDOW_WIDTH - 20, bottom: deviceIphoneX() ? LAYOUT.NAVIGATOR_HEIGHT : 10, left: 10, padding: 10, justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.PRIMARY, borderRadius: 3, opacity: 0.95 },
 	specialevents_filter_applybutton_text: { fontSize: 16, color: COLOR.WHITE },
+	// SpecialEventsView
 	sev_specialEventsListView: { flex: 1 },
 	sev_scrollButtonContainer: { flexDirection: 'row' },
 	sev_scrollContentContainer: { flexGrow: 1 },
@@ -151,28 +156,31 @@ const css = StyleSheet.create({
 	sev_filterText: { textAlign: 'center', fontSize: 17, color: 'white' },
 	sev_backButtonContainer: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginTop: -7 },
 	sev_backButtonImage: { color: COLOR.WHITE, marginRight: 7 },
+	// SpecialEventsListView
 	selv_mainContainer: { flexGrow: 1 },
-	selv_rowContainer: { flexDirection: 'row' },
+	selv_rowContainer: { flexGrow: 1, flexDirection: 'row' },
 	selv_full: { flexGrow: 1, width: LAYOUT.WINDOW_WIDTH, height: (LAYOUT.WINDOW_HEIGHT - LAYOUT.NAVIGATOR_HEIGHT - LAYOUT.TAB_BAR_HEIGHT) },
 	selv_card: { width: LAYOUT.MAX_CARD_WIDTH },
 	selv_noSessions: { flexGrow: 1, fontSize: 16, textAlign: 'center', padding: 20, lineHeight: 22 },
 	selv_labelsContainer: { alignItems: 'center', justifyContent: 'flex-start', borderBottomWidth: 1, borderBottomColor: COLOR.PRIMARY },
-	selv_labelHeader: { fontWeight: '600', },
+	selv_labelHeader: { fontWeight: '600' },
 	selv_labelText: { width: LAYOUT.WINDOW_WIDTH, paddingVertical: 4, paddingHorizontal: 20, fontSize: 14, color: COLOR.PRIMARY },
 	selv_emptyRow: { width: 75, flexDirection: 'row' },
-	sei_itemRow: { flexShrink: 1, flexDirection: 'row', paddingBottom: 10 },
-	sei_titleContainer: { flexShrink: 1, flexBasis: 10000, marginTop: 3 }, // TODO: improve usage of flex, especially to avoid hardcoding 10000, which acts like an infifity value to maximize column width on all screen sizes.
+	// SpecialEventsItem
+	sei_itemRow: { flexShrink: 1, flexDirection: 'row' },
+	sei_titleContainer: { flexShrink: 1, flexBasis: 10000, marginTop: 3, marginBottom: 8 }, // TODO: improve usage of flex, especially to avoid hardcoding 10000, which acts like an infifity value to maximize column width on all screen sizes.
 	sei_titleText: { alignSelf: 'stretch', fontSize: 17, color: 'black' },
 	sei_labelView: { flexDirection: 'row', paddingTop: 4 },
-	sei_labelTextContainer: { 'flexDirection': 'row', 'maxWidth': LAYOUT.WINDOW_WIDTH / 2, },
+	sei_labelTextContainer: { 'flexDirection': 'row', 'maxWidth': LAYOUT.WINDOW_WIDTH / 2 },
 	sei_labelText: { fontSize: 13 },
 	sei_starButton: { width: 50 },
 	sei_starButtonInner: { justifyContent: 'flex-start', alignItems: 'center' },
 	sei_starOuterIcon: { color: COLOR.DGREY, position: platformIOS() ? 'absolute' : 'relative', zIndex: 10, backgroundColor: 'rgba(0,0,0,0)' },
 	sei_starInnerIcon: { color: COLOR.YELLOW, position: 'absolute', zIndex: platformIOS() ? 5 : 15, marginTop: 3 },
 	sei_borderContainer: { width: 1, alignSelf: 'stretch', marginRight: 10, alignItems: 'flex-start' },
-	sei_line: { flexGrow: 1, borderLeftWidth: 1, borderColor: COLOR.MGREY, paddingBottom: 20 },
+	sei_line: { flexGrow: 1, borderLeftWidth: 1, borderColor: COLOR.MGREY },
 	sei_circle: { position: 'absolute', top: 11, left: -2.5, height: 6, width: 6, borderRadius: 3, borderWidth: 1, borderColor: COLOR.MGREY, backgroundColor: COLOR.LGREY },
+	// SpecialEventsDetailView
 	sedv_detailContainer: { width: LAYOUT.WINDOW_WIDTH, padding: 12 },
 	sedv_labelView: { flexDirection: 'row', paddingTop: 4 },
 	sedv_labelText: { fontSize: 13 },
@@ -265,19 +273,8 @@ const css = StyleSheet.create({
 	srlv_icon: { alignSelf: 'flex-end', color: COLOR.DGREY },
 	srlv_row_name: { flex: 1, paddingRight: 10 },
 	srlv_touchable: { flex: 1, flexDirection: 'row', alignItems: 'center', height: 60, padding: 7, paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY, overflow: 'hidden' },
-	sslv_listRow: { backgroundColor: COLOR.WHITE, flexDirection: 'row', alignItems: 'center', width: LAYOUT.DEVICE_WIDTH, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY, height: 50,
-		...Platform.select({
-			ios: {
-				shadowOpacity: 0,
-				shadowOffset: { height: 2, width: 2 },
-				shadowRadius: 2,
-			},
-			android: {
-				margin: 0,
-				elevation: 0,
-			},
-		})
-	},
+
+	sslv_listRow: { backgroundColor: COLOR.WHITE, flexDirection: 'row', alignItems: 'center', width: LAYOUT.DEVICE_WIDTH, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY, height: 50,	...Platform.select({ ios: { shadowOpacity: 0, shadowOffset: { height: 2, width: 2 }, shadowRadius: 2 }, android: { margin: 0, elevation: 0 } }) },
 	sslv_nameText: { flex: 1, margin: 7 },
 	sslv_cancelButton: { justifyContent: 'center', alignItems: 'center', width: 50, height: 50 },
 	sslv_addNoticeText: { lineHeight: 28, fontSize: 15, color: COLOR.DGREY, textAlign: 'center' },
@@ -337,9 +334,9 @@ const css = StyleSheet.create({
 	dd_menu_container: { marginHorizontal: 8 },
 	dd_menu_link_text: { fontSize: 16, color: COLOR.WHITE },
 	dd_menu_food_type: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginVertical: 8 },
-	dd_menu_meal_type: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderTopWidth: 1, borderTopColor: COLOR.MGREY, },
-	dd_menu_meal_type_text: { fontSize: 20, color: COLOR.DGREY, },
-	dd_menu_meal_type_text_active: { fontSize: 20, color: COLOR.PRIMARY, },
+	dd_menu_meal_type: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	dd_menu_meal_type_text: { fontSize: 20, color: COLOR.DGREY },
+	dd_menu_meal_type_text_active: { fontSize: 20, color: COLOR.PRIMARY },
 	dd_menu_filter_button: { paddingVertical: 8, paddingHorizontal: 14, fontSize: 14, color: COLOR.DGREY, borderWidth: 1, borderColor: COLOR.DGREY, borderRadius: 3, backgroundColor: COLOR.MGREY, textAlign: 'center', marginHorizontal: 8 },
 	dd_menu_filter_button_active: { paddingVertical: 8, paddingHorizontal: 14, fontSize: 14, color: COLOR.WHITE, borderWidth: 1, borderColor: COLOR.DGREY, borderRadius: 3, backgroundColor: COLOR.PRIMARY, textAlign: 'center', marginHorizontal: 8, overflow: 'hidden' },
 	dd_menu_circle: { borderWidth: 1, borderColor: COLOR.MGREY, borderRadius: 8, width: 16, height: 16, backgroundColor: COLOR.MGREY, marginRight: 5 },
@@ -347,7 +344,7 @@ const css = StyleSheet.create({
 	dd_menu_row: { flexDirection: 'row', paddingBottom: 8 },
 	dd_menu_item_name_text: { fontSize: 15, color: COLOR.PRIMARY },
 	dd_menu_item_price_text: { color: COLOR.BLACK, paddingLeft: 26, marginLeft: 30 },
-	dd_menu_meal_button: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 40, },
+	dd_menu_meal_button: { flex: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: 40 },
 	dd_description_po: { color: COLOR.BLACK },
 	dn_container: { paddingHorizontal: 10, paddingTop: 10 },
 	dn_title: { fontSize: 26, color: COLOR.PRIMARY },
@@ -374,10 +371,10 @@ const css = StyleSheet.create({
 	 */
 	links_row_container: { paddingVertical: 8, paddingHorizontal: 16, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
 	links_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
-	links_icon: { height: 34, width: 34 },
+	links_icon: { height: 28, width: 28 },
 	links_icon_fa: { paddingLeft: 8, paddingRight: 5, color: COLOR.PRIMARY },
-	links_name: { flex: 1, color: COLOR.VDGREY, fontSize: round(22 * prm), fontWeight: '300', paddingHorizontal: 16 },
-	links_arrow_icon: { color: COLOR.DGREY },
+	links_name: { flex: 1, color: COLOR.VDGREY, fontSize: 18, paddingLeft: 16 },
+	links_arrow_icon: { color: COLOR.CCC },
 
 	/**
 	 *  11 - Weather
@@ -404,15 +401,36 @@ const css = StyleSheet.create({
 	sr_beach_name: { fontSize: 18 },
 	sr_beach_surf: { fontSize: 16, paddingTop: 4, paddingLeft: 8 },
 	surf_touchable: { borderTopWidth: 1, borderTopColor: COLOR.MGREY },
-	surf_text: { textAlign: 'center', fontSize: 20, fontWeight: '300', color: COLOR.PRIMARY, paddingHorizontal: 14, paddingVertical: 10,  },
+	surf_text: { textAlign: 'center', fontSize: 20, fontWeight: '300', color: COLOR.PRIMARY, paddingHorizontal: 14, paddingVertical: 10 },
 
 	/**
 	 *  12 - Map
 	 */
 	map_nogoogleplay: { padding: 16 },
-	destinationcard_marker_label: { flex: 2, fontSize: 18, paddingLeft: 8, paddingTop: 0, color: COLOR.PRIMARY, justifyContent: 'center' },
-	destinationcard_marker_dist_label: { flex: 1, textAlign: 'right', fontSize: 18, paddingLeft: 8, paddingTop: 0, color: COLOR.PRIMARY, justifyContent: 'center' },
 	map_section: { height: LAYOUT.MAP_HEIGHT },
+	snb_container: { zIndex: 2, justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 44, right: 6, width: 50, height: 50, borderRadius: 25, backgroundColor: COLOR.MBLUE },
+	snb_container_nav: { bottom: 100 },
+	srb_bottomBarContainer: { zIndex: 5, alignItems: 'center', justifyContent: 'center', position: 'absolute', bottom: 0, width: LAYOUT.WINDOW_WIDTH, padding: 10, backgroundColor: COLOR.WHITE },
+	srb_bottomBarContent: { flex: 1, justifyContent: 'center', alignSelf: 'stretch' },
+	srb_bottomBarText: { textAlign: 'center' },
+	// SearchSuggest
+	ss_card_main: { top: 50, backgroundColor: 'white', marginTop: 6, marginHorizontal: 6, borderRadius: 3, alignItems: 'center', justifyContent: 'center' },
+	ss_list_container: { width: LAYOUT.MAX_CARD_WIDTH, height: 90 },
+	ss_list_row: { flex: 1, alignItems: 'center', flexDirection: 'column', paddingVertical: 14, width: Math.round((LAYOUT.WINDOW_WIDTH - 12) / 4) },
+	ss_icon_container: { justifyContent: 'center', alignItems: 'center', width: 50, height: 50, borderRadius: 25, backgroundColor: COLOR.MRED },
+	ss_icon_label: { fontSize: 12, marginTop: 4, color: COLOR.VDGREY2 },
+	// SearchResults
+	ms_container: { top: 50, backgroundColor: COLOR.WHITE, width: LAYOUT.MAX_CARD_WIDTH, margin: 6, marginBottom: deviceIphoneX() ? (92 + LAYOUT.STATUS_BAR_HEIGHT + LAYOUT.TAB_BAR_HEIGHT) : (36 + LAYOUT.STATUS_BAR_HEIGHT + LAYOUT.TAB_BAR_HEIGHT), borderRadius: 3 },
+	ms_result_row: { flexDirection: 'row', paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY, overflow: 'hidden', paddingLeft: 8, paddingRight: 8, alignItems: 'center' },
+	ms_result_icon: { color: COLOR.VDGREY },
+	ms_result_title: { flex: 4, fontSize: 16, paddingLeft: 12, paddingTop: 0, color: COLOR.VDGREY },
+	ms_result_dist: { flex: 1, textAlign: 'right', fontSize: 16, paddingLeft: 8, paddingTop: 0, color: COLOR.PRIMARY },
+	// SearchHistoryCard
+	shc_list_container: { width: LAYOUT.MAX_CARD_WIDTH, top: 50, backgroundColor: COLOR.WHITE, margin: 6, maxHeight: (LAYOUT.WINDOW_HEIGHT / 2), borderRadius: 3 },
+	shc_list_row: { flexDirection: 'row', paddingVertical: 14, borderBottomWidth: 1, borderBottomColor: COLOR.LGREY },
+	shc_row_icon: { alignSelf: 'center', marginHorizontal: 6, color: COLOR.DMGREY },
+	shc_row_text: { flex: 1, fontSize: 16, alignSelf: 'center', color: COLOR.VDGREY2 },
+	shc_row_remove: { justifyContent: 'center' },
 
 	/**
 	 *  13 - Feedback
@@ -431,7 +449,6 @@ const css = StyleSheet.create({
 	/**
 	 *  14 - User Profile
 	 */
-	profile_inner: { paddingBottom: 50 },
 	// User Account
 	ua_accountinfo: { flexDirection: 'row', paddingHorizontal: 10, paddingVertical: 14, alignItems: 'center' },
 	ua_loggedin: { flex: 3, flexDirection: 'row', alignItems: 'center' },
@@ -453,12 +470,12 @@ const css = StyleSheet.create({
 	ua_loginText: { fontSize: 16, color: COLOR.WHITE },
 	ua_errorText: { flex: 1, fontSize: 18, color: COLOR.MRED },
 
-	us_list_row: { flexDirection: 'row', alignItems: 'center', borderTopWidth: 1, borderTopColor: COLOR.MGREY, paddingHorizontal: 20, paddingVertical: 8, margin: 0, elevation: 0, backgroundColor: COLOR.WHITE },
+	us_list_row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderColor: COLOR.MGREY, paddingHorizontal: 20, paddingVertical: 8, margin: -1, elevation: 0, backgroundColor: COLOR.WHITE },
 	us_icon: { color: COLOR.DGREY },
 	us_name_text: { flexGrow: 1, fontSize: 18, color: COLOR.VDGREY, paddingLeft: 16 },
 	us_switchContainer: { justifyContent: 'center', alignItems: 'center' },
 
-	pi_container: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: COLOR.WHITE, marginTop: 20, paddingVertical: 8, paddingHorizontal: 20, borderTopWidth: 2, borderTopColor: COLOR.MGREY, borderBottomWidth: 2, borderBottomColor: COLOR.MGREY },
+	pi_container: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: COLOR.WHITE, marginBottom: 16, paddingVertical: 8, paddingHorizontal: 20, borderTopWidth: 1, borderTopColor: COLOR.MGREY, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY },
 	pi_icon: { color: COLOR.PRIMARY },
 	pi_title: { flexGrow: 1, fontSize: 18, color: COLOR.VDGREY, paddingLeft: 16 },
 	pi_arrow: { color: COLOR.CCC },
@@ -514,23 +531,26 @@ const css = StyleSheet.create({
 	po_structure_context: { fontSize: round(18 * prm), marginTop: 4, color: COLOR.DGREY },
 	po_structure_spots_available: {  alignSelf: 'center', fontSize: round(18 * prm), marginTop: 8 },
 	po_circle: { justifyContent: 'space-around', overflow: 'hidden', backgroundColor: COLOR.GREEN },
-	po_character: { textAlign: 'center', fontWeight: '600',  backgroundColor: 'transparent' },
+	po_character: { textAlign: 'center', fontWeight: '600', backgroundColor: 'transparent' },
 	po_circle_number: { fontWeight: 'bold' },
 	po_circle_number_na: { color: COLOR.DGREY },
 	po_circle_percent: {  textAlign: 'center' },
 	po_fill_info: { flexDirection: 'row', alignItems: 'center' },
-	po_one_spot_selected: { flexDirection: 'row',  justifyContent: 'space-around', width: LAYOUT.MAX_CARD_WIDTH, marginTop: 16, paddingBottom: 20 },
-	po_two_spots_selected: { flexDirection: 'row',  justifyContent: 'center', width: LAYOUT.MAX_CARD_WIDTH, marginTop: 16, paddingBottom: 20 },
+	po_one_spot_selected: { flexDirection: 'row', justifyContent: 'space-around', width: LAYOUT.MAX_CARD_WIDTH, marginTop: 16, paddingBottom: 20 },
+	po_two_spots_selected: { flexDirection: 'row', justifyContent: 'center', width: LAYOUT.MAX_CARD_WIDTH, marginTop: 16, paddingBottom: 20 },
 	po_three_spots_selected: { flexDirection: 'row', justifyContent: 'center', width: LAYOUT.MAX_CARD_WIDTH, marginTop: 16, paddingBottom: 20 },
 	po_structure_comingsoon: { textAlign: 'center', fontSize: round(17 * prm), color: COLOR.DGREY, fontStyle: 'italic', marginBottom: 10 },
 	po_acp: { marginBottom: 15 },
 	po_acp_gap_1: { paddingHorizontal: 20 },
 	po_acp_gap_2: { paddingHorizontal: 10 },
+	// ParkingCard
+	pc_nolots_container: { paddingHorizontal: 20, paddingVertical: 40 },
+	pc_nolots_text: {  alignSelf: 'center', fontSize: round(18 * prm) },
 
-	mpl_row_view: { flexDirection: 'row', flex: 1, paddingLeft: 15, backgroundColor: COLOR.WHITE, alignItems: 'center', justifyContent: 'center', paddingVertical: 10 },
-	mpl_row_text_unselected: { flex: 1, paddingLeft: 10, fontSize: 19, justifyContent: 'flex-start', color: COLOR.DGREY },
-	mpl_row_text_selected: { flex: 1, paddingLeft: 10, fontSize: 19, justifyContent: 'flex-start', color: COLOR.PRIMARY },
-	mpl_row_add_remove_btn: { paddingRight: 30 },
+	mpl_row_view: { flexDirection: 'row', flex: 1, padding: 12, alignItems: 'center', justifyContent: 'center' },
+	mpl_row_text_unselected: { flex: 1, fontSize: 20, justifyContent: 'flex-start', color: COLOR.VDGREY2 },
+	mpl_row_text_selected: { flex: 1, fontSize: 20, justifyContent: 'flex-start', color: COLOR.PRIMARY },
+	mpl_row_add_remove_btn: {  },
 	mpl_message_view: { justifyContent: 'center', alignItems: 'center', marginVertical: round(30 * prm) },
 	mpl_message_text: { fontSize: round(19 * prm), textAlign: 'center' },
 
@@ -593,9 +613,6 @@ const css = StyleSheet.create({
 	lrc_promptText: { fontSize: 14, color: COLOR.DGREY, paddingLeft: 6 },
 	lrc_button: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.PRIMARY, borderRadius: 3, marginTop: 14, padding: 10 },
 	lrc_buttonText: { color: COLOR.WHITE },
-
-
-
 })
 
 module.exports = css

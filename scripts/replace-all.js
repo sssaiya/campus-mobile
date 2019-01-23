@@ -1,7 +1,3 @@
-/*
-	Usage:
-	npm run-script [campus-prod|campus-qa]
-*/
 const fs = require('fs')
 const os = require('os')
 
@@ -103,7 +99,7 @@ if (REPLACEMENT_ENV === 'prod' || REPLACEMENT_ENV === 'qa') {
 		{ prodVal: myEnv.GS_PROD_PROJECT_NUMBER, 				qaVal: myEnv.GS_QA_PROJECT_NUMBER, 				phVal: PH.GS_PROJECT_NUMBER_PH },
 	])
 } else {
-	console.log('Error: Replacement type not specififed.\nSample Usage: npm run-script [campus-prod|campus-qa]')
+	console.log('Error: Replacement type not specififed.')
 }
 
 
