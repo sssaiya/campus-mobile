@@ -6,7 +6,6 @@ import {
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import Permissions from 'react-native-permissions'
-import { withNavigation } from 'react-navigation'
 
 class PushNotificationContainer extends Component {
 	componentDidMount() {
@@ -136,4 +135,4 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 	}
 )
 
-module.exports = withNavigation(connect(mapStateToProps, mapDispatchToProps)(PushNotificationContainer))
+module.exports = (connect(mapStateToProps, mapDispatchToProps)(PushNotificationContainer))

@@ -16,7 +16,6 @@ import ParkingCardContainer from '../parking/ParkingCardContainer'
 import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import css from '../../styles/css'
 import logger from '../../util/logger'
-import PushNotifciationContainer from '../../containers/pushNotificationContainer'
 
 const campusLogoImage = require('../../assets/images/UCSanDiegoLogo-nav.png')
 
@@ -156,8 +155,6 @@ export class Home extends React.Component {
 			>
 				{/* LOAD CARDS */}
 				{ this._getCards() }
-				<PushNotifciationContainer />
-		
 			</ScrollView>
 		)
 	}

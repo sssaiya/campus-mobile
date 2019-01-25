@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import { View, TouchableWithoutFeedback, Text, Modal } from 'react-native'
-import { withNavigation } from 'react-navigation'
 import SetDates from './SetDates'
 import css from '../../../styles/css'
-import LAYOUT from '../../../styles/LayoutConstants'
 
 class SetDatesContainer extends Component {
 	constructor(props) {

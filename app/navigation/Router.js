@@ -32,7 +32,6 @@ import FullSchedule from '../views/schedule/FullScheduleListView'
 import ParkingSpotType from '../views/parking/ParkingSpotType'
 import ManageParkingLots from '../views/parking/ManageParkingLots'
 import Notifications from '../views/preferences/notifications/Notifications'
-import PushNotifciationContainer from '../containers/pushNotificationContainer'
 import ParkingNotifications from '../views/preferences/parking/Notifications'
 import CardPreferences from '../views/preferences/card/CardPreferences'
 
@@ -121,13 +120,6 @@ const MainStack = StackNavigator(
 			screen: ShuttleStop,
 			navigationOptions: {
 				title: 'Shuttle',
-				headerRight: (<DummyView />)
-			}
-		},
-		PushNotifciationContainer: {
-			screen: PushNotifciationContainer,
-			navigationOptions: {
-				title: 'PushNotifciationContainer',
 				headerRight: (<DummyView />)
 			}
 		},

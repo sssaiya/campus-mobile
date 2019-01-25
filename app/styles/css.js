@@ -569,7 +569,7 @@ const css = StyleSheet.create({
 	tabIconBadge: { position: 'absolute', zIndex: 10, top: platformIOS() ? 0 : 3, right: platformIOS() ? 2 : 3, width: round(18 * prm), height: round(18 * prm), backgroundColor: 'red', borderRadius: round(9 * prm), justifyContent: 'center', opacity: 1 },
 	tabIconBadgeText: { color: COLOR.WHITE, textAlign: 'center', fontSize: round(12 * prm), overflow: 'hidden', fontWeight: '700' },
 
-	//Parking notifications
+	// Parking notifications
 	notifications_full_container: { flex: 1, backgroundColor: COLOR.WHITE },
 	notifications_section_list: { flex: 1 },
 	notifications_row_view: { flexDirection: 'row', flex: 1, paddingLeft: 10, paddingRight: 10, alignItems: 'center', justifyContent: 'center', height: 35, borderBottomColor: COLOR.MGREY, borderBottomWidth: 1 },

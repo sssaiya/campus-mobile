@@ -35,7 +35,6 @@ export class Messaging extends Component {
 		this.props.navigation.addListener('willFocus', () => {
 			this.props.setLatestTimeStamp(new Date().getTime())
 		})
-
 	}
 
 	renderSeparator = ({ leadingItem }) => (
