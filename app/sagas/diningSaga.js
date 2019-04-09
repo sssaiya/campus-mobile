@@ -1,5 +1,6 @@
 import { put, takeLatest, call, select, race, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
+import SystemSetting from 'react-native-system-setting'
 import logger from '../util/logger'
 import DiningService from '../services/diningService'
 import { DINING_API_TTL, DINING_MENU_API_TTL, HTTP_REQUEST_TTL } from '../AppSettings'
@@ -20,8 +21,28 @@ function* updateDining(action) {
 		if (position) {
 			const diningDataWithDistance = yield call(_setDiningDistance, position, data)
 			yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDistance })
+		} else {
+			const diningDataWithDashes = yield call(_setDistanceToDashes, data)
+			yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDashes })
 		}
 	}
+}
+
+function _setDistanceToDashes(diningData) {
+	return new Promise((resolve, reject) => {
+		if (Array.isArray(diningData)) {
+			resolve(diningData.map((eatery) => {
+				eatery = {
+					...eatery,
+					distanceMiles: 0,
+					distanceMilesStr: '-'
+				}
+				return eatery
+			}))
+		} else {
+			reject(new Error('Error _setDistanceToDashes'))
+		}
+	})
 }
 
 function* getDiningMenu(action) {
@@ -196,7 +217,6 @@ function _setDiningDistance(position, diningData) {
 					distanceMiles: milesDistance,
 					distanceMilesStr: getDistanceMilesStr(milesDistance)
 				}
-
 				return eatery
 			}))
 		} else {
