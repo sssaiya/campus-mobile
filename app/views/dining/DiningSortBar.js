@@ -11,58 +11,91 @@ class DiningSortBar extends React.Component {
 		super()
 	}
 
-	render() {
-		console.log('RENDERING')
-		const { updateDiningSort } = this.props
-		const { sortBy } = this.props
+	_handleClosestButtonTapped() {
+		const { sortBy, updateDiningSort } = this.props
+		if (sortBy !== 'Closest') {
+			SystemSetting.isLocationEnabled().then((enable) => {
+				if (enable) {
+					updateDiningSort('Closest')
+				} else {
+					Alert.alert(
+						'Location Required',
+						'If you would like to see closest dining, please enable Location Services.',
+						[
+							{
+								text: 'OK',
+								style: 'cancel'
+							}
+						],
+						{ cancelable: false }
+					)
+				}
+			})
+		}
+	}
 
-		if (sortBy === 'A-Z') {
-			return (
-				<View style={css.dn_sort_bar_container}>
-					<View style={css.dn_sort_bar_content}>
-						<Text style={css.dn_sort_by_text}>
-							{'Sort By:'}
-						</Text>
-						<Touchable onPress={() => updateDiningSort('Closest')}>
+	_handleAZButtonTapped() {
+		const { sortBy, updateDiningSort } = this.props
+		if (sortBy !== 'A-Z') {
+			updateDiningSort('A-Z')
+		}
+	}
+
+	renderClosestButton() {
+		const { sortBy } = this.props
+		return (
+			<Touchable onPress={() => this._handleClosestButtonTapped()}>
+				{
+					(sortBy === 'Closest') ?
+						(
 							<Text style={css.dn_sort_bar_selected_text}>
 								Closest
 							</Text>
-						</Touchable>
-						<Text style={css.dn_sort_bar_unselected_text}>
-							{' A - Z '}
-						</Text>
-					</View>
-				</View>
-			)
-		} else {
-			return (
-				<View style={css.dn_sort_bar_container}>
-					<View style={css.dn_sort_bar_content}>
-						<Text style={css.dn_sort_by_text}>
-							{'Sort By:'}
-						</Text>
-						<Text style={css.dn_sort_bar_unselected_text}>
-							Closest
-						</Text>
-						<Touchable onPress={() => updateDiningSort('A-Z')}>
+						) : (
+							<Text style={css.dn_sort_bar_unselected_text}>
+								Closest
+							</Text>
+						)
+				}
+			</Touchable>
+		)
+	}
+
+	renderAZButton() {
+		const { sortBy } = this.props
+		return (
+			<Touchable onPress={() => this._handleAZButtonTapped()}>
+				{
+					(sortBy === 'A-Z') ?
+						(
 							<Text style={css.dn_sort_bar_selected_text}>
 								{' A - Z '}
 							</Text>
-						</Touchable>
-					</View>
+						) : (
+							<Text style={css.dn_sort_bar_unselected_text}>
+								{' A - Z '}
+							</Text>
+						)
+				}
+			</Touchable>
+		)
+	}
+
+	render() {
+		console.log(this.props.sortBy)
+		return (
+			<View style={css.dn_sort_bar_container}>
+				<View style={css.dn_sort_bar_content}>
+					<Text style={css.dn_sort_by_text}>
+						{'Sort By:'}
+					</Text>
+					{this.renderClosestButton()}
+					{this.renderAZButton()}
 				</View>
-			)
-		}
+			</View>
+		)
 	}
 }
-
-// const renderClosestBtn = (sortBy) => {
-// 	SystemSetting.isLocationEnabled().then((enable) => {
-// 		if (enable) {
-// 		} else {
-// 		}
-// 	})
-// }
 
 function mapStateToProps(state) {
 	return { sortBy: state.dining.sortBy }
@@ -71,29 +104,8 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => (
 	{
 		updateDiningSort: (sortBy) => {
-			if (sortBy === 'Closest') {
-				SystemSetting.isLocationEnabled().then((enable) => {
-					if (enable) {
-						dispatch({ type: 'SET_DINING_SORT', sortBy })
-						dispatch({ type: 'REORDER_DINING' })
-					} else {
-						Alert.alert(
-							'Location Required',
-							'If you would like to see closest dining, please enable Location Services.',
-							[
-								{
-									text: 'OK',
-									style: 'cancel'
-								}
-							],
-							{ cancelable: false }
-						)
-					}
-				})
-			} else {
-				dispatch({ type: 'SET_DINING_SORT', sortBy })
-				dispatch({ type: 'REORDER_DINING' })
-			}
+			dispatch({ type: 'SET_DINING_SORT', sortBy })
+			dispatch({ type: 'REORDER_DINING' })
 		}
 	}
 )
