@@ -4,6 +4,7 @@ import { setJSExceptionHandler } from 'react-native-exception-handler'
 import { Provider } from 'react-redux'
 import AppRedux from './AppRedux'
 import PushNotificationContainer from './containers/pushNotificationContainer'
+import LocationContainer from './containers/locationContainer'
 import Router from './navigation/Router'
 import { gracefulFatalReset, platformIOS } from './util/general'
 import css from './styles/css'
@@ -37,6 +38,7 @@ export default class App extends Component {
 				<Provider store={this.state.store}>
 					<View style={css.main}>
 						<PushNotificationContainer />
+						<LocationContainer />
 						<Router />
 					</View>
 				</Provider>

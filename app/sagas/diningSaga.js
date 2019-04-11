@@ -1,6 +1,5 @@
 import { put, takeLatest, call, select, race, all } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
-import SystemSetting from 'react-native-system-setting'
 import logger from '../util/logger'
 import DiningService from '../services/diningService'
 import { DINING_API_TTL, DINING_MENU_API_TTL, HTTP_REQUEST_TTL } from '../AppSettings'

@@ -6,6 +6,7 @@ const initialState = {
 		}
 	},
 	permission: 'undetermined',
+	enabled: true
 }
 
 function location(state = initialState, action) {
@@ -14,6 +15,9 @@ function location(state = initialState, action) {
 	switch (action.type) {
 		case 'SET_POSITION':
 			newState.position = Object.assign({}, action.position)
+			return newState
+		case 'UPDATE_LOCATION_STATUS':
+			newState.enabled = action
 			return newState
 
 		case 'SET_PERMISSION':

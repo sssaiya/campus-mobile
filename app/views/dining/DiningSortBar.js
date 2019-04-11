@@ -1,10 +1,8 @@
 import React from 'react'
 import { View, Text, Alert } from 'react-native'
-import SystemSetting from 'react-native-system-setting'
 import { connect } from 'react-redux'
 import css from '../../styles/css'
 import Touchable from '../common/Touchable'
-
 
 class DiningSortBar extends React.Component {
 	constructor(props) {
@@ -12,25 +10,25 @@ class DiningSortBar extends React.Component {
 	}
 
 	_handleClosestButtonTapped() {
-		const { sortBy, updateDiningSort } = this.props
+		const { sortBy, updateDiningSort, enabled } = this.props
 		if (sortBy !== 'Closest') {
-			SystemSetting.isLocationEnabled().then((enable) => {
-				if (enable) {
-					updateDiningSort('Closest')
-				} else {
-					Alert.alert(
-						'Location Required',
-						'If you would like to see closest dining, please enable Location Services.',
-						[
-							{
-								text: 'OK',
-								style: 'cancel'
-							}
-						],
-						{ cancelable: false }
-					)
-				}
-			})
+			if (enabled.enabled) {
+				updateDiningSort('Closest')
+				console.log('Loc enabled: switching to closes sort')
+			} else {
+				console.log('Loc disabled: Alert')
+				Alert.alert(
+					'Location Required',
+					'If you would like to see closest dining, please enable Location Services.',
+					[
+						{
+							text: 'OK',
+							style: 'cancel'
+						}
+					],
+					{ cancelable: false }
+				)
+			}
 		}
 	}
 
@@ -42,7 +40,7 @@ class DiningSortBar extends React.Component {
 	}
 
 	renderClosestButton() {
-		const { sortBy } = this.props
+		const { sortBy, locStatus } = this.props
 		return (
 			<Touchable onPress={() => this._handleClosestButtonTapped()}>
 				{
@@ -52,9 +50,17 @@ class DiningSortBar extends React.Component {
 								Closest
 							</Text>
 						) : (
-							<Text style={css.dn_sort_bar_unselected_text}>
-								Closest
-							</Text>
+							(locStatus) ?
+								(
+									<Text style={css.dn_sort_bar_unselected_text_blocked}>
+										Closest
+									</Text>
+								) : (
+									// console.log('BLOCKED TEXT')
+									<Text style={css.dn_sort_bar_unselected_text}>
+										Closest
+									</Text>
+								)
 						)
 				}
 			</Touchable>
@@ -98,7 +104,10 @@ class DiningSortBar extends React.Component {
 }
 
 function mapStateToProps(state) {
-	return { sortBy: state.dining.sortBy }
+	return {
+		sortBy: state.dining.sortBy,
+		enabled: state.location.enabled
+	}
 }
 
 const mapDispatchToProps = dispatch => (

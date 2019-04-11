@@ -375,8 +375,9 @@ const css = StyleSheet.create({
 	dn_sort_bar_container: { backgroundColor: 'transparent', alignSelf: 'center' },
 	dn_sort_bar_content: { alignSelf: 'flex-start', justifyContent: 'center', flexDirection: 'row' , backgroundColor: 'white', paddingTop: 10 },
 	dn_sort_by_text: { borderColor: 'white', borderWidth: 1, paddingRight: 4, fontSize: 14, color: COLOR.PRIMARY },
-	dn_sort_bar_selected_text: { color: COLOR.PRIMARY, borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 14 },
-	dn_sort_bar_unselected_text: { color: 'white', borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 14, backgroundColor: COLOR.PRIMARY },
+	dn_sort_bar_selected_text: { color: 'white', borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 14, backgroundColor: COLOR.PRIMARY },
+	dn_sort_bar_unselected_text: { color: COLOR.PRIMARY, borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 14 },
+	dn_sort_bar_unselected_text_blocked: { color: 'grey', borderColor: 'grey', borderWidth: 1, paddingHorizontal: 10, fontSize: 14 },
 
 	/**
 	 *  10 - Links
