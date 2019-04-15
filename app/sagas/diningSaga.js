@@ -7,6 +7,7 @@ import { convertMetersToMiles, getDistanceMilesStr, dynamicSort, sortNearbyMarke
 import { getDistance } from '../util/map'
 
 const getDining = state => (state.dining)
+const getLocation = state => (state.location)
 
 function* updateDining(action) {
 	const { lastUpdated, data } = yield select(getDining)
@@ -120,7 +121,7 @@ function* reorderDining() {
 	const { sortBy, data } = yield select(getDining)
 	switch (sortBy) {
 		case 'A-Z': {
-			// Sort dining locations nearest to you
+			// Sort dining locations by name
 			if (Array.isArray(data)) {
 				const sortedDiningData = data.slice()
 				yield all(sortedDiningData.sort(dynamicSort('name')))
@@ -129,7 +130,7 @@ function* reorderDining() {
 			break
 		}
 		case 'Closest': {
-			// Sort dining locations by name
+			// Sort dining locations nearest to you
 			if (Array.isArray(data)) {
 				const sortedDiningData = data.slice()
 				yield all(sortedDiningData.sort(sortNearbyMarkers))

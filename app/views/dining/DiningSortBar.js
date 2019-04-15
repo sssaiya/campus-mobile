@@ -12,11 +12,9 @@ class DiningSortBar extends React.Component {
 	_handleClosestButtonTapped() {
 		const { sortBy, updateDiningSort, enabled } = this.props
 		if (sortBy !== 'Closest') {
-			if (enabled.enabled) {
+			if (enabled) {
 				updateDiningSort('Closest')
-				console.log('Loc enabled: switching to closes sort')
 			} else {
-				console.log('Loc disabled: Alert')
 				Alert.alert(
 					'Location Required',
 					'If you would like to see closest dining, please enable Location Services.',
@@ -88,7 +86,10 @@ class DiningSortBar extends React.Component {
 	}
 
 	render() {
-		console.log(this.props.sortBy)
+		const { sortBy, updateDiningSort, enabled } = this.props
+		if (!enabled && sortBy == 'Closest') {
+			updateDiningSort('A-Z')
+		}
 		return (
 			<View style={css.dn_sort_bar_container}>
 				<View style={css.dn_sort_bar_content}>

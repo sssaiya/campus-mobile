@@ -4,11 +4,11 @@ import { connect } from 'react-redux'
 
 class LocationContainer extends React.Component {
 	async componentDidMount() {
-		const { updateLocationStatus, updateSortBy } = this.props
+		const { updateLocationStatus, updateDiningSort } = this.props
 		SystemSetting.addLocationListener((enabled) => {
 			updateLocationStatus(enabled)
 			if (!enabled) {
-				updateSortBy('A-Z')
+				updateDiningSort('A-Z')
 			}
 		})
 	}
@@ -32,8 +32,9 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 		updateLocationStatus: (enabled) => {
 			dispatch({ type: 'UPDATE_LOCATION_STATUS', enabled })
 			dispatch({ type: 'UPDATE_DINING' })
+			dispatch({ type: 'REORDER_DINING' })
 		},
-		updateSortBy: (sortBy) => {
+		updateDiningSort: (sortBy) => {
 			dispatch({ type: 'SET_DINING_SORT', sortBy })
 			dispatch({ type: 'REORDER_DINING' })
 		}

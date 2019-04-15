@@ -17,7 +17,7 @@ function location(state = initialState, action) {
 			newState.position = Object.assign({}, action.position)
 			return newState
 		case 'UPDATE_LOCATION_STATUS':
-			newState.enabled = action
+			newState.enabled = action.enabled
 			return newState
 
 		case 'SET_PERMISSION':
