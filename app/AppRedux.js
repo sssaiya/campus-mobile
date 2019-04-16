@@ -81,7 +81,7 @@ export default function AppRedux(initialState, onComplete = () => null) {
 
 	// If in development, add redux-immutable-state-invariant
 	if (__DEV__) {
-		middlewares.push(immutable.default())
+		// middlewares.push(immutable.default())
 	}
 
 	// custom composer for redux devtools
