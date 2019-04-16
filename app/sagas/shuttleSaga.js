@@ -29,12 +29,7 @@ function* toggleRoute(action) {
 			if (stops[stop]) {
 				const newStop = { ...stops[stop] }
 				delete newStop.routes[route]
-				/*
-				newStops = {
-					...newStops,
-					newStop
-				}
-				*/
+
 				newStops[stop] = newStop
 			}
 		})
@@ -48,13 +43,8 @@ function* toggleRoute(action) {
 				Object.keys(routes[toggledRoute].stops).forEach((stop) => {
 					if (stops[stop]) {
 						const newStop = { ...stops[stop] }
-						delete newStop.routes[route]
-						/*
-						newStops = {
-							...newStops,
-							newStop
-						}
-						*/
+						delete newStop.routes[toggledRoute]
+
 						newStops[stop] = newStop
 					}
 				})
@@ -71,13 +61,7 @@ function* toggleRoute(action) {
 					...stops[stop],
 					routes: {}
 				}
-				/*
-				newStop.routes[route] = routes[route]
-				newStops = {
-					...newStops,
-					newStop
-				}
-				*/
+
 				newStop.routes[route] = true
 				newStops[stop] = newStop
 			}
