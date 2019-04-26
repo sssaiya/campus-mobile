@@ -186,7 +186,6 @@ dependencies {
     implementation project(':react-native-svg')
     implementation project(':react-native-vector-icons')
     implementation project(':react-native-system-setting')
-    implementation project(':react-native-location')
 }
 
 // Run this once to be able to run the application with BUCK

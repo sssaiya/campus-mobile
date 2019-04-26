@@ -4,7 +4,6 @@ import android.app.Application;
 import android.util.Log;
 
 import com.facebook.react.ReactApplication;
-import com.github.reactnativecommunity.location.RNLocationPackage;
 import com.ninty.system.setting.SystemSettingPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
@@ -42,7 +41,6 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new RNLocationPackage(),
             new SystemSettingPackage(),
             new RNGestureHandlerPackage(),
             new VectorIconsPackage(),

@@ -1,21 +1,15 @@
 import React from 'react'
-import RNLocation from 'react-native-location'
+import SystemSetting from 'react-native-system-setting'
 import { connect } from 'react-redux'
 
 class LocationContainer extends React.Component {
 	async componentDidMount() {
 		const { updateLocationStatus, updateDiningSort } = this.props
-		const settings = {
-			distanceFilter: 100, // Meters
-			desiredAccuracy: {
-				ios: 'best',
-				android: 'balancedPowerAccuracy'
+		SystemSetting.addLocationListener((enabled) => {
+			updateLocationStatus(enabled)
+			if (!enabled) {
+				updateDiningSort('A-Z')
 			}
-		}
-		RNLocation.configure(settings)
-		// Subscribe
-		const unsubscribe = RNLocation.subscribeToLocationUpdates((locations) => {
-			console.log(locations)
 		})
 	}
 

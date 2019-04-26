@@ -44,8 +44,6 @@ target 'CampusMobile' do
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
-  pod 'react-native-location', :path => '../node_modules/react-native-location'
-
   # target 'CampusMobileTests' do
   #   inherit! :search_paths
   #   # Pods for testing
