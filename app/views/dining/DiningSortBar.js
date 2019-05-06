@@ -10,52 +10,47 @@ class DiningSortBar extends React.Component {
 	}
 
 	_handleClosestButtonTapped() {
-		const { sortBy, updateDiningSort, enabled } = this.props
-		if (sortBy !== 'Closest') {
-			if (enabled) {
-				updateDiningSort('Closest')
-			} else {
-				Alert.alert(
-					'Location Required',
-					'If you would like to see closest dining, please enable Location Services.',
-					[
-						{
-							text: 'OK',
-							style: 'cancel'
-						}
-					],
-					{ cancelable: false }
-				)
-			}
+		const { updateDiningSort, enabled } = this.props
+		if (enabled) {
+			updateDiningSort('Closest')
+		} else {
+			Alert.alert(
+				'Location Required',
+				'If you would like to see closest dining, please enable Location Services.',
+				[
+					{
+						text: 'OK',
+						style: 'cancel'
+					}
+				],
+				{ cancelable: false }
+			)
 		}
 	}
 
 	_handleAZButtonTapped() {
-		const { sortBy, updateDiningSort } = this.props
-		if (sortBy !== 'A-Z') {
-			updateDiningSort('A-Z')
-		}
+		const { updateDiningSort } = this.props
+		updateDiningSort('A-Z')
 	}
 
 	renderClosestButton() {
-		const { sortBy, locStatus } = this.props
+		const { sortBy, enabled } = this.props
 		return (
 			<Touchable onPress={() => this._handleClosestButtonTapped()}>
 				{
-					(sortBy === 'Closest') ?
+					(sortBy === 'Closest' && enabled) ?
 						(
 							<Text style={css.dn_sort_bar_selected_text}>
 								Closest
 							</Text>
 						) : (
-							(locStatus) ?
+							(enabled) ?
 								(
-									<Text style={css.dn_sort_bar_unselected_text_blocked}>
+									<Text style={css.dn_sort_bar_unselected_text}>
 										Closest
 									</Text>
 								) : (
-									// console.log('BLOCKED TEXT')
-									<Text style={css.dn_sort_bar_unselected_text}>
+									<Text style={css.dn_sort_bar_unselected_text_blocked}>
 										Closest
 									</Text>
 								)
@@ -66,11 +61,11 @@ class DiningSortBar extends React.Component {
 	}
 
 	renderAZButton() {
-		const { sortBy } = this.props
+		const { sortBy, enabled } = this.props
 		return (
 			<Touchable onPress={() => this._handleAZButtonTapped()}>
 				{
-					(sortBy === 'A-Z') ?
+					(sortBy === 'A-Z' || !enabled) ?
 						(
 							<Text style={css.dn_sort_bar_selected_text}>
 								{' A - Z '}
@@ -86,18 +81,14 @@ class DiningSortBar extends React.Component {
 	}
 
 	render() {
-		const { sortBy, updateDiningSort, enabled } = this.props
-		if (!enabled && sortBy == 'Closest') {
-			updateDiningSort('A-Z')
-		}
 		return (
 			<View style={css.dn_sort_bar_container}>
 				<View style={css.dn_sort_bar_content}>
 					<Text style={css.dn_sort_by_text}>
 						{'Sort By:'}
 					</Text>
-					{this.renderClosestButton()}
 					{this.renderAZButton()}
+					{this.renderClosestButton()}
 				</View>
 			</View>
 		)
@@ -115,7 +106,6 @@ const mapDispatchToProps = dispatch => (
 	{
 		updateDiningSort: (sortBy) => {
 			dispatch({ type: 'SET_DINING_SORT', sortBy })
-			dispatch({ type: 'REORDER_DINING' })
 		}
 	}
 )

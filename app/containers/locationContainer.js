@@ -1,5 +1,4 @@
 import React from 'react'
-import SystemSetting from 'react-native-system-setting'
 import GPSState from 'react-native-gps-state'
 import { connect } from 'react-redux'
 
@@ -13,15 +12,16 @@ class LocationContainer extends React.Component {
 					updateLocationStatus(false)
 					break
 				case GPSState.NOT_DETERMINED:
-					console.log('Please, allow the location, for us to do amazing things for you!')
+					updateLocationStatus(false)
 					break
 
 				case GPSState.RESTRICTED:
+					updateLocationStatus(false)
 					GPSState.openLocationSettings()
 					break
 
 				case GPSState.DENIED:
-					console.log('It`s a shame that you do not allowed us to use location :(')
+					updateLocationStatus(false)
 					break
 
 				case GPSState.AUTHORIZED_ALWAYS:

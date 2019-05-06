@@ -4,6 +4,7 @@ import { connect } from 'react-redux'
 import DiningItem from './DiningItem'
 import css from '../../styles/css'
 import DiningSortBar from './DiningSortBar'
+import dining from '../../util/dining'
 
 /**
  * DiningListViewAll used by DiningCardContainer
@@ -12,13 +13,20 @@ import DiningSortBar from './DiningSortBar'
  */
 class DiningListViewAll extends React.Component {
 	render() {
-		const { data } = this.props
-
+		const { data, sortBy, enabled } = this.props
+		let sortedData = data
+		if (!enabled) {
+			sortedData = dining.setDistanceToDashes(sortedData)
+			sortedData = dining.sortDiningList('A-Z', sortedData)
+		} else {
+			sortedData = dining.sortDiningList(sortBy, data)
+		}
 		return (
 			<FlatList
 				style={css.fl_bg}
 				contentContainerStyle={css.fl_full}
-				data={data}
+				data={sortedData}
+				extraData={enabled}
 				keyExtractor={(listItem, index) => {
 					if (listItem.id) return listItem.id + index
 					else             return listItem.name + index
@@ -33,7 +41,11 @@ class DiningListViewAll extends React.Component {
 }
 
 function mapStateToProps(state) {
-	return { data: state.dining.data }
+	return {
+		data: state.dining.data,
+		sortBy: state.dining.sortBy,
+		enabled: state.location.enabled
+	}
 }
 
 export default connect(mapStateToProps)(DiningListViewAll)

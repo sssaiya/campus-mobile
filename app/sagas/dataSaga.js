@@ -209,7 +209,6 @@ function* updateParking() {
 
 // comparator function to sort all the parking lots in the same order as a parking data structure which is passed in
 function sortByOldParkingData(parkingData) {
-	console.log(parkingData)
 	return function (a, b) {
 		return parkingData.findIndex(x => x.LocationName === a.LocationName) - parkingData.findIndex(x => x.LocationName === b.LocationName)
 	}

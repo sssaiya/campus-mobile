@@ -1,4 +1,6 @@
 import moment from 'moment'
+import { convertMetersToMiles, getDistanceMilesStr, dynamicSort, sortNearbyMarkers, timeDiff } from '../util/general'
+
 
 /**
  * A module containing dining-related helper functions
@@ -24,7 +26,50 @@ module.exports = {
 			closingHour: closingTimeMoment
 		}
 	},
-
+	sortDiningList(sortBy, diningData) {
+		switch (sortBy) {
+			case 'A-Z': {
+				// Sort dining locations by name
+				if (Array.isArray(diningData)) {
+					const sortedDiningData = diningData.slice()
+					sortedDiningData.sort(dynamicSort('name'))
+					return sortedDiningData
+				}
+				break
+			}
+			case 'Closest': {
+				// Sort dining locations nearest to you
+				if (Array.isArray(diningData)) {
+					const sortedDiningData = diningData.slice()
+					sortedDiningData.sort(sortNearbyMarkers)
+					return sortedDiningData
+				}
+				break
+			}
+			default:
+				// on defualt sort dining locations by name
+				if (Array.isArray(diningData)) {
+					const sortedDiningData = diningData.slice()
+					sortedDiningData.sort(dynamicSort('name'))
+					return sortedDiningData
+				}
+				break
+		}
+	},
+	setDistanceToDashes(diningData) {
+		let sortedList = diningData
+		if (Array.isArray(diningData)) {
+			sortedList = diningData.map((eatery) => {
+				eatery = {
+					...eatery,
+					distanceMiles: 0,
+					distanceMilesStr: '-'
+				}
+				return eatery
+			})
+		}
+		return sortedList
+	},
 	/**
 	 * Gets the current open or closed status of a restaurant.
 	 * @function
