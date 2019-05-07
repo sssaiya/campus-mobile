@@ -12,12 +12,10 @@ class LocationContainer extends React.Component {
 					updateLocationStatus(false)
 					break
 				case GPSState.NOT_DETERMINED:
-					updateLocationStatus(false)
 					break
 
 				case GPSState.RESTRICTED:
 					updateLocationStatus(false)
-					GPSState.openLocationSettings()
 					break
 
 				case GPSState.DENIED:
@@ -25,12 +23,10 @@ class LocationContainer extends React.Component {
 					break
 
 				case GPSState.AUTHORIZED_ALWAYS:
-					// this is for android
 					updateLocationStatus(true)
 					break
 
 				case GPSState.AUTHORIZED_WHENINUSE:
-					// this is for ios
 					updateLocationStatus(true)
 					break
 			}
