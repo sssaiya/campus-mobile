@@ -86,7 +86,6 @@ class AccountLogin extends Component {
 					autoCapitalize="none"
 					autoCorrect={false}
 					underlineColorAndroid="transparent"
-					editable={!this.props.requestStatus}
 					onChange={this.handleCredentialInput('username')}
 					onSubmitEditing={(event) => {
 						this._passwordInput.focus()
@@ -99,14 +98,12 @@ class AccountLogin extends Component {
 					placeholder="Password"
 					returnKeyType="send"
 					underlineColorAndroid="transparent"
-					editable={!this.props.requestStatus}
 					secureTextEntry
 					onChange={this.handleCredentialInput('password')}
 					onSubmitEditing={() => this.props.doLogin(username, password)}
 				/>
 				<Touchable
 					onPress={() => this.props.doLogin(username, password)}
-					disabled={((this.props.requestStatus) !== null)}
 					style={
 						(this.props.requestStatus) ?
 							(
