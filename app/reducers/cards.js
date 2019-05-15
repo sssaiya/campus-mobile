@@ -65,12 +65,19 @@ const initialState = {
 			active: true,
 			name: 'Parking',
 			component: 'ParkingCard'
+		},
+		radio: {
+			id: 'radio',
+			active: true,
+			name: 'KSDT Radio',
+			component: 'RadioCard'
 		}
 	},
 
 	// Only cards that show up by default
 	// on first launch should appear here.
 	cardOrder: [
+		'radio',
 		'shuttle',
 		'parking',
 		'dining',

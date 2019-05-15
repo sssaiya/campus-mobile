@@ -13,6 +13,7 @@ import SpecialEventsCardContainer from '../specialEvents/SpecialEventsCardContai
 import FinalsCard from '../schedule/FinalsCard'
 import ScheduleCardContainer from '../schedule/ScheduleCardContainer'
 import ParkingCardContainer from '../parking/ParkingCardContainer'
+import RadioCardContainer from '../radio/RadioCardContainer'
 import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import logger from '../../util/logger'
 
@@ -120,6 +121,9 @@ export class Home extends React.Component {
 							break
 						case 'parking':
 							activeCards.push(<ParkingCardContainer key="parking" />)
+							break
+						case 'radio':
+							activeCards.push(<RadioCardContainer key="radio" />)
 							break
 						default:
 							return gracefulFatalReset(new Error('Invalid card in state: ', card))
