@@ -3,6 +3,7 @@ import { ScrollView, Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { checkGooglePlayServices } from 'react-native-google-api-availability-bridge'
 
+import WebViewCardContainer from '../webview/WebViewCardContainer'
 import WeatherCardContainer from '../weather/WeatherCardContainer'
 import ShuttleCardContainer from '../shuttle/ShuttleCardContainer'
 import EventCardContainer from '../events/EventCardContainer'
@@ -77,6 +78,8 @@ export class Home extends React.Component {
 
 	_getCards = () => {
 		const activeCards = []
+
+		activeCards.push(<WebViewCardContainer key="webviews" />)
 
 		if (Array.isArray(this.props.cardOrder)) {
 			this.props.cardOrder.forEach((card) => {
