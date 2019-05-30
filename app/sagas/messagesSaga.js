@@ -134,6 +134,7 @@ function* updateMessages(action) {
 					}
 				}
 				yield put({ type: 'SET_UNREAD_MESSAGES', count })
+				yield put({ type: 'SET_BADGE_COUNT', count })
 				yield put({ type: 'SET_MESSAGES', messages: sortedMessages, nextTimestamp })
 				yield put({ type: 'GET_MESSAGES_SUCCESS' })
 			}
@@ -174,6 +175,7 @@ function* updateMessages(action) {
 					}
 				}
 				yield put({ type: 'SET_UNREAD_MESSAGES', count })
+				yield put({ type: 'SET_BADGE_COUNT', count })
 				yield put({ type: 'SET_MESSAGES', messages: sortedMessages, nextTimestamp })
 				yield put({ type: 'GET_MESSAGES_SUCCESS' })
 			}
@@ -246,6 +248,18 @@ function* refreshTopicSubscriptions(action) {
 	}
 }
 
+const notifications = firebase.notifications()
+
+// Sets badge count
+function* setBadgeCount(action) {
+	console.log('SETTING BADGE COUNT')
+	const badgeCount = yield notifications.getBadge()
+	// notifications.android.setChannelId('app-infos')
+	// notifications.displayNotification(notifications)
+	notifications.setBadge(badgeCount + 1)
+	console.log('BADGE COUNT SHOULD BE - ' + badgeCount)
+}
+
 function mergeMessagesArrays(old, updated) {
 	const messages = {}
 
@@ -279,6 +293,7 @@ function* messagesSaga() {
 	yield takeLatest('UNSUBSCRIBE_FROM_TOPIC', unsubscribeFromTopic)
 	yield takeLatest('CLEAR_USER_SUBSCRIPTIONS', clearUserSubscriptions)
 	yield takeLatest('REFRESH_TOPIC_SUBSCRIPTIONS', refreshTopicSubscriptions)
+	yield takeLatest('SET_BADGE_COUNT', setBadgeCount)
 }
 
 export default messagesSaga
