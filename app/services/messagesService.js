@@ -12,10 +12,10 @@ const MyMessagesService = {
 		try {
 			const topics = yield (yield fetch(MESSAGES_TOPICS_URL)).json()
 
-			if (Object.keys(topics).length > 0) return topics
-			else {
-				const e = new Error('Invalid data from messages API')
-				throw e
+			if (Object.keys(topics).length > 0) {
+				return topics
+			} else {
+				throw new Error('FetchTopics: No topics available')
 			}
 		} catch (error) {
 			throw error
@@ -29,10 +29,10 @@ const MyMessagesService = {
 
 			const messages = JSON.parse(yield authorizedFetch(`${MYMESSAGES_API_URL}/messages${query}`))
 
-			if (messages && messages.messages) return messages
-			else {
-				const e = new Error('Invalid data from messages API')
-				throw e
+			if (messages && messages.messages) {
+				return messages
+			} else {
+				throw new Error('FetchMyMessages: No direct messages available')
 			}
 		} catch (error) {
 			throw error
@@ -58,10 +58,10 @@ const MyMessagesService = {
 
 		try {
 			const messages = yield (yield fetch(`${TOPICS_API_URL}?topics=${userTopics}${query}`)).json()
-			if (messages && messages.messages) return messages
-			else {
-				const e = new Error('Invalid data from messages API')
-				throw e
+			if (messages && messages.messages) {
+				return messages
+			} else {
+				throw new Error('FetchTopicMessages: No topic messages available')
 			}
 		} catch (error) {
 			throw error
@@ -71,10 +71,10 @@ const MyMessagesService = {
 	* PostPushToken(token, deviceId) {
 		try {
 			const result = yield authorizedFetch(`${MP_REGISTRATION_API_URL}/register`, { deviceId, token })
-			if (result === 'Success') return result
-			else {
-				const e = new Error('Invalid data from token registration API')
-				throw e
+			if (result === 'Success') {
+				return result
+			} else {
+				throw new Error('PostPushToken: Unable to update push token: ' + result)
 			}
 		} catch (error) {
 			throw error

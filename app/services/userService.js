@@ -7,10 +7,10 @@ const userService = {
 		try {
 			const profile = JSON.parse(yield authorizedFetch(MP_REGISTRATION_API_URL + '/profile'))
 
-			if (profile) return profile
-			else {
-				const e = new Error('Invalid data from profile API')
-				throw e
+			if (profile) {
+				return profile
+			} else {
+				throw new Error('FetchUserProfile: profile is null')
 			}
 		} catch (error) {
 			throw error
@@ -20,10 +20,10 @@ const userService = {
 	* PostUserProfile(profile) {
 		try {
 			const result = yield authorizedFetch(MP_REGISTRATION_API_URL + '/profile', profile)
-			if (result === 'Success') return result
-			else {
-				const e = new Error('Invalid data from token registration API')
-				throw e
+			if (result === 'Success') {
+				return result
+			} else {
+				throw new Error('PostUserProfile: Unable to update user profile: ' + result)
 			}
 		} catch (error) {
 			throw error
