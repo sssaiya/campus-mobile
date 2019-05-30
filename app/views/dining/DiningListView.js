@@ -2,8 +2,6 @@ import React from 'react'
 import { FlatList, View } from 'react-native'
 import DiningItem from './DiningItem'
 import css from '../../styles/css'
-import COLOR from '../../styles/ColorConstants'
-
 
 /**
  * DiningListView used by DiningCardContainer
@@ -24,20 +22,11 @@ const DiningListView = ({ data, rows }) => {
 					renderItem={({ item: rowData }) => (
 						<DiningItem data={rowData} />
 					)}
-					ItemSeparatorComponent={renderSeperator}
+					ItemSeparatorComponent={() => (<View style={css.fl_separator} />)}
 				/>
 			</View>
 		)
 	} else { return null }
 }
-
-const renderSeperator = () => (
-	<View
-		style={{
-			height: 1,
-			backgroundColor: COLOR.MGREY
-		}}
-	/>
-)
 
 export default DiningListView

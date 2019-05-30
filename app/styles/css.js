@@ -316,8 +316,8 @@ const css = StyleSheet.create({
 	/**
 	 *  07 - Dining
 	 */
-	dl_row: { flexDirection: 'row', padding: 10, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
-	dl_row_container_left: { flex: 4, flexDirection: 'column', justifyContent: 'flex-start', paddingRight: 8 },
+	dl_row: { flexDirection: 'row', padding: 8 },
+	dl_row_container_left: { flex: 6, flexDirection: 'column', justifyContent: 'flex-start', paddingRight: 8 },
 	dl_row_container_right: { flex: 1, alignItems: 'center', justifyContent: 'flex-end' },
 	dl_title_row: { flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', flexWrap: 'wrap' },
 	dl_title_text: { fontSize: 20, color: COLOR.PRIMARY },
@@ -383,12 +383,12 @@ const css = StyleSheet.create({
 	dn_topborder2: { borderTopWidth: 4, borderTopColor: COLOR.BLACK },
 	dn_info_container: { paddingTop: 10 },
 	dn_bold: { fontWeight: '700' },
-	dn_sort_bar_container: { backgroundColor: 'transparent', alignSelf: 'center' },
-	dn_sort_bar_content: { alignSelf: 'flex-start', justifyContent: 'center', flexDirection: 'row' , backgroundColor: 'white', paddingTop: 10 },
-	dn_sort_by_text: { borderColor: 'white', borderWidth: 1, paddingRight: 4, fontSize: 14, color: COLOR.PRIMARY },
-	dn_sort_bar_selected_text: { color: 'white', borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 14, backgroundColor: COLOR.PRIMARY },
-	dn_sort_bar_unselected_text: { color: COLOR.PRIMARY, borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 14 },
-	dn_sort_bar_unselected_text_blocked: { color: 'grey', borderColor: 'grey', borderWidth: 1, paddingHorizontal: 10, fontSize: 14 },
+	dn_sort_bar_container: { alignSelf: 'center', marginVertical: 16 },
+	dn_sort_bar_content: { justifyContent: 'center', flexDirection: 'row' },
+	dn_sort_by_text: { borderColor: 'white', borderWidth: 1, paddingRight: 4, fontSize: 16, color: COLOR.PRIMARY },
+	dn_sort_bar_selected_text: { color: 'white', borderColor: 'black', borderWidth: 1, paddingHorizontal: 10, fontSize: 16, backgroundColor: COLOR.PRIMARY },
+	dn_sort_bar_unselected_text: { color: COLOR.PRIMARY, borderColor: COLOR.BLACK, borderWidth: 1, paddingHorizontal: 10, fontSize: 16 },
+	dn_sort_bar_unselected_text_blocked: { color: COLOR.MGREY, borderColor: COLOR.MGREY, borderWidth: 1, paddingHorizontal: 10, fontSize: 16 },
 
 	/**
 	 *  10 - Links
