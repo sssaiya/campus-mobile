@@ -16,7 +16,7 @@ class DiningSortBar extends React.Component {
 		} else {
 			Alert.alert(
 				'Location Required',
-				'If you would like to see closest dining, please enable Location Services.',
+				'To see closest dining, turn on Location Services.',
 				[
 					{
 						text: 'OK',
