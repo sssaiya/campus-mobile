@@ -8,10 +8,11 @@
 
 #import "AppDelegate.h"
 
+#import <BugsnagReactNative/BugsnagReactNative.h>
 #import <React/RCTUtils.h>
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
-#import <BugsnagReactNative/BugsnagReactNative.h>
+
 #import <Firebase.h>
 #import "RNFirebaseNotifications.h"
 #import "RNFirebaseMessaging.h"

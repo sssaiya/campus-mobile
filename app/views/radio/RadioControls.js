@@ -2,9 +2,9 @@
 import React from 'react'
 import { View, TouchableOpacity, Image } from 'react-native'
 
-const RadioControls = ({ 
-	paused, 
-	onPause, 
+const RadioControls = ({
+	paused,
+	onPause,
 	onPlay }) => (
 	<View>
 		<View>

@@ -20,6 +20,7 @@
 	15 - Onboarding
 	16 - Parking
 	17 - Notifications
+	18 - Radio
 
 	99 - Misc
 */
@@ -585,6 +586,11 @@ const css = StyleSheet.create({
 	notifications_section_list_separator: { height: 1, backgroundColor: COLOR.MGREY },
 	notifications_status: { fontSize: 16, padding: 20 },
 	notifications_err: { textAlign: 'center', fontSize: 16, padding: 30 },
+
+	/**
+	 *  18 - Radio
+	 */
+	
 
 	/**
 	 *  99 - Misc
