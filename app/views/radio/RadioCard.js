@@ -1,3 +1,4 @@
+/* eslint-disable space-before-blocks */
 /* eslint-disable react/no-unused-state */
 /* eslint-disable handle-callback-err */
 /* eslint-disable no-trailing-spaces */
@@ -19,11 +20,7 @@ class RadioCard extends Component {
 	constructor(props) {
 		super(props)
 		this.state = ({
-			playPauseButton: 'Preparing...',
-      		stopButtonDisabled: true,
-     		playButtonDisabled: true,
 			error: null,
-
 			paused: true,
 			currentlyPlaying: '',
 			upNext: ''
@@ -32,37 +29,22 @@ class RadioCard extends Component {
 
 	componentWillMount() {
 		this.player = null
-	
 		this._reloadPlayer()
 	}
+
+	_play(){
+    this.player.play(() => {
+      this.setState({ paused: true })
+    })
+  }
+
+  _pause(){
+    this.player.pause(() => {
+      this.setState({ paused: false })
+    })
+  }
 	
-	  _updateState(err) {
-		this.setState({
-		  playPauseButton: this.player && this.player.isPlaying ? 'Pause' : 'Play',
-	
-		  stopButtonDisabled: !this.player || !this.player.canStop,
-		  playButtonDisabled: !this.player || !this.player.canPlay,
-		})
-	  }
-	
-	  _playPause() {
-		this.player.playPause((err, paused) => {
-		  if (err) {
-			this.setState({
-			  error: err.message
-			})
-		  }
-		  this._updateState()
-		})
-	  }
-	
-	  _stop() {
-		this.player.stop(() => {
-		  this._updateState()
-		});
-	  }
-	
-	  _reloadPlayer() {
+	_reloadPlayer() {
 		if (this.player) {
 		  this.player.destroy()
 		}
@@ -74,19 +56,8 @@ class RadioCard extends Component {
 			console.log('error at _reloadPlayer():')
 			console.log(err)
 		  } 
-	
-		  this._updateState()
-		});
-	
-		this._updateState()
-	
-		this.player.on('ended', () => {
-		  this._updateState()
 		})
-		this.player.on('pause', () => {
-		  this._updateState()
-		})
-	  }
+	}
 
 	render() {
 		return (
@@ -107,13 +78,11 @@ class RadioCard extends Component {
 						</View>
 						<RadioControls
 							onPlay={() => {
-								this.setState({ paused: false })
-								this._playPause()
+								this._pause()
 							}
 							}
 							onPause={() => {
-								this.setState({ paused: true })
-								this._playPause()
+								this._play()
 							}
 							}
 							paused={this.state.paused}
