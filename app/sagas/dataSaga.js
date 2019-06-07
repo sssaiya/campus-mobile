@@ -6,7 +6,6 @@ import { Image } from 'react-native'
 import WeatherService from '../services/weatherService'
 import SpecialEventsService from '../services/specialEventsService'
 import LinksService from '../services/quicklinksService'
-import EventService from '../services/eventService'
 import NewsService from '../services/newsService'
 import ParkingService from '../services/parkingService'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
@@ -15,7 +14,6 @@ import {
 	SURF_API_TTL,
 	SPECIAL_EVENTS_TTL,
 	QUICKLINKS_API_TTL,
-	EVENTS_API_TTL,
 	NEWS_API_TTL,
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
@@ -26,7 +24,6 @@ const getWeather = state => (state.weather)
 const getSurf = state => (state.surf)
 const getSpecialEvents = state => (state.specialEvents)
 const getLinks = state => (state.links)
-const getEvents = state => (state.events)
 const getNews = state => (state.news)
 const getCards = state => (state.cards)
 const getShuttle = state => (state.shuttle)
@@ -41,7 +38,6 @@ function* watchData() {
 			yield call(updateSpecialEvents)
 			yield call(updateLinks)
 			yield call(updateParking)
-			yield call(updateEvents)
 			yield call(updateNews)
 			yield call(updateShuttleMaster)
 			yield put({ type: 'UPDATE_DINING' })
@@ -212,21 +208,6 @@ function* updateParking() {
 function sortByOldParkingData(parkingData) {
 	return function (a, b) {
 		return parkingData.findIndex(x => x.LocationName === a.LocationName) - parkingData.findIndex(x => x.LocationName === b.LocationName)
-	}
-}
-
-function* updateEvents() {
-	const { lastUpdated, data } = yield select(getEvents)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const ttl = EVENTS_API_TTL
-
-	if (timeDiff < ttl && data) {
-		// Do nothing, no need to fetch new data
-	} else {
-		// Fetch for new data
-		const events = yield call(EventService.FetchEvents)
-		yield put({ type: 'SET_EVENTS', events })
 	}
 }
 

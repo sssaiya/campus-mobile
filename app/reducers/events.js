@@ -10,7 +10,6 @@ function events(state = initialState, action) {
 		case 'SET_EVENTS': {
 			newState.data = action.events
 			newState.lastUpdated = new Date().getTime()
-
 			return newState
 		}
 		default:

@@ -31,6 +31,20 @@ function* reorderCard(action) {
 
 function* updateCard(action) {
 	const { id, state } = action
+
+
+	console.log('updateCard: state: ' + state + ', id: ' + id)
+
+	if (state) {
+		console.log('updateCard in state')
+		switch (id) {
+			case 'events':
+				console.log('Update events from cardSaga')
+				yield put({ type: 'UPDATE_EVENTS' })
+				break
+		}
+	}
+
 	yield put({ type: 'SET_CARD_STATE', id, active: state })
 }
 

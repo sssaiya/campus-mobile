@@ -16,17 +16,6 @@ import css from '../../styles/css'
  * @return {JSX} Returns presentation JSX DataListView component
  */
 const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
-	<DataFlatList
-		style={style}
-		data={data}
-		rows={rows}
-		scrollEnabled={scrollEnabled}
-		item={item}
-		card={card}
-	/>
-)
-
-const DataFlatList = ({ style, data, rows, scrollEnabled, item, card }) => (
 	<FlatList
 		style={[style, css.scroll_default]}
 		contentContainerStyle={rows ? null : css.main_full}

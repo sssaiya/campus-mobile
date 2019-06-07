@@ -54,7 +54,6 @@ module.exports = {
 	WEATHER_API_TTL: 1800000, // 30 minutes
 	SURF_API_TTL: 1800000, // 30 minutes
 	SPECIAL_EVENTS_TTL: 1800000, // 30 minutes
-	EVENTS_API_TTL: 3600000, // 1 hour
 	NEWS_API_TTL: 3600000, // 1 hour
 	DINING_API_TTL: 3600000, // 1 hour
 	DINING_MENU_API_TTL: 3600000, // 1 hour

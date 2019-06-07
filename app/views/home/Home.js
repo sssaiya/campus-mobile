@@ -1,5 +1,5 @@
 import React from 'react'
-import { ScrollView, Alert } from 'react-native'
+import { ScrollView, Alert, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { checkGooglePlayServices } from 'react-native-google-api-availability-bridge'
 
@@ -18,11 +18,9 @@ import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import logger from '../../util/logger'
 
 export class Home extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = {
-			updatedGoogle: true // eslint-disable-line
-		}
+	state = {
+		updatedGoogle: true, // eslint-disable-line
+		refreshing: false,
 	}
 
 	componentWillMount() {
@@ -72,13 +70,22 @@ export class Home extends React.Component {
 		}
 	}
 
+	pullToRefresh = () => {
+		this.setState({ refreshing: true })
+
+		// Update Events
+		this.props.updateEvents()
+
+		this.setState({ refreshing: false })
+	}
+
 	handleScroll = (event) => {
 		if (this.props.updateScroll) {
 			this.props.updateScroll(event.nativeEvent.contentOffset.y)
 		}
 	}
 
-	_getCards = () => {
+	loadCards = () => {
 		const activeCards = []
 
 		if (Array.isArray(this.props.cardOrder)) {
@@ -153,9 +160,15 @@ export class Home extends React.Component {
 				ref={(c) => { this._scrollview = c }}
 				onScroll={this.handleScroll}
 				scrollEventThrottle={0}
+				refreshControl={
+					<RefreshControl
+						refreshing={this.state.refreshing}
+						onRefresh={() => this.pullToRefresh()}
+					/>
+				}
 			>
 				{/* LOAD CARDS */}
-				{ this._getCards() }
+				{ this.loadCards() }
 			</ScrollView>
 		)
 	}
@@ -174,7 +187,10 @@ function mapDispatchtoProps(dispatch) {
 	return {
 		updateScroll: (scrollY) => {
 			dispatch({ type: 'UPDATE_HOME_SCROLL', scrollY })
-		}
+		},
+		updateEvents: () => {
+			dispatch({ type: 'UPDATE_EVENTS' })
+		},
 	}
 }
 export default connect(mapStateToProps, mapDispatchtoProps)(Home)
