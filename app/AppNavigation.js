@@ -24,6 +24,7 @@ import DiningDetail from './views/home/cards/dining/DiningDetail'
 import DiningNutrition from './views/home/cards/dining/DiningNutrition'
 import EventsList from './views/home/cards/events/EventsList'
 import EventsDetail from './views/home/cards/events/EventsDetail'
+import NewsList from './views/home/cards/news/NewsList'
 import NewsDetail from './views/home/cards/news/NewsDetail'
 import Feedback from './views/profile/feedback/Feedback'
 import Messaging from './views/messaging/Messaging'
@@ -95,6 +96,12 @@ let MainStack = createStackNavigator(
 			screen: SurfReport,
 			navigationOptions: {
 				title: 'Surf Report'
+			}
+		},
+		NewsList: {
+			screen: NewsList,
+			navigationOptions: {
+				title: 'News',
 			}
 		},
 		NewsDetail: {

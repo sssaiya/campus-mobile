@@ -8,7 +8,6 @@ import LastUpdated from '../../../common/LastUpdated'
 import Touchable from '../../../common/Touchable'
 import css from '../../../../styles/css'
 
-// class EventsCard extends React.Component {
 const EventsCard = props => (
 	<Card id="events" title="Events">
 		<View>
@@ -28,7 +27,6 @@ const EventsCard = props => (
 )
 
 const mapStateToProps = state => ({
-	// eventsData: state.events.data,
 	lastUpdated: state.events.lastUpdated
 })
 

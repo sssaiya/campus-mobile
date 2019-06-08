@@ -1,34 +1,33 @@
 import React from 'react'
+import { View, Text } from 'react-native'
 import { connect } from 'react-redux'
-import moment from 'moment'
-import DataListCard from '../../../common/DataListCard'
+import { withNavigation } from 'react-navigation'
+import Card from '../../../common/Card'
+import NewsList from './NewsList'
+import LastUpdated from '../../../common/LastUpdated'
+import Touchable from '../../../common/Touchable'
+import css from '../../../../styles/css'
 
-export const NewsCardContainer = ({ newsData }) => {
-	let data = null
-	if (Array.isArray(newsData)) {
-		const parsedNewsData = newsData.slice()
-		parsedNewsData.forEach((element, index) => {
-			parsedNewsData[index] = {
-				...element,
-				subtext: moment(element.date).format('MMM Do, YYYY')
-			}
-		})
-		data = parsedNewsData
-	}
-	return (
-		<DataListCard
-			id="news"
-			title="News"
-			data={data}
-			item="NewsItem"
-		/>
-	)
-}
-
-const mapStateToProps = state => (
-	{ newsData: state.news.data }
+const NewsCard = props => (
+	<Card id="news" title="News">
+		<View>
+			<NewsList type="card" />
+			<LastUpdated
+				lastUpdated={props.lastUpdated}
+				error={props.requestError ? "We're having trouble updating right now." : null}
+				warning={props.requestError ? "We're having trouble updating right now." : null}
+			/>
+			<Touchable onPress={() => (props.navigation.navigate('NewsList'))}>
+				<View style={css.card_button_container}>
+					<Text style={css.card_button_text}>View All</Text>
+				</View>
+			</Touchable>
+		</View>
+	</Card>
 )
 
-const ActualNewsCard = connect(mapStateToProps)(NewsCardContainer)
+const mapStateToProps = state => ({
+	lastUpdated: state.news.lastUpdated
+})
 
-export default ActualNewsCard
+export default connect(mapStateToProps)(withNavigation(NewsCard))

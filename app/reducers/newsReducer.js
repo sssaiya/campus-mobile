@@ -10,7 +10,6 @@ function news(state = initialState, action) {
 		case 'SET_NEWS': {
 			newState.data = action.news
 			newState.lastUpdated = new Date().getTime()
-
 			return newState
 		}
 		default:

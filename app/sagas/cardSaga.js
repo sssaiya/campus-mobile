@@ -42,6 +42,10 @@ function* updateCard(action) {
 				console.log('Update events from cardSaga')
 				yield put({ type: 'UPDATE_EVENTS' })
 				break
+			case 'news':
+				console.log('Update news from cardSaga')
+				yield put({ type: 'UPDATE_NEWS' })
+				break
 		}
 	}
 }

@@ -6,34 +6,32 @@ import moment from 'moment'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import SafeImage from '../../../common/SafeImage'
-import { militaryToAMPM } from '../../../../util/general'
 
-class EventsList extends React.Component {
+class NewsList extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { eventsData: this.parseEventData(props.eventsData) }
+		this.state = { newsData: this.parseNewsData(props.newsData) }
 	}
 
-	parseEventData = (eventsData) => {
-		if (Array.isArray(eventsData)) {
-			const parsedEventsData = eventsData.slice()
-			parsedEventsData.forEach((element, index) => {
-				parsedEventsData[index] = {
+	parseNewsData = (newsData) => {
+		if (Array.isArray(newsData)) {
+			const parsedNewsData = newsData.slice()
+			parsedNewsData.forEach((element, index) => {
+				parsedNewsData[index] = {
 					...element,
-					subtext: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-					image: element.imagethumb
+					subtext: moment(element.date).format('MMM Do, YYYY')
 				}
 			})
-			return parsedEventsData
+			return parsedNewsData
 		}
 	}
 
-	EventsListItem = (data) => {
+	NewsListItem = (data) => {
 		const { navigation } = this.props
 
 		return (
 			<Touchable
-				onPress={() => { navigation.navigate('EventsDetail', { data }) }}
+				onPress={() => { navigation.navigate('NewsDetail', { data }) }}
 				style={css.dataitem_touchableRow}
 			>
 				<Text style={css.dataitem_titleText}>{data.title}</Text>
@@ -59,14 +57,14 @@ class EventsList extends React.Component {
 		const { type } = this.props
 		const MAX_ROWS = 3
 
-		if (this.state.eventsData) {
+		if (this.state.newsData) {
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={type === 'card' ? this.state.eventsData.slice(0, MAX_ROWS) : this.state.eventsData}
+					data={type === 'card' ? this.state.newsData.slice(0, MAX_ROWS) : this.state.newsData}
 					scrollEnabled={!(type === 'card')}
-					keyExtractor={(item, index) => (item.id + index)}
-					renderItem={({ item: rowData }) => this.EventsListItem(rowData)}
+					keyExtractor={(item, index) => (item.title + index)}
+					renderItem={({ item: rowData }) => this.NewsListItem(rowData)}
 					ItemSeparatorComponent={() => (
 						<View style={css.fl_separator} />
 					)}
@@ -83,7 +81,7 @@ class EventsList extends React.Component {
 }
 
 const mapStateToProps = state => ({
-	eventsData: state.events.data
+	newsData: state.news.data
 })
 
-export default connect(mapStateToProps)(withNavigation(EventsList))
+export default connect(mapStateToProps)(withNavigation(NewsList))

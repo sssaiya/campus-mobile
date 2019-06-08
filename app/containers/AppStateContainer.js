@@ -19,11 +19,9 @@ class AppStateContainer extends React.Component {
 		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
 			console.log('APP STATE CHANGE: current: ' + this.state.appState + ', next: ' + nextAppState)
 
-			// Update Messages
 			this.props.updateMessages(new Date().getTime())
-
-			// Update Events
 			this.props.updateEvents()
+			this.props.updateNews()
 		}
 		this.setState({ appState: nextAppState })
 	}
@@ -40,6 +38,9 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 		},
 		updateEvents: () => {
 			dispatch({ type: 'UPDATE_EVENTS' })
+		},
+		updateNews: () => {
+			dispatch({ type: 'UPDATE_NEWS' })
 		},
 	}
 )

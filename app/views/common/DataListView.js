@@ -1,6 +1,5 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import NewsItem from '../home/cards/news/NewsItem'
 import DiningItem from '../home/cards/dining/DiningItem'
 import LinksItem from '../home/cards/links/LinksItem'
 import css from '../../styles/css'
@@ -25,9 +24,6 @@ const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
 			// item will use to identify itself. Each
 			// item MUST have a unique key!
 			switch (item) {
-				case 'NewsItem': {
-					return listItem.title + index
-				}
 				case 'DiningItem': {
 					if (listItem.id) return listItem.id + index
 					else return listItem.name + index
@@ -45,9 +41,6 @@ const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
 			// Only reason this is a switch is cuz Actions from react-router-flux doesn't like being passed JSX
 			// Should revisit to see if this can be simplified
 			switch (item) {
-				case 'NewsItem': {
-					return (<NewsItem data={rowData} card={card} />)
-				}
 				case 'DiningItem': {
 					return (<DiningItem data={rowData} card={card} />)
 				}

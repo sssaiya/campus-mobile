@@ -71,10 +71,8 @@ export class Home extends React.Component {
 
 	pullToRefresh = () => {
 		this.setState({ refreshing: true })
-
-		// Update Events
 		this.props.updateEvents()
-
+		this.props.updateNews()
 		this.setState({ refreshing: false })
 	}
 
@@ -189,6 +187,9 @@ function mapDispatchtoProps(dispatch) {
 		},
 		updateEvents: () => {
 			dispatch({ type: 'UPDATE_EVENTS' })
+		},
+		updateNews: () => {
+			dispatch({ type: 'UPDATE_NEWS' })
 		},
 	}
 }
