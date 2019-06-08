@@ -32,7 +32,7 @@ module.exports = {
 	DINING_API_URL: 'https://pg83tslbyi.execute-api.us-west-2.amazonaws.com/prod/v3/dining',
 	MAP_SEARCH_API_URL: 'https://xgu9qa7gx4.execute-api.us-west-2.amazonaws.com/prod/v2/map/search?region=0&query=',
 	FEEDBACK_URL: 'https://eforms.ucsd.edu/view.php?id=175631',
-	QUICKLINKS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/quick_links/ucsd-quicklinks-v3.json',
+	LINKS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/quick_links/ucsd-quicklinks-v3.json',
 	PARKING_API_URL: 'https://b2waxbcovi.execute-api.us-west-2.amazonaws.com/prod/parking/v1.1/status',
 	MY_STUDENT_CONTACT_API_URL: 'https://api.ucsd.edu:8243/student/my/student_contact_info/v1',
 	MY_STUDENT_PROFILE_API_URL: 'https://api.ucsd.edu:8243/student/my/v1',

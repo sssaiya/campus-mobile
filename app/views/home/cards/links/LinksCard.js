@@ -9,7 +9,7 @@ import Touchable from '../../../common/Touchable'
 import css from '../../../../styles/css'
 
 const LinksCard = props => (
-	<Card id="quicklinks" title="Links">
+	<Card id="links" title="Links">
 		<View>
 			<LinksList type="card" />
 			<LastUpdated

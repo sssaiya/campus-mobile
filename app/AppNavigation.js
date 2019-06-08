@@ -25,6 +25,7 @@ import DiningNutrition from './views/home/cards/dining/DiningNutrition'
 import EventsList from './views/home/cards/events/EventsList'
 import EventsDetail from './views/home/cards/events/EventsDetail'
 import NewsList from './views/home/cards/news/NewsList'
+import LinksList from './views/home/cards/links/LinksList'
 import NewsDetail from './views/home/cards/news/NewsDetail'
 import Feedback from './views/profile/feedback/Feedback'
 import Messaging from './views/messaging/Messaging'
@@ -120,6 +121,12 @@ let MainStack = createStackNavigator(
 			screen: EventsDetail,
 			navigationOptions: {
 				title: 'Events',
+			}
+		},
+		LinksList: {
+			screen: LinksList,
+			navigationOptions: {
+				title: 'Links',
 			}
 		},
 		DiningDetail: {

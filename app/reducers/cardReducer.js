@@ -56,11 +56,11 @@ const initialState = {
 			name: 'News',
 			component: 'NewsCard',
 		},
-		quicklinks: {
-			id: 'quicklinks',
+		links: {
+			id: 'links',
 			active: true,
 			name: 'Links',
-			component: 'QuicklinksCard'
+			component: 'LinksCard'
 		},
 		weather: {
 			id: 'weather',
@@ -84,7 +84,7 @@ const initialState = {
 		'dining',
 		'events',
 		'news',
-		'quicklinks',
+		'links',
 		'weather',
 	],
 }

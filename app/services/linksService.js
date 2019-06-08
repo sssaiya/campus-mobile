@@ -1,17 +1,17 @@
 const AppSettings = require('../AppSettings')
 
-const QuicklinksService = {
-	FetchQuicklinks() {
-		console.log('FetchQuicklinks')
-		return fetch(AppSettings.QUICKLINKS_API_URL, {
+const LinksService = {
+	FetchLinks() {
+		console.log('FetchLinks')
+		return fetch(AppSettings.LINKS_API_URL, {
 			headers: { 'Cache-Control': 'no-cache' }
 		})
 			.then(response => response.json())
 			.catch((err) => {
-				console.log('Error fetching quicklinks' + err)
+				console.log('Error fetching linkslinks' + err)
 				return null
 			})
 	}
 }
 
-export default QuicklinksService
+export default LinksService

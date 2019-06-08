@@ -9,7 +9,7 @@ function* updateLinks() {
 	const { active } = yield select(linksState)
 	if (active) {
 		console.log('updateLinks')
-		const links = yield call(LinksService.FetchQuicklinks)
+		const links = yield call(LinksService.FetchLinks)
 		yield put({ type: 'SET_LINKS', links })
 		prefetchLinkImages(links)
 	}

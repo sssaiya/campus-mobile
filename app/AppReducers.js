@@ -1,6 +1,6 @@
 import { combineReducers } from 'redux'
 
-import cardsReducer from './reducers/cardsReducer'
+import cardReducer from './reducers/cardReducer'
 import diningReducer from './reducers/diningReducer'
 import eventsReducer from './reducers/eventsReducer'
 import feedbackReducer from './reducers/feedbackReducer'
@@ -24,7 +24,7 @@ import userReducer from './reducers/userReducer'
 import weatherReducer from './reducers/weatherReducer'
 
 module.exports = combineReducers({
-	cards: cardsReducer,
+	cards: cardReducer,
 	dining: diningReducer,
 	events: eventsReducer,
 	feedback: feedbackReducer,

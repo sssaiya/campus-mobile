@@ -45,7 +45,7 @@ function* updateCard(action) {
 				console.log('Update news from cardSaga')
 				yield put({ type: 'UPDATE_NEWS' })
 				break
-			case 'quicklinks':
+			case 'links':
 				console.log('Update links from cardSaga')
 				yield put({ type: 'UPDATE_LINKS' })
 				break

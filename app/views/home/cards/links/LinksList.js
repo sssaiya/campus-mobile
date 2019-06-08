@@ -9,11 +9,6 @@ import Touchable from '../../../common/Touchable'
 import { openURL } from '../../../../util/general'
 
 class LinksList extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { linksData: props.linksData }
-	}
-
 	LinksListItem = (data) => {
 		if (data.name && data.url && data.icon) {
 			return (
@@ -48,7 +43,7 @@ class LinksList extends React.Component {
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={type === 'card' ? this.state.linksData.slice(0, MAX_ROWS) : this.state.linksData}
+					data={type === 'card' ? this.props.linksData.slice(0, MAX_ROWS) : this.props.linksData}
 					scrollEnabled={!(type === 'card')}
 					keyExtractor={(item, index) => (item.name + index)}
 					renderItem={({ item: rowData }) => this.LinksListItem(rowData)}

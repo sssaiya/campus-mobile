@@ -126,8 +126,8 @@ export class Home extends React.Component {
 						case 'events':
 							activeCards.push(<EventsCard key="events" />)
 							break
-						case 'quicklinks':
-							activeCards.push(<LinksCard key="quicklinks" />)
+						case 'links':
+							activeCards.push(<LinksCard key="links" />)
 							break
 						case 'news':
 							activeCards.push(<NewsCard key="news" />)

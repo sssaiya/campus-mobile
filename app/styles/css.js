@@ -416,7 +416,7 @@ const css = StyleSheet.create({
 	/**
 	 *  10 - Links
 	 */
-	links_row_container: { paddingVertical: 8, paddingHorizontal: 16, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	links_row_container: { paddingVertical: 8, paddingHorizontal: 16 },
 	links_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
 	links_icon: { height: 28, width: 28 },
 	links_icon_fa: { paddingLeft: 8, paddingRight: 5, color: COLOR.PRIMARY },
