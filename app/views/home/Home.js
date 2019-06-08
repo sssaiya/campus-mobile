@@ -73,6 +73,7 @@ export class Home extends React.Component {
 		this.setState({ refreshing: true })
 		this.props.updateEvents()
 		this.props.updateNews()
+		this.props.updateLinks()
 		this.setState({ refreshing: false })
 	}
 
@@ -190,6 +191,9 @@ function mapDispatchtoProps(dispatch) {
 		},
 		updateNews: () => {
 			dispatch({ type: 'UPDATE_NEWS' })
+		},
+		updateLinks: () => {
+			dispatch({ type: 'UPDATE_Links' })
 		},
 	}
 }

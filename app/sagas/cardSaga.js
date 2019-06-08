@@ -36,7 +36,6 @@ function* updateCard(action) {
 	console.log('updateCard: state: ' + state + ', id: ' + id)
 
 	if (state) {
-		console.log('updateCard in state')
 		switch (id) {
 			case 'events':
 				console.log('Update events from cardSaga')
@@ -45,6 +44,10 @@ function* updateCard(action) {
 			case 'news':
 				console.log('Update news from cardSaga')
 				yield put({ type: 'UPDATE_NEWS' })
+				break
+			case 'quicklinks':
+				console.log('Update links from cardSaga')
+				yield put({ type: 'UPDATE_LINKS' })
 				break
 		}
 	}

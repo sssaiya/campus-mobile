@@ -2,6 +2,7 @@ const AppSettings = require('../AppSettings')
 
 const QuicklinksService = {
 	FetchQuicklinks() {
+		console.log('FetchQuicklinks')
 		return fetch(AppSettings.QUICKLINKS_API_URL, {
 			headers: { 'Cache-Control': 'no-cache' }
 		})

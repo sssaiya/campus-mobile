@@ -22,6 +22,7 @@ class AppStateContainer extends React.Component {
 			this.props.updateMessages(new Date().getTime())
 			this.props.updateEvents()
 			this.props.updateNews()
+			this.props.updateLinks()
 		}
 		this.setState({ appState: nextAppState })
 	}
@@ -41,6 +42,9 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 		},
 		updateNews: () => {
 			dispatch({ type: 'UPDATE_NEWS' })
+		},
+		updateLinks: () => {
+			dispatch({ type: 'UPDATE_LINKS' })
 		},
 	}
 )

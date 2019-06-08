@@ -17,6 +17,7 @@ import myStudentProfileSaga from './sagas/myStudentProfileSaga'
 import siSessionsSaga from './sagas/siSessionsSaga'
 import eventsSaga from './sagas/eventsSaga'
 import newsSaga from './sagas/newsSaga'
+import linksSaga from './sagas/linksSaga'
 
 export default function* rootSaga() {
 	yield all([
@@ -38,5 +39,6 @@ export default function* rootSaga() {
 		fork(siSessionsSaga),
 		fork(eventsSaga),
 		fork(newsSaga),
+		fork(linksSaga),
 	])
 }

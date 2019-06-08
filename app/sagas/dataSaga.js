@@ -5,14 +5,12 @@ import { Image } from 'react-native'
 
 import WeatherService from '../services/weatherService'
 import SpecialEventsService from '../services/specialEventsService'
-import LinksService from '../services/quicklinksService'
 import ParkingService from '../services/parkingService'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
 import {
 	WEATHER_API_TTL,
 	SURF_API_TTL,
 	SPECIAL_EVENTS_TTL,
-	QUICKLINKS_API_TTL,
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
 	PARKING_API_TTL
@@ -21,7 +19,6 @@ import {
 const getWeather = state => (state.weather)
 const getSurf = state => (state.surf)
 const getSpecialEvents = state => (state.specialEvents)
-const getLinks = state => (state.links)
 const getCards = state => (state.cards)
 const getShuttle = state => (state.shuttle)
 const getUserData = state => (state.user)
@@ -33,7 +30,6 @@ function* watchData() {
 			yield call(updateWeather)
 			yield call(updateSurf)
 			yield call(updateSpecialEvents)
-			yield call(updateLinks)
 			yield call(updateParking)
 			yield call(updateShuttleMaster)
 			yield put({ type: 'UPDATE_DINING' })
@@ -159,25 +155,6 @@ function* updateSpecialEvents() {
 	}
 }
 
-function* updateLinks() {
-	const { lastUpdated, data } = yield select(getLinks)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const ttl = QUICKLINKS_API_TTL
-
-	if ((timeDiff < ttl) && data) {
-		// Do nothing, no need to fetch new data
-	} else {
-		// Fetch for new data
-		const links = yield call(LinksService.FetchQuicklinks)
-
-		if (links) {
-			yield put({ type: 'SET_LINKS', links })
-			prefetchLinkImages(links)
-		}
-	}
-}
-
 function* updateParking() {
 	const { lastUpdated, parkingData } = yield select(getParkingData),
 		nowTime = new Date().getTime(),
@@ -231,18 +208,6 @@ function prefetchSpecialEventsImages(specialEvents) {
 	}
 	if (specialEvents['banner-image']) {
 		Image.prefetch(specialEvents['banner-image'])
-	}
-}
-
-function prefetchLinkImages(links) {
-	if (Array.isArray(links)) {
-		links.forEach((item) => {
-			const imageUrl = item.icon
-			// Check if actually a url and not icon name
-			if (imageUrl.indexOf('fontawesome:') !== 0) {
-				Image.prefetch(imageUrl)
-			}
-		})
 	}
 }
 

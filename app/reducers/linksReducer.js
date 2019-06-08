@@ -8,9 +8,9 @@ function links(state = initialState, action) {
 
 	switch (action.type) {
 		case 'SET_LINKS': {
+			console.log('SET_LINKS')
 			newState.data = action.links
 			newState.lastUpdated = new Date().getTime()
-
 			return newState
 		}
 		default:
