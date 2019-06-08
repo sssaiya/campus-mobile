@@ -5,7 +5,7 @@ import { Provider } from 'react-redux'
 import AppRedux from './AppRedux'
 import PushNotificationContainer from './containers/PushNotificationContainer'
 import AppStateContainer from './containers/AppStateContainer'
-import Router from './navigation/Router'
+import AppNavigation from './AppNavigation'
 import { gracefulFatalReset, platformIOS } from './util/general'
 import css from './styles/css'
 
@@ -39,7 +39,7 @@ export default class App extends Component {
 					<View style={css.main}>
 						<PushNotificationContainer />
 						<AppStateContainer />
-						<Router />
+						<AppNavigation />
 					</View>
 				</Provider>
 			)

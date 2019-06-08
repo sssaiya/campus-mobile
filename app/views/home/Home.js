@@ -2,18 +2,17 @@ import React from 'react'
 import { ScrollView, Alert, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { checkGooglePlayServices } from 'react-native-google-api-availability-bridge'
-
-import WeatherCardContainer from '../weather/WeatherCardContainer'
-import ShuttleCardContainer from '../shuttle/ShuttleCardContainer'
-import EventsCard from '../events/EventsCard'
-import QuicklinksCardContainer from '../quicklinks/QuicklinksCardContainer'
-import NewsCardContainer from '../news/NewsCardContainer'
-import DiningCardContainer from '../dining/DiningCardContainer'
-import SpecialEventsCardContainer from '../specialEvents/SpecialEventsCardContainer'
-import StudentIDCardContainer from '../studentId/StudentIDCardContainer'
-import FinalsCard from '../schedule/FinalsCard'
-import ScheduleCardContainer from '../schedule/ScheduleCardContainer'
-import ParkingCardContainer from '../parking/ParkingCardContainer'
+import WeatherCardContainer from './cards/weather/WeatherCardContainer'
+import ShuttleCardContainer from './cards/shuttle/ShuttleCardContainer'
+import EventsCard from './cards/events/EventsCard'
+import LinksCard from './cards/links/LinksCard'
+import NewsCard from './cards/news/NewsCard'
+import DiningCardContainer from './cards/dining/DiningCardContainer'
+import SpecialEventsCardContainer from './cards/specialEvents/SpecialEventsCardContainer'
+import StudentIDCardContainer from './cards/studentId/StudentIDCardContainer'
+import FinalsCard from './cards/finals/FinalsCard'
+import ScheduleCardContainer from './cards/classes/ScheduleCardContainer'
+import ParkingCardContainer from './cards/parking/ParkingCardContainer'
 import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import logger from '../../util/logger'
 
@@ -129,10 +128,10 @@ export class Home extends React.Component {
 							activeCards.push(<EventsCard key="events" />)
 							break
 						case 'quicklinks':
-							activeCards.push(<QuicklinksCardContainer key="quicklinks" />)
+							activeCards.push(<LinksCard key="quicklinks" />)
 							break
 						case 'news':
-							activeCards.push(<NewsCardContainer key="news" />)
+							activeCards.push(<NewsCard key="news" />)
 							break
 						case 'parking':
 							activeCards.push(<ParkingCardContainer key="parking" />)

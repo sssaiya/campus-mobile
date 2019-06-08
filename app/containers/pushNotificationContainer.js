@@ -3,7 +3,7 @@ import { Alert, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import firebase from 'react-native-firebase'
 import Permissions from 'react-native-permissions'
-import NavigationService from '../navigation/NavigationService'
+import NavigationService from '../services/navigationService'
 
 class PushNotificationContainer extends React.Component {
 	async componentDidMount() {

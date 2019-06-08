@@ -1,8 +1,8 @@
 import React from 'react'
 import { FlatList } from 'react-native'
-import NewsItem from '../news/NewsItem'
-import DiningItem from '../dining/DiningItem'
-import QuicklinksItem from '../quicklinks/QuicklinksItem'
+import NewsItem from '../home/cards/news/NewsItem'
+import DiningItem from '../home/cards/dining/DiningItem'
+import LinksItem from '../home/cards/links/LinksItem'
 import css from '../../styles/css'
 
 /**
@@ -32,7 +32,7 @@ const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
 					if (listItem.id) return listItem.id + index
 					else return listItem.name + index
 				}
-				case 'QuicklinksItem': {
+				case 'LinksItem': {
 					return listItem.name + index
 				}
 				default: {
@@ -51,8 +51,8 @@ const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
 				case 'DiningItem': {
 					return (<DiningItem data={rowData} card={card} />)
 				}
-				case 'QuicklinksItem': {
-					return (<QuicklinksItem data={rowData} card={card} />)
+				case 'LinksItem': {
+					return (<LinksItem data={rowData} card={card} />)
 				}
 				default: {
 					return null
