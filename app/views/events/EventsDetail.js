@@ -1,10 +1,5 @@
 import React from 'react'
-import {
-	View,
-	Text,
-	ScrollView,
-	Linking,
-} from 'react-native'
+import { View, Text, ScrollView, Linking } from 'react-native'
 import Hyperlink from 'react-native-hyperlink'
 import moment from 'moment'
 import ShareContent from '../common/ShareContent'
@@ -14,7 +9,7 @@ import logger from '../../util/logger'
 import general, { openURL } from '../../util/general'
 import css from '../../styles/css'
 
-const EventDetail = ({ navigation }) => {
+const EventsDetail = ({ navigation }) => {
 	const { params } = navigation.state
 	const { data } = params
 
@@ -66,4 +61,4 @@ const EventDetail = ({ navigation }) => {
 	)
 }
 
-export default EventDetail
+export default EventsDetail

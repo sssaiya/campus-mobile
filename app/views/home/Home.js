@@ -5,7 +5,7 @@ import { checkGooglePlayServices } from 'react-native-google-api-availability-br
 
 import WeatherCardContainer from '../weather/WeatherCardContainer'
 import ShuttleCardContainer from '../shuttle/ShuttleCardContainer'
-import EventCardContainer from '../events/EventCardContainer'
+import EventsCard from '../events/EventsCard'
 import QuicklinksCardContainer from '../quicklinks/QuicklinksCardContainer'
 import NewsCardContainer from '../news/NewsCardContainer'
 import DiningCardContainer from '../dining/DiningCardContainer'
@@ -126,7 +126,7 @@ export class Home extends React.Component {
 							activeCards.push(<DiningCardContainer key="dining" />)
 							break
 						case 'events':
-							activeCards.push(<EventCardContainer key="events" />)
+							activeCards.push(<EventsCard key="events" />)
 							break
 						case 'quicklinks':
 							activeCards.push(<QuicklinksCardContainer key="quicklinks" />)

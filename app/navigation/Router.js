@@ -22,7 +22,8 @@ import SurfReport from '../views/weather/SurfReport'
 import ShuttleStop from '../views/shuttle/ShuttleStop'
 import DiningDetail from '../views/dining/DiningDetail'
 import DiningNutrition from '../views/dining/DiningNutrition'
-import EventDetail from '../views/events/EventDetail'
+import EventsList from '../views/events/EventsList'
+import EventsDetail from '../views/events/EventsDetail'
 import NewsDetail from '../views/news/NewsDetail'
 import Feedback from '../views/preferences/feedback/Feedback'
 import Messaging from '../views/messaging/Messaging'
@@ -102,8 +103,14 @@ let MainStack = createStackNavigator(
 				title: 'News',
 			}
 		},
-		EventDetail: {
-			screen: EventDetail,
+		EventsList: {
+			screen: EventsList,
+			navigationOptions: {
+				title: 'Events',
+			}
+		},
+		EventsDetail: {
+			screen: EventsDetail,
 			navigationOptions: {
 				title: 'Events',
 			}

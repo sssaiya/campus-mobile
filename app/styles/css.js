@@ -98,7 +98,7 @@ const css = StyleSheet.create({
 	DataList_full_list: { top: -1 },
 	dataitem_descContainer: { flex: 1 },
 	dataitem_descText: { color: COLOR.VDGREY },
-	dataitem_touchableRow: { paddingVertical: 12, paddingHorizontal: 8, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	dataitem_touchableRow: { paddingVertical: 12, paddingHorizontal: 8 },
 	dataitem_titleText: { fontSize: 17 },
 	dataitem_listInfoContainer: { flexDirection: 'row', paddingVertical: 8 },
 	dataitem_dateText: { color: COLOR.PRIMARY, paddingTop: 8 },

@@ -3,6 +3,7 @@ import { View, Text, ActivityIndicator } from 'react-native'
 import { withNavigation } from 'react-navigation'
 import DataListView from './DataListView'
 import Card from '../common/Card'
+import LastUpdated from './LastUpdated'
 import Touchable from './Touchable'
 import css from '../../styles/css'
 
@@ -14,7 +15,7 @@ import css from '../../styles/css'
  * @param {Function} cardSort array sorting function
  * @return {JSX} Generic component for list type cards
  */
-export const DataListCard = ({ navigation, id, title, data, item, rows, cardSort }) => {
+export const DataListCard = ({ navigation, id, title, data, item, rows, cardSort, lastUpdated }) => {
 	let sortedData = data
 	if (cardSort && sortedData) {
 		sortedData = sortedData.slice().sort(cardSort)
