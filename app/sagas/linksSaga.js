@@ -1,18 +1,31 @@
 import { Image } from 'react-native'
 import { call, put, select, takeLatest } from 'redux-saga/effects'
 import LinksService from '../services/linksService'
+import { dynamicSort } from '../util/general'
 
 const linksState = state => (state.cards.cards.links)
 
 function* updateLinks() {
-	console.log('updateLinks-----')
 	const { active } = yield select(linksState)
 	if (active) {
-		console.log('updateLinks')
 		const links = yield call(LinksService.FetchLinks)
-		yield put({ type: 'SET_LINKS', links })
 		prefetchLinkImages(links)
+		const sortedLinks = yield call(sortLinks, links)
+		yield put({ type: 'SET_LINKS', links: sortedLinks })
 	}
+}
+
+function sortLinks(linksData) {
+	// Sort links by card-order
+	return new Promise((resolve, reject) => {
+		if (Array.isArray(linksData)) {
+			const sortedLinks = linksData.slice()
+			sortedLinks.sort(dynamicSort('card-order'))
+			resolve(sortedLinks)
+		} else {
+			reject(new Error('sortLinks: Err:_sortDining:' + linksData))
+		}
+	})
 }
 
 function prefetchLinkImages(links) {
