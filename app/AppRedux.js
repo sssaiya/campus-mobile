@@ -5,9 +5,8 @@ import thunkMiddleware from 'redux-thunk'
 import createFilter from 'redux-persist-transform-filter'
 import createSagaMiddleware from 'redux-saga'
 import createMigration from 'redux-persist-migrate'
-
-import rootSaga from './sagas/rootSaga'
-import rootReducer from './reducers'
+import rootSaga from './AppSagas'
+import rootReducer from './AppReducers'
 
 // immutable module import is ignored by eslint because it is
 // only used when the app is running in dev mode
@@ -94,8 +93,8 @@ const manifest = {
 				newState.cards.cardOrder.splice(0, 0, 'studentId')
 			}
 		}
-		return newState // 6.7 studentId migration
-	}
+		return newState
+	}, // 6.7 migration
 }
 
 // reducerKey is the key of the reducer you want to store the state version in

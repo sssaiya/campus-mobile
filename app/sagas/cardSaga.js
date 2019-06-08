@@ -31,7 +31,7 @@ function* reorderCard(action) {
 
 function* updateCard(action) {
 	const { id, state } = action
-
+	yield put({ type: 'SET_CARD_STATE', id, active: state })
 
 	console.log('updateCard: state: ' + state + ', id: ' + id)
 
@@ -44,8 +44,6 @@ function* updateCard(action) {
 				break
 		}
 	}
-
-	yield put({ type: 'SET_CARD_STATE', id, active: state })
 }
 
 function* updateAutoactivated(action) {

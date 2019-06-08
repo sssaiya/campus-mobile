@@ -3,14 +3,11 @@ import EventsService from '../services/eventsService'
 
 const eventsState = state => (state.cards.cards.events)
 
-const updateEvents = function* () {
+function* updateEvents() {
 	const { active } = yield select(eventsState)
-
 	if (active) {
 		// Events card is active, fetch and update new events data
-		console.log('eventsSaga:updateEvents:active')
 		const events = yield call(EventsService.FetchEvents)
-		console.log('data:' + events)
 		yield put({ type: 'SET_EVENTS', events })
 	}
 }
