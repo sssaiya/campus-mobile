@@ -87,7 +87,7 @@ const css = StyleSheet.create({
 	scrollcard_dotStyle: { padding: 6, paddingTop: 3, backgroundColor: 'transparent', color: COLOR.DGREY },
 	scrollcard_dotsContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
 	scrollcard_listStyle: { flexDirection: 'row' },
-	card_last_updated: { flexDirection: 'row', alignItems: 'center', paddingLeft: 8, paddingBottom: 8 },
+	card_last_updated: { flexDirection: 'row', alignItems: 'center', paddingTop: 16, paddingLeft: 8, paddingBottom: 8 },
 	card_last_updated_text: { fontStyle: 'italic', fontWeight: '300', color: COLOR.DGREY },
 	last_updated_err_icon: { fontSize: 16, marginRight: 6 },
 	last_updated_err_icon_warn: { color: COLOR.WARNING },

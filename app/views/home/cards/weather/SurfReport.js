@@ -1,13 +1,6 @@
 import React from 'react'
-import {
-	View,
-	Text,
-	ScrollView,
-	Image,
-	FlatList,
-} from 'react-native'
+import { View, Text, ScrollView, Image, FlatList } from 'react-native'
 import { connect } from 'react-redux'
-
 import css from '../../../../styles/css'
 import logger from '../../../../util/logger'
 
@@ -22,7 +15,6 @@ const mapWeekdays = [
 	'Friday',
 	'Saturday'
 ]
-
 const mapMonths = [
 	'January',
 	'February',

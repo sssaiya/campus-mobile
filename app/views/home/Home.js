@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView, Alert, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { checkGooglePlayServices } from 'react-native-google-api-availability-bridge'
-import WeatherCardContainer from './cards/weather/WeatherCardContainer'
+import WeatherCard from './cards/weather/WeatherCard'
 import ShuttleCardContainer from './cards/shuttle/ShuttleCardContainer'
 import EventsCard from './cards/events/EventsCard'
 import LinksCard from './cards/links/LinksCard'
@@ -74,6 +74,7 @@ export class Home extends React.Component {
 		this.props.updateEvents()
 		this.props.updateNews()
 		this.props.updateLinks()
+		this.props.updateWeather()
 		this.setState({ refreshing: false })
 	}
 
@@ -115,7 +116,7 @@ export class Home extends React.Component {
 							activeCards.push(<ScheduleCardContainer key="schedule" />)
 							break
 						case 'weather':
-							activeCards.push(<WeatherCardContainer key="weather" />)
+							activeCards.push(<WeatherCard key="weather" />)
 							break
 						case 'shuttle':
 							activeCards.push(<ShuttleCardContainer key="shuttle" />)
@@ -193,7 +194,10 @@ function mapDispatchtoProps(dispatch) {
 			dispatch({ type: 'UPDATE_NEWS' })
 		},
 		updateLinks: () => {
-			dispatch({ type: 'UPDATE_Links' })
+			dispatch({ type: 'UPDATE_LINKS' })
+		},
+		updateWeather: () => {
+			dispatch({ type: 'UPDATE_WEATHER' })
 		},
 	}
 }

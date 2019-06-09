@@ -2,13 +2,12 @@
 import { delay } from 'redux-saga'
 import { put, call, select } from 'redux-saga/effects'
 import { Image } from 'react-native'
-
-import WeatherService from '../services/weatherService'
 import SpecialEventsService from '../services/specialEventsService'
 import ParkingService from '../services/parkingService'
+import WeatherService from '../services/weatherService'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
+
 import {
-	WEATHER_API_TTL,
 	SURF_API_TTL,
 	SPECIAL_EVENTS_TTL,
 	DATA_SAGA_TTL,
@@ -16,7 +15,6 @@ import {
 	PARKING_API_TTL
 } from '../AppSettings'
 
-const getWeather = state => (state.weather)
 const getSurf = state => (state.surf)
 const getSpecialEvents = state => (state.specialEvents)
 const getCards = state => (state.cards)
@@ -27,7 +25,6 @@ const getParkingData = state => (state.parking)
 function* watchData() {
 	while (true) {
 		try {
-			yield call(updateWeather)
 			yield call(updateSurf)
 			yield call(updateSpecialEvents)
 			yield call(updateParking)
@@ -69,22 +66,6 @@ function* updateShuttleMaster() {
 			toggles: initialToggles,
 			nowTime
 		})
-	}
-}
-
-function* updateWeather() {
-	const { lastUpdated, data } = yield select(getWeather)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const weatherTTL = WEATHER_API_TTL
-
-	if (timeDiff < weatherTTL && data) {
-		// Do nothing, no need to fetch new data
-	} else {
-		const weather = yield call(WeatherService.FetchWeather)
-		if (weather) {
-			yield put({ type: 'SET_WEATHER', weather })
-		}
 	}
 }
 

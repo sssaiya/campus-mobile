@@ -1,7 +1,6 @@
 const AppSettings = require('../AppSettings')
 
 const WeatherService = {
-
 	FetchWeather() {
 		return fetch(AppSettings.WEATHER_API_URL)
 			.then(response => response.json())
