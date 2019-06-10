@@ -7,6 +7,7 @@ import {
 	race
 } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
+import { Platform } from 'react-native'
 import Device from 'react-native-device-info'
 import firebase from 'react-native-firebase'
 import moment from 'moment'
@@ -254,21 +255,25 @@ const notifications = firebase.notifications()
 
 // Sets badge count
 function* setBadgeCount(action) {
-	console.log('SETTING BADGE COUNT')
-	console.log(action)
-	// const badgeCount = yield notifications.getBadge()
-	// // notifications.android.setChannelId('app-infos')
-	// // notifications.displayNotification(notifications)
-	// notifications.setBadge(badgeCount + 1)
-	const badgeCount = action.count
-	yield notifications.setBadge(badgeCount)
-	console.log('BADGE COUNT SHOULD BE - ' + badgeCount)
+	if (Platform.OS === 'ios') {
+		console.log('SETTING BADGE COUNT')
+		console.log(action)
+		// const badgeCount = yield notifications.getBadge()
+		// // notifications.android.setChannelId('app-infos')
+		// // notifications.displayNotification(notifications)
+		// notifications.setBadge(badgeCount + 1)
+		const badgeCount = action.count
+		yield notifications.setBadge(badgeCount)
+		console.log('BADGE COUNT SHOULD BE - ' + badgeCount)
+	}
 }
 
 // Resets badge count when notifications opened
 function* resetBadgeCount(action) {
-	console.log('RESETTING BADGE COUNT')
-	yield notifications.setBadge(0)
+	if (Platform.OS === 'ios') {
+		console.log('RESETTING BADGE COUNT')
+		yield notifications.setBadge(0)
+	}
 }
 
 function mergeMessagesArrays(old, updated) {

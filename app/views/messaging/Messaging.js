@@ -137,7 +137,7 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 		notificationsSeen: () => {
 			const timestamp = new Date().getTime()
 			const profileItems = { latestTimeStamp: timestamp }
-			dispatch('RESET_BADGE_COUNT')
+			dispatch({ type: 'RESET_BADGE_COUNT' })
 			dispatch({ type: 'MODIFY_LOCAL_PROFILE', profileItems })
 			dispatch({ type: 'SET_UNREAD_MESSAGES',  count: 0 })
 		}
