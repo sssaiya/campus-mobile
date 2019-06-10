@@ -138,6 +138,9 @@ class ParkingOverview extends Component {
 	}
 
 	render() {
+
+		console.log('parking overview------------')
+
 		const { structureData, selectedSpots } = this.props
 
 		let message
