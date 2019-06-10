@@ -20,7 +20,6 @@ function* watchData() {
 		try {
 			yield call(updateSpecialEvents)
 			yield call(updateShuttleMaster)
-			yield put({ type: 'UPDATE_DINING' })
 			yield put({ type: 'UPDATE_SCHEDULE' })
 			yield put({ type: 'UPDATE_STUDENT_PROFILE' })
 			yield put({ type: 'SYNC_USER_PROFILE' })

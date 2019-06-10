@@ -18,12 +18,15 @@ class AppStateContainer extends React.Component {
 	handleAppStateChange = (nextAppState) => {
 		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
 			console.log('APP STATE CHANGE: current: ' + this.state.appState + ', next: ' + nextAppState)
-			this.props.updateMessages(new Date().getTime())
+			// Update Cards
+			this.props.updateDining()
 			this.props.updateEvents()
-			this.props.updateNews()
 			this.props.updateLinks()
-			this.props.updateWeather()
+			this.props.updateNews()
 			this.props.updateParking()
+			this.props.updateWeather()
+			// Update Notifications
+			this.props.updateMessages(new Date().getTime())
 		}
 		this.setState({ appState: nextAppState })
 	}
@@ -35,6 +38,7 @@ class AppStateContainer extends React.Component {
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	// Cards
+	updateDining: () => { dispatch({ type: 'UPDATE_DINING' }) },
 	updateEvents: () => { dispatch({ type: 'UPDATE_EVENTS' }) },
 	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
 	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },

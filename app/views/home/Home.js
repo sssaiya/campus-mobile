@@ -7,7 +7,7 @@ import ShuttleCardContainer from './cards/shuttle/ShuttleCardContainer'
 import EventsCard from './cards/events/EventsCard'
 import LinksCard from './cards/links/LinksCard'
 import NewsCard from './cards/news/NewsCard'
-import DiningCardContainer from './cards/dining/DiningCardContainer'
+import DiningCard from './cards/dining/DiningCard'
 import SpecialEventsCardContainer from './cards/specialEvents/SpecialEventsCardContainer'
 import StudentIDCardContainer from './cards/studentId/StudentIDCardContainer'
 import FinalsCard from './cards/finals/FinalsCard'
@@ -71,11 +71,13 @@ export class Home extends React.Component {
 
 	pullToRefresh = () => {
 		this.setState({ refreshing: true })
+		// Update Cards
+		this.props.updateDining()
 		this.props.updateEvents()
-		this.props.updateNews()
 		this.props.updateLinks()
-		this.props.updateWeather()
+		this.props.updateNews()
 		this.props.updateParking()
+		this.props.updateWeather()
 		this.setState({ refreshing: false })
 	}
 
@@ -123,7 +125,7 @@ export class Home extends React.Component {
 							activeCards.push(<ShuttleCardContainer key="shuttle" />)
 							break
 						case 'dining':
-							activeCards.push(<DiningCardContainer key="dining" />)
+							activeCards.push(<DiningCard key="dining" />)
 							break
 						case 'events':
 							activeCards.push(<EventsCard key="events" />)
@@ -183,6 +185,7 @@ const mapStateToProps = (state, props) => ({
 
 const mapDispatchToProps = (dispatch, ownProps) => ({
 	// Cards
+	updateDining: () => { dispatch({ type: 'UPDATE_DINING' }) },
 	updateEvents: () => { dispatch({ type: 'UPDATE_EVENTS' }) },
 	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
 	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },

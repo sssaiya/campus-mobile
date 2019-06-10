@@ -15,34 +15,34 @@ import TabIcons from './views/common/TabIcons'
 import NavigationService from './services/navigationService'
 
 // VIEWS
+import CardPreferences from './views/profile/card/CardPreferences'
+import DiningDetail from './views/home/cards/dining/DiningDetail'
+import DiningList from './views/home/cards/dining/DiningList'
+import DiningNutrition from './views/home/cards/dining/DiningNutrition'
+import EventsDetail from './views/home/cards/events/EventsDetail'
+import EventsList from './views/home/cards/events/EventsList'
+import Feedback from './views/profile/feedback/Feedback'
+import FullSchedule from './views/home/cards/classes/FullScheduleListView'
 import Home from './views/home/Home'
+import LinksList from './views/home/cards/links/LinksList'
+import ManageParkingLots from './views/home/cards/parking/ManageParkingLots'
+import Map from './views/map/Map'
+import Messaging from './views/messaging/Messaging'
+import NewsDetail from './views/home/cards/news/NewsDetail'
+import NewsList from './views/home/cards/news/NewsList'
+import NotificationTopics from './views/profile/notifications/NotificationTopics'
 import OnboardingIntro from './views/onboarding/OnboardingIntro'
 import OnboardingLogin from './views/onboarding/OnboardingLogin'
-import SurfReport from './views/home/cards/weather/SurfReport'
-import ShuttleStop from './views/home/cards/shuttle/ShuttleStop'
-import DiningDetail from './views/home/cards/dining/DiningDetail'
-import DiningNutrition from './views/home/cards/dining/DiningNutrition'
-import EventsList from './views/home/cards/events/EventsList'
-import EventsDetail from './views/home/cards/events/EventsDetail'
-import NewsList from './views/home/cards/news/NewsList'
-import LinksList from './views/home/cards/links/LinksList'
-import NewsDetail from './views/home/cards/news/NewsDetail'
-import Feedback from './views/profile/feedback/Feedback'
-import Messaging from './views/messaging/Messaging'
+import ParkingSpotType from './views/home/cards/parking/ParkingSpotType'
 import Profile from './views/profile/Profile'
-import Map from './views/map/Map'
-import DataListViewAll from './views/common/DataListViewAll'
-import SpecialEventsView from './views/home/cards/specialEvents/SpecialEventsView'
+import ShuttleRoutesListView from './views/home/cards/shuttle/ShuttleRoutesListView'
+import ShuttleSavedListView from './views/home/cards/shuttle/ShuttleSavedListView'
+import ShuttleStop from './views/home/cards/shuttle/ShuttleStop'
+import ShuttleStopsListView from './views/home/cards/shuttle/ShuttleStopsListView'
 import SpecialEventsDetailView from './views/home/cards/specialEvents/SpecialEventsDetailView'
 import SpecialEventsFilterListView from './views/home/cards/specialEvents/SpecialEventsFilterListView'
-import ShuttleRoutesListView from './views/home/cards/shuttle/ShuttleRoutesListView'
-import ShuttleStopsListView from './views/home/cards/shuttle/ShuttleStopsListView'
-import ShuttleSavedListView from './views/home/cards/shuttle/ShuttleSavedListView'
-import FullSchedule from './views/home/cards/classes/FullScheduleListView'
-import ParkingSpotType from './views/home/cards/parking/ParkingSpotType'
-import ManageParkingLots from './views/home/cards/parking/ManageParkingLots'
-import NotificationTopics from './views/profile/notifications/NotificationTopics'
-import CardPreferences from './views/profile/card/CardPreferences'
+import SpecialEventsView from './views/home/cards/specialEvents/SpecialEventsView'
+import SurfReport from './views/home/cards/weather/SurfReport'
 
 const campusLogoImage = require('./assets/images/UCSanDiegoLogo-nav.png')
 
@@ -131,6 +131,12 @@ let MainStack = createStackNavigator(
 		},
 		DiningDetail: {
 			screen: DiningDetail,
+			navigationOptions: {
+				title: 'Dining',
+			}
+		},
+		DiningList: {
+			screen: DiningList,
 			navigationOptions: {
 				title: 'Dining',
 			}
@@ -226,14 +232,6 @@ let MainStack = createStackNavigator(
 				title: 'Cards',
 			}
 		},
-		DataListViewAll: {
-			screen: DataListViewAll,
-			navigationOptions: ({ navigation }) => {
-				const { params } = navigation.state
-				const { title } = params
-				return { title }
-			}
-		}
 	},
 	{
 		initialRouteName: 'MainTabs',

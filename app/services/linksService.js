@@ -2,7 +2,6 @@ const AppSettings = require('../AppSettings')
 
 const LinksService = {
 	FetchLinks() {
-		console.log('FetchLinks')
 		return fetch(AppSettings.LINKS_API_URL, {
 			headers: { 'Cache-Control': 'no-cache' }
 		})

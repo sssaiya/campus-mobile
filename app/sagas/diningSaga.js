@@ -2,25 +2,28 @@ import { put, takeLatest, call, select, race } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import logger from '../util/logger'
 import DiningService from '../services/diningService'
-import { DINING_API_TTL, DINING_MENU_API_TTL, HTTP_REQUEST_TTL } from '../AppSettings'
-import { convertMetersToMiles, getDistanceMilesStr, dynamicSort, timeDiff } from '../util/general'
+import { DINING_MENU_API_TTL, HTTP_REQUEST_TTL } from '../AppSettings'
+import { convertMetersToMiles, getDistanceMilesStr, dynamicSort } from '../util/general'
 import { getDistance } from '../util/map'
 
 const getDining = state => (state.dining)
+const diningState = state => (state.cards.cards.dining)
 
 function* updateDining(action) {
-	const { lastUpdated, data } = yield select(getDining)
-	const { position } = action
-
-	if (timeDiff(lastUpdated) > DINING_API_TTL) {
-		const diningData = yield call(fetchDining, position)
+	const { active } = yield select(diningState)
+	if (active) {
+		const diningData = yield call(DiningService.FetchDining)
 		const diningDataSorted = yield call(_sortDining, diningData)
 		yield put({ type: 'SET_DINING', data: diningDataSorted })
-	} else {
-		if (position) {
-			const diningDataWithDistance = yield call(_setDiningDistance, position, data)
-			yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDistance })
-		}
+	}
+}
+
+function* updateDiningDistance(action) {
+	const { position } = action
+	const { data } = yield select(getDining)
+	if (position) {
+		const diningDataWithDistance = yield call(_setDiningDistance, position, data)
+		yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDistance })
 	}
 }
 
@@ -45,31 +48,6 @@ function* getDiningMenu(action) {
 		const currentMenu = yield call(fetchDiningMenu, menuId)
 		yield put({ type: 'SET_DINING_MENU', data: currentMenu, id: menuArrayPosition })
 	}
-}
-
-function fetchDining(position) {
-	return new Promise((resolve, reject) => {
-		DiningService.FetchDining()
-			.then((dining) => {
-				_sortDining(dining)
-					.then((diningData) => {
-						if (position) {
-							_setDiningDistance(position, diningData)
-								.then((diningDataWithDistance) => {
-									resolve(diningDataWithDistance)
-								})
-						} else {
-							resolve(diningData)
-						}
-					})
-					.catch((error) => {
-						reject(error)
-					})
-			})
-			.catch((error) => {
-				reject(new Error('Error _fetchDining, request failed:', error))
-			})
-	})
 }
 
 function* fetchDiningMenu(id) {
@@ -148,6 +126,7 @@ function _setDiningDistance(position, diningData) {
 
 function* diningSaga() {
 	yield takeLatest('UPDATE_DINING', updateDining)
+	yield takeLatest('UPDATE_DINING_DISTANCE', updateDiningDistance)
 	yield takeLatest('GET_DINING_MENU', getDiningMenu)
 }
 
