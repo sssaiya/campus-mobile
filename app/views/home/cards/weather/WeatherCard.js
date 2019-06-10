@@ -17,17 +17,14 @@ const WeatherCard = props => (
 					<WeatherForecast {...props} />
 				</View>
 			) : (
-				<View style={css.wc_loadingContainer}>
-					<ActivityIndicator size="large" />
-				</View>
+				<ActivityIndicator size="large" style={css.activity_indicator} />
 			)}
-
 			<LastUpdated
 				lastUpdated={props.lastUpdated}
 				error={props.requestError ? "We're having trouble updating right now." : null}
 				warning={props.requestError ? "We're having trouble updating right now." : null}
+				style={css.last_updated_card}
 			/>
-
 			<Touchable onPress={() => (props.navigation.navigate('SurfReport'))}>
 				<View style={css.card_button_container}>
 					<Text style={css.card_button_text}>Surf Report</Text>

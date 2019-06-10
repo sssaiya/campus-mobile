@@ -19,6 +19,7 @@ import eventsSaga from './sagas/eventsSaga'
 import newsSaga from './sagas/newsSaga'
 import linksSaga from './sagas/linksSaga'
 import weatherSaga from './sagas/weatherSaga'
+import surfSaga from './sagas/surfSaga'
 
 export default function* rootSaga() {
 	yield all([
@@ -42,5 +43,6 @@ export default function* rootSaga() {
 		fork(newsSaga),
 		fork(linksSaga),
 		fork(weatherSaga),
+		fork(surfSaga),
 	])
 }

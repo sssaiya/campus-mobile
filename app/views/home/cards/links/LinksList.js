@@ -10,7 +10,7 @@ import { openURL } from '../../../../util/general'
 
 class LinksList extends React.Component {
 	LinksListItem = (data) => {
-		if (data.name && data.url && data.icon) {
+		try {
 			return (
 				<Touchable onPress={() => openURL(data.url)}>
 					<View style={css.links_row_container}>
@@ -30,7 +30,7 @@ class LinksList extends React.Component {
 					</View>
 				</Touchable>
 			)
-		} else {
+		} catch (err) {
 			return null
 		}
 	}
@@ -39,7 +39,7 @@ class LinksList extends React.Component {
 		const { type } = this.props
 		const MAX_ROWS = 4
 
-		try {
+		if (Array.isArray(this.props.linksData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
@@ -52,11 +52,9 @@ class LinksList extends React.Component {
 					)}
 				/>
 			)
-		} catch (err) {
+		} else {
 			return (
-				<View style={[css.dlc_cardcenter, css.dlc_wc_loading_height]}>
-					<ActivityIndicator size="large" />
-				</View>
+				<ActivityIndicator size="large" style={css.activity_indicator} />
 			)
 		}
 	}

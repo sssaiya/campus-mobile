@@ -21,7 +21,7 @@ const checkData = (data) => {
 	return cleanData
 }
 
-export class Messaging extends Component {
+export class Notifications extends Component {
 	componentDidMount() {
 		logger.ga('View Loaded: Messaging')
 		this.props.updateMessages(new Date().getTime())
@@ -143,4 +143,4 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 	}
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Messaging)
+export default connect(mapStateToProps, mapDispatchToProps)(Notifications)

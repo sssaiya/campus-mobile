@@ -40,9 +40,7 @@ export const DataListCard = ({ navigation, id, title, data, item, rows, cardSort
 						</Touchable>
 					</View>
 				) : (
-					<View style={[css.dlc_cardcenter, css.dlc_wc_loading_height]}>
-						<ActivityIndicator size="large" />
-					</View>
+					<ActivityIndicator size="large" style={css.activity_indicator} />
 				)}
 			</View>
 		</Card>

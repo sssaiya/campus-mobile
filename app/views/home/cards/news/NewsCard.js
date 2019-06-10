@@ -16,6 +16,7 @@ const NewsCard = props => (
 				lastUpdated={props.lastUpdated}
 				error={props.requestError ? "We're having trouble updating right now." : null}
 				warning={props.requestError ? "We're having trouble updating right now." : null}
+				style={css.last_updated_card}
 			/>
 			<Touchable onPress={() => (props.navigation.navigate('NewsList'))}>
 				<View style={css.card_button_container}>

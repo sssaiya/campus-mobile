@@ -26,20 +26,10 @@ const WeatherService = {
 				}
 			})
 			.catch((err) => {
-				console.log('Error fetching weather: ' + err)
+				console.log('WeatherService: FetchWeather: ' + err)
 				return null
 			})
-	},
-
-	FetchSurf() {
-		return fetch(AppSettings.SURF_API_URL)
-			.then(response => response.json())
-			.then(responseData => responseData)
-			.catch((err) => {
-				console.log('Error fetching surf: ' + err)
-				return null
-			})
-	},
+	}
 }
 
 export default WeatherService

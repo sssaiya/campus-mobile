@@ -1,49 +1,49 @@
 import React from 'react'
-import { View, Text, ScrollView, Image, FlatList } from 'react-native'
+import { View, Text, ScrollView, Image, FlatList, ActivityIndicator, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
+import moment from 'moment'
+import LastUpdated from '../../../common/LastUpdated'
 import css from '../../../../styles/css'
 import logger from '../../../../util/logger'
 
-const surfHeader = require('../../../../assets/images/surf_report_header.jpg')
-
-const mapWeekdays = [
-	'Sunday',
-	'Monday',
-	'Tuesday',
-	'Wednesday',
-	'Thursday',
-	'Friday',
-	'Saturday'
-]
-const mapMonths = [
-	'January',
-	'February',
-	'March',
-	'April',
-	'May',
-	'June',
-	'July',
-	'August',
-	'September',
-	'October',
-	'November',
-	'December'
-]
+const surfBanner = require('../../../../assets/images/surf_report_header.jpg')
 
 class SurfReport extends React.Component {
+	state = {
+		refreshing: false,
+	}
+
 	componentDidMount() {
 		logger.ga('View Loaded: Surf Report')
+		this.props.navigation.addListener('willFocus', () => {
+			this.props.updateSurf()
+		})
+	}
+
+	pullToRefresh = () => {
+		this.setState({ refreshing: true })
+		this.props.updateSurf()
+		this.setState({ refreshing: false })
 	}
 
 	render() {
-		try {
-			const dateString = new Date(this.props.surfData.spots[0].date)
-			return (
-				<ScrollView style={css.scroll_default} contentContainerStyle={css.main_full}>
-					<Image style={css.sr_headerImage} source={surfHeader} />
+		console.log('lastUpdated: ' + this.props.lastUpdated)
+		return (
+			<ScrollView
+				style={css.scroll_default}
+				contentContainerStyle={css.main_full}
+				refreshControl={
+					<RefreshControl
+						refreshing={this.state.refreshing}
+						onRefresh={() => this.pullToRefresh()}
+					/>
+				}
+			>
+				<Image style={css.sr_headerImage} source={surfBanner} />
+				{ this.props.surfData ? (
 					<View style={css.sr_container}>
 						<Text style={css.sr_title}>
-							Surf Report for {mapWeekdays[dateString.getDay()]}{', '}{mapMonths[dateString.getMonth()]}{' '}{dateString.getDate()}
+							Surf Report for {moment().format('dddd, MMMM Do')} {/* Sunday, June 9th */}
 						</Text>
 						<Text style={css.sr_desc}>{this.props.surfData.forecast[3]}</Text>
 						<FlatList
@@ -57,29 +57,33 @@ class SurfReport extends React.Component {
 								</View>
 							)}
 						/>
+						<LastUpdated
+							lastUpdated={this.props.lastUpdated}
+							error={this.props.requestError ? "We're having trouble updating right now." : null}
+							warning={this.props.requestError ? "We're having trouble updating right now." : null}
+						/>
 					</View>
-				</ScrollView>
-			)
-		} catch (err) {
-			console.log('Error: Surf Report: ', err)
-			return (
-				<ScrollView style={css.scroll_default} contentContainerStyle={css.main_full}>
-					<Image style={css.sr_headerImage} source={surfHeader} />
-					<View style={css.sr_container}>
-						<Text style={css.sr_desc}>
-							An error occurred while loading your Surf Report.
-							{'\n'}Please try again later.
-						</Text>
-					</View>
-				</ScrollView>
-			)
+				) : (
+					<ActivityIndicator size="large" style={css.activity_indicator} />
+				)}
+			</ScrollView>
+		)
+	}
+}
+
+function mapDispatchtoProps(dispatch) {
+	return {
+		updateSurf: () => {
+			dispatch({ type: 'UPDATE_SURF' })
 		}
 	}
 }
 
 function mapStateToProps(state) {
-	return { surfData: state.surf.data }
+	return {
+		surfData: state.surf.data,
+		lastUpdated: state.surf.lastUpdated,
+	}
 }
 
-const ActualSurfReport = connect(mapStateToProps)(SurfReport)
-export default ActualSurfReport
+export default connect(mapStateToProps, mapDispatchtoProps)(SurfReport)

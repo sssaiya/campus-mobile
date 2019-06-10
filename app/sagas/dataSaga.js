@@ -4,18 +4,15 @@ import { put, call, select } from 'redux-saga/effects'
 import { Image } from 'react-native'
 import SpecialEventsService from '../services/specialEventsService'
 import ParkingService from '../services/parkingService'
-import WeatherService from '../services/weatherService'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
 
 import {
-	SURF_API_TTL,
 	SPECIAL_EVENTS_TTL,
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
 	PARKING_API_TTL
 } from '../AppSettings'
 
-const getSurf = state => (state.surf)
 const getSpecialEvents = state => (state.specialEvents)
 const getCards = state => (state.cards)
 const getShuttle = state => (state.shuttle)
@@ -25,7 +22,6 @@ const getParkingData = state => (state.parking)
 function* watchData() {
 	while (true) {
 		try {
-			yield call(updateSurf)
 			yield call(updateSpecialEvents)
 			yield call(updateParking)
 			yield call(updateShuttleMaster)
@@ -66,22 +62,6 @@ function* updateShuttleMaster() {
 			toggles: initialToggles,
 			nowTime
 		})
-	}
-}
-
-function* updateSurf() {
-	const { lastUpdated, data } = yield select(getSurf)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const ttl = SURF_API_TTL
-
-	if (timeDiff < ttl && data) {
-		// Do nothing, no need to fetch new data
-	} else {
-		const surf = yield call(WeatherService.FetchSurf)
-		if (surf) {
-			yield put({ type: 'SET_SURF', surf })
-		}
 	}
 }
 

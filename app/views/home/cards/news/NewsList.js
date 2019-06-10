@@ -57,7 +57,7 @@ class NewsList extends React.Component {
 		const { type } = this.props
 		const MAX_ROWS = 3
 
-		if (this.state.newsData) {
+		if (Array.isArray(this.state.newsData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
@@ -72,9 +72,7 @@ class NewsList extends React.Component {
 			)
 		} else {
 			return (
-				<View style={[css.dlc_cardcenter, css.dlc_wc_loading_height]}>
-					<ActivityIndicator size="large" />
-				</View>
+				<ActivityIndicator size="large" style={css.activity_indicator} />
 			)
 		}
 	}

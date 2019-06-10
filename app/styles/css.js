@@ -87,12 +87,14 @@ const css = StyleSheet.create({
 	scrollcard_dotStyle: { padding: 6, paddingTop: 3, backgroundColor: 'transparent', color: COLOR.DGREY },
 	scrollcard_dotsContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
 	scrollcard_listStyle: { flexDirection: 'row' },
-	card_last_updated: { flexDirection: 'row', alignItems: 'center', paddingTop: 16, paddingLeft: 8, paddingBottom: 8 },
-	card_last_updated_text: { fontStyle: 'italic', fontWeight: '300', color: COLOR.DGREY },
+	safe_image_loading_activity_indicator: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+	// Last Updated
+	last_updated: { flexDirection: 'row', paddingTop: 8,  },
+	last_updated_card: { paddingLeft: 8, paddingBottom: 8 },
+	last_updated_text: { fontStyle: 'italic', fontWeight: '300', color: COLOR.DGREY },
 	last_updated_err_icon: { fontSize: 16, marginRight: 6 },
 	last_updated_err_icon_warn: { color: COLOR.WARNING },
 	last_updated_err_icon_error: { color: COLOR.ERROR },
-	safe_image_loading_activity_indicator: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 	// Data
 	DataList_card_list: {  },
 	DataList_full_list: { top: -1 },
@@ -125,6 +127,8 @@ const css = StyleSheet.create({
 	button_primary_text: { fontSize: 16, color: COLOR.WHITE },
 	share_button: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.MGREY, borderRadius: 3, marginTop: 20, padding: 10 },
 	share_button_text: { fontSize: 16 },
+	// Loading - ActivityIndicator
+	activity_indicator: { alignItems: 'center', justifyContent: 'center', padding: 20 },
 	// Checkbox
 	ccb_checkBoxContainer: { flexDirection: 'row', alignItems: 'center' },
 	ccb_center: { justifyContent: 'center', alignItems: 'center' },
@@ -440,7 +444,7 @@ const css = StyleSheet.create({
 	wd_maxText: { fontSize: 14, fontWeight: '300', paddingTop: 10 },
 	ww_weekContainer: { flexDirection: 'row', padding: 20 },
 	sr_headerImage: { width: LAYOUT.WINDOW_WIDTH, height: round(LAYOUT.WINDOW_WIDTH * 0.361) },
-	sr_container: { paddingHorizontal: 10, paddingTop: 10 },
+	sr_container: { padding: 10 },
 	sr_beach_list: { marginTop: 20 },
 	sr_surf_row: { marginBottom: 15 },
 	sr_title: { fontSize: 22, fontWeight: '400', color: COLOR.PRIMARY },

@@ -3,7 +3,7 @@ import { Text, View, SectionList, Switch } from 'react-native'
 import { connect } from 'react-redux'
 import css from '../../../styles/css'
 
-class Notifications extends Component {
+class NotificationTopics extends Component {
 	componentDidMount() {
 		this.props.getTopics()
 	}
@@ -116,4 +116,4 @@ const mapDispatchToProps = dispatch => (
 	}
 )
 
-export default connect(mapStateToProps, mapDispatchToProps)(Notifications)
+export default connect(mapStateToProps, mapDispatchToProps)(NotificationTopics)

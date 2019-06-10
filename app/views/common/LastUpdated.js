@@ -18,7 +18,8 @@ class LastUpdated extends Component {
 	render() {
 		if (this.props.lastUpdated) {
 			let warningComponent = null
-			let messageText = `Last updated: ${moment(this.props.lastUpdated).fromNow()}`
+			let messageText = 'Last updated: ' + moment(this.props.lastUpdated).fromNow()
+
 			if (this.props.warning && !this.props.error) {
 				warningComponent = (
 					<FAIcon
@@ -36,10 +37,11 @@ class LastUpdated extends Component {
 				)
 				messageText = this.props.error
 			}
+
 			return (
-				<View style={[css.card_last_updated, this.props.style]}>
+				<View style={[css.last_updated, this.props.style]}>
 					{warningComponent}
-					<Text style={css.card_last_updated_text}>
+					<Text style={css.last_updated_text}>
 						{messageText}
 					</Text>
 				</View>

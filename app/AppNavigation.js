@@ -41,7 +41,7 @@ import ShuttleSavedListView from './views/home/cards/shuttle/ShuttleSavedListVie
 import FullSchedule from './views/home/cards/classes/FullScheduleListView'
 import ParkingSpotType from './views/home/cards/parking/ParkingSpotType'
 import ManageParkingLots from './views/home/cards/parking/ManageParkingLots'
-import Notifications from './views/profile/notifications/Notifications'
+import NotificationTopics from './views/profile/notifications/NotificationTopics'
 import CardPreferences from './views/profile/card/CardPreferences'
 
 const campusLogoImage = require('./assets/images/UCSanDiegoLogo-nav.png')
@@ -214,8 +214,8 @@ let MainStack = createStackNavigator(
 				title: 'Feedback'
 			}
 		},
-		Notifications: {
-			screen: Notifications,
+		NotificationTopics: {
+			screen: NotificationTopics,
 			navigationOptions: {
 				title: 'Notifications',
 			}

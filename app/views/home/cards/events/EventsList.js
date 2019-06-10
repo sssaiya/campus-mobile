@@ -59,7 +59,7 @@ class EventsList extends React.Component {
 		const { type } = this.props
 		const MAX_ROWS = 3
 
-		if (this.state.eventsData) {
+		if (Array.isArray(this.state.eventsData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
@@ -74,9 +74,7 @@ class EventsList extends React.Component {
 			)
 		} else {
 			return (
-				<View style={[css.dlc_cardcenter, css.dlc_wc_loading_height]}>
-					<ActivityIndicator size="large" />
-				</View>
+				<ActivityIndicator size="large" style={css.activity_indicator} />
 			)
 		}
 	}
