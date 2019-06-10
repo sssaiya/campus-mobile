@@ -53,6 +53,10 @@ function* updateCard(action) {
 				console.log('Update weather from cardSaga')
 				yield put({ type: 'UPDATE_WEATHER' })
 				break
+			case 'parking':
+				console.log('Update parking from cardSaga')
+				yield put({ type: 'UPDATE_PARKING' })
+				break
 		}
 	}
 }

@@ -100,7 +100,6 @@ function* resetMessages() {
 }
 
 function* updateMessages(action) {
-	console.log('fire updateMessages')
 	const { timestamp } = action
 	const { isLoggedIn, profile } = yield select(getUserData)
 	const { messages } = yield select(getMessages)

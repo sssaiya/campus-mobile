@@ -27,6 +27,48 @@ const ParkingCard = props => (
 	</Card>
 )
 
+/*
+Move to common/PageIndicator
+
+	{this.PageIndicator(selectedLots.length, this.state.dotIndex)}
+	PageIndicator = ({ numDots, dotIndex }) => {
+		console.log('PageIndicator')
+		console.log('numDots: ' + numDots)
+		console.log('dotIndex: ' + dotIndex)
+		console.log('PageIndicator end')
+
+
+		const dots = []
+		for (let i = 0; i < numDots; ++i) {
+			const dotName = (dotIndex === i) ? ('circle') : ('circle-thin')
+			const dot = (
+				<FAIcon
+					style={css.scrollcard_dotStyle}
+					name={dotName}
+					size={10}
+					key={'dot' + i}
+				/>
+			)
+			dots.push(dot)
+		}
+
+
+		if (numDots > 0) {
+			return (
+				<View style={css.scrollcard_dotsContainer}>
+					{dots}
+				</View>
+			)
+		} else {
+			return (
+				<View style={css.scrollcard_dotsContainer}>
+					<Text>No dots</Text>
+				</View>
+			)
+		}
+	}
+*/
+
 const mapStateToProps = state => ({
 	parkingData: state.parking.parkingData,
 	lastUpdated: state.parking.lastUpdated,

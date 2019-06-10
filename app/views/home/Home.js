@@ -75,6 +75,7 @@ export class Home extends React.Component {
 		this.props.updateNews()
 		this.props.updateLinks()
 		this.props.updateWeather()
+		this.props.updateParking()
 		this.setState({ refreshing: false })
 	}
 
@@ -173,32 +174,22 @@ export class Home extends React.Component {
 	}
 }
 
-function mapStateToProps(state, props) {
-	return {
-		cards: state.cards.cards,
-		cardOrder: state.cards.cardOrder,
-		lastScroll: state.home.lastScroll,
-		user: state.user
-	}
-}
+const mapStateToProps = (state, props) => ({
+	cards: state.cards.cards,
+	cardOrder: state.cards.cardOrder,
+	lastScroll: state.home.lastScroll,
+	user: state.user
+})
 
-function mapDispatchtoProps(dispatch) {
-	return {
-		updateScroll: (scrollY) => {
-			dispatch({ type: 'UPDATE_HOME_SCROLL', scrollY })
-		},
-		updateEvents: () => {
-			dispatch({ type: 'UPDATE_EVENTS' })
-		},
-		updateNews: () => {
-			dispatch({ type: 'UPDATE_NEWS' })
-		},
-		updateLinks: () => {
-			dispatch({ type: 'UPDATE_LINKS' })
-		},
-		updateWeather: () => {
-			dispatch({ type: 'UPDATE_WEATHER' })
-		},
-	}
-}
-export default connect(mapStateToProps, mapDispatchtoProps)(Home)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	// Cards
+	updateEvents: () => { dispatch({ type: 'UPDATE_EVENTS' }) },
+	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
+	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
+	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
+	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
+	// Scroll
+	updateScroll: (scrollY) => { dispatch({ type: 'UPDATE_HOME_SCROLL', scrollY }) },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

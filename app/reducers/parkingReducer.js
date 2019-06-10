@@ -35,8 +35,8 @@ function parking(state = initialState, action) {
 			newState.selectedSpots = [...tempArray]
 			return newState
 		}
-		case 'SET_PARKING_DATA': {
-			newState.parkingData = [...action.newParkingData]
+		case 'SET_PARKING': {
+			newState.parkingData = action.parkingData // [...action.newParkingData]
 			newState.lastUpdated = new Date().getTime()
 			return newState
 		}

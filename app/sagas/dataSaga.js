@@ -3,27 +3,22 @@ import { delay } from 'redux-saga'
 import { put, call, select } from 'redux-saga/effects'
 import { Image } from 'react-native'
 import SpecialEventsService from '../services/specialEventsService'
-import ParkingService from '../services/parkingService'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
 
 import {
 	SPECIAL_EVENTS_TTL,
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
-	PARKING_API_TTL
 } from '../AppSettings'
 
 const getSpecialEvents = state => (state.specialEvents)
 const getCards = state => (state.cards)
 const getShuttle = state => (state.shuttle)
-const getUserData = state => (state.user)
-const getParkingData = state => (state.parking)
 
 function* watchData() {
 	while (true) {
 		try {
 			yield call(updateSpecialEvents)
-			yield call(updateParking)
 			yield call(updateShuttleMaster)
 			yield put({ type: 'UPDATE_DINING' })
 			yield put({ type: 'UPDATE_SCHEDULE' })
@@ -113,35 +108,6 @@ function* updateSpecialEvents() {
 			yield put({ type: 'UPDATE_AUTOACTIVATED_STATE', id: 'specialEvents', state: false })
 			yield put({ type: 'HIDE_CARD', id: 'specialEvents' })
 		}
-	}
-}
-
-function* updateParking() {
-	const { lastUpdated, parkingData } = yield select(getParkingData),
-		nowTime = new Date().getTime(),
-		ttl = PARKING_API_TTL,
-		timeDiff = nowTime - lastUpdated
-
-	if (timeDiff > ttl) {
-		// Fetch for new data
-		const newParkingData = yield call(ParkingService.FetchParking)
-		if (newParkingData) {
-			newParkingData.sort(sortByOldParkingData(parkingData))
-			yield put({ type: 'SET_PARKING_DATA', newParkingData })
-		}
-		// get previously selected lots from users synced profile
-		const userData = yield select(getUserData)
-		const prevSelectedParkingLots = userData.profile.selectedLots
-		if (prevSelectedParkingLots) {
-			yield put({ type: 'SYNC_PARKING_LOTS_DATA', prevSelectedParkingLots })
-		}
-	}
-}
-
-// comparator function to sort all the parking lots in the same order as a parking data structure which is passed in
-function sortByOldParkingData(parkingData) {
-	return function (a, b) {
-		return parkingData.findIndex(x => x.LocationName === a.LocationName) - parkingData.findIndex(x => x.LocationName === b.LocationName)
 	}
 }
 

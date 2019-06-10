@@ -18,12 +18,12 @@ class AppStateContainer extends React.Component {
 	handleAppStateChange = (nextAppState) => {
 		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
 			console.log('APP STATE CHANGE: current: ' + this.state.appState + ', next: ' + nextAppState)
-
 			this.props.updateMessages(new Date().getTime())
 			this.props.updateEvents()
 			this.props.updateNews()
 			this.props.updateLinks()
 			this.props.updateWeather()
+			this.props.updateParking()
 		}
 		this.setState({ appState: nextAppState })
 	}
@@ -33,24 +33,15 @@ class AppStateContainer extends React.Component {
 	}
 }
 
-const mapDispatchToProps = (dispatch, ownProps) => (
-	{
-		updateMessages: () => {
-			dispatch({ type: 'UPDATE_MESSAGES' })
-		},
-		updateEvents: () => {
-			dispatch({ type: 'UPDATE_EVENTS' })
-		},
-		updateNews: () => {
-			dispatch({ type: 'UPDATE_NEWS' })
-		},
-		updateLinks: () => {
-			dispatch({ type: 'UPDATE_LINKS' })
-		},
-		updateWeather: () => {
-			dispatch({ type: 'UPDATE_WEATHER' })
-		},
-	}
-)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	// Cards
+	updateEvents: () => { dispatch({ type: 'UPDATE_EVENTS' }) },
+	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
+	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
+	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
+	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
+	// Notifications
+	updateMessages: () => { dispatch({ type: 'UPDATE_MESSAGES' }) },
+})
 
 module.exports = connect(null, mapDispatchToProps)(AppStateContainer)

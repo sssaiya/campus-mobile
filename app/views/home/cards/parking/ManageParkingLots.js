@@ -168,7 +168,7 @@ const mapDispatchToProps = dispatch => (
 			dispatch({ type: 'SET_WARNING_SIGN', showWarning })
 		},
 		reorderParkingLots: (newParkingData) => {
-			dispatch({ type: 'SET_PARKING_DATA', newParkingData })
+			dispatch({ type: 'SET_PARKING', newParkingData })
 		}
 	}
 )
