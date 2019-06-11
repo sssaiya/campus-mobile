@@ -13,13 +13,13 @@ function shuttle(state = initialState, action) {
 	const newState = { ...state }
 
 	switch (action.type) {
-		case 'SET_SHUTTLE_MASTER':
+		case 'SET_SHUTTLE':
 			newState.routes = action.routes
 			newState.stops = action.stops
 			newState.toggles = action.toggles
-			newState.lastUpdated = action.nowTime
+			newState.lastUpdated = new Date().getTime()
 			return newState
-		case 'TOGGLE_ROUTE':
+		case 'SET_TOGGLED_ROUTE':
 			if (action.newRoute && action.route) {
 				newState.routes[action.route] = action.newRoute
 			}

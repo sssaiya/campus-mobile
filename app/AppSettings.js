@@ -21,8 +21,7 @@ module.exports = {
 	SHUTTLE_STOPS_API_URL: 'https://ies4wyrlx9.execute-api.us-west-2.amazonaws.com/prod/v2/stops/',
 	SHUTTLE_VEHICLES_API_URL: 'https://hjr84cay81.execute-api.us-west-2.amazonaws.com/prod?route=',
 	SHUTTLE_ROUTES_MASTER: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_routes_master_map.json',
-	SHUTTLE_STOPS_MASTER: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_stops_master_map.json',
-	SHUTTLE_STOPS_MASTER_NO_ROUTES: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_stops_master_map_no_routes.json',
+	SHUTTLE_STOPS_MASTER: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_stops_master_map_no_routes.json',
 	// OTHER
 	NEWS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/allstories.json',
 	EVENTS_API_URL: 'https://2jjml3hf27.execute-api.us-west-2.amazonaws.com/prod/events/student',
@@ -47,13 +46,9 @@ module.exports = {
 
 	/* TTLs */
 	LOCATION_TTL: 15000, // 15 seconds
-	SHUTTLE_API_TTL: 15000, // 15 seconds
 	DATA_SAGA_TTL: 60000, // 1 minute
 	SCHEDULE_TTL: 300000,  // 5 minutes
-	SPECIAL_EVENTS_TTL: 1800000, // 30 minutes
-	DINING_API_TTL: 3600000, // 1 hour
 	DINING_MENU_API_TTL: 3600000, // 1 hour
-	SHUTTLE_MASTER_TTL: 3600000, // 1 hour
 	USER_PROFILE_SYNC_TTL: 3600000, // 1 hour
 	SID_API_TTL: 86400000, // 1 day
 

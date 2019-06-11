@@ -125,5 +125,4 @@ function mapDispatchtoProps(dispatch) {
 	}
 }
 
-const ActualShuttleCard = connect(mapStateToProps, mapDispatchtoProps)(withNavigation(ShuttleCardContainer))
-export default ActualShuttleCard
+export default connect(mapStateToProps, mapDispatchtoProps)(withNavigation(ShuttleCardContainer))

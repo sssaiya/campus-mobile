@@ -1,10 +1,6 @@
 import React, { Component } from 'react'
-import {
-	View,
-	Text,
-} from 'react-native'
+import { View, Text } from 'react-native'
 import moment from 'moment'
-
 import ColoredDot from '../../../common/ColoredDot'
 import COLOR from '../../../../styles/ColorConstants'
 import css from '../../../../styles/css'
@@ -216,30 +212,24 @@ const generateSpecialHours = (allHours, status) => {
 }
 
 class DiningHours extends Component {
-	componentDidMount() {
-		this.interval = setInterval(() => this.forceUpdate(), 950)
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.interval)
-	}
-
 	render() {
 		const { hours, specialHours, style } = this.props
 		const status = dining.getOpenStatus(hours)
 
 		let hoursElements
-		if (specialHours) hoursElements = generateSpecialHours(hours, status)
-		else hoursElements = generateHours(hours, status)
+		if (specialHours) {
+			hoursElements = generateSpecialHours(hours, status)
+		} else {
+			hoursElements = generateHours(hours, status)
+		}
+
 		return (
 			<View>
-				{
-					(specialHours && hoursElements.length > 0) ? (
-						<Text style={css.dd_description_subtext}>
-							Special hours:
-						</Text>
-					) : null
-				}
+				{(specialHours && hoursElements.length > 0) ? (
+					<Text style={css.dd_description_subtext}>
+						Special hours:
+					</Text>
+				) : null }
 				<View style={[style]}>
 					{hoursElements}
 				</View>

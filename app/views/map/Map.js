@@ -363,7 +363,7 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 			dispatch({ type: 'FETCH_MAP_SEARCH', term, location })
 		},
 		toggle: (route) => {
-			dispatch({ type: 'UPDATE_TOGGLE_ROUTE', route })
+			dispatch({ type: 'UPDATE_SHUTTLE_TOGGLED_ROUTE', route })
 		},
 		removeHistory: (index) => {
 			dispatch({ type: 'REMOVE_HISTORY', index })

@@ -1,17 +1,103 @@
-import { delay } from 'redux-saga'
-import {
-	call,
-	fork,
-	put,
-	select,
-	takeLatest
-} from 'redux-saga/effects'
-import { fetchShuttleArrivalsByStop, fetchVehiclesByRoute } from '../services/shuttleService'
-import { SHUTTLE_API_TTL } from '../AppSettings'
+import { call, fork, put, select, takeLatest } from 'redux-saga/effects'
+import ShuttleService from '../services/shuttleService'
+import { getDistance } from '../util/map'
 
 const getShuttle = state => (state.shuttle)
+const shuttleState = state => (state.cards.cards.shuttle)
+const getLocation = state => (state.location)
 
-function* toggleRoute(action) {
+function* updateShuttle() {
+	const { active } = yield select(shuttleState)
+	if (active) {
+		const stopsData = yield call(ShuttleService.FetchMasterStopsNoRoutes)
+		const routesData = yield call(ShuttleService.FetchMasterRoutes)
+		const initialToggles = {}
+		Object.keys(routesData).forEach((key, index) => {
+			initialToggles[key] = false
+		})
+		yield put({ type: 'SET_SHUTTLE', stops: stopsData, routes: routesData, toggles: initialToggles })
+	}
+}
+
+function* updateShuttleArrivals() {
+	const { savedStops, closestStop, toggles } = yield select(getShuttle)
+
+	// Update Arrivals
+	if (Array.isArray(savedStops)) {
+		// Fetch arrivals for all saved stops
+		for (let i = 0; i < savedStops.length; ++i) {
+			const stopID = savedStops[i].id
+			yield call(fetchArrival, stopID)
+		}
+		if (closestStop) {
+			yield call(fetchArrival, closestStop.id)
+		}
+	}
+
+	// Update Vehicles
+	if (toggles) {
+		const toggleKeys = Object.keys(toggles)
+		for (let i = 0; i < toggleKeys.length; ++i) {
+			const routeKey = toggleKeys[i]
+			const route = toggles[routeKey]
+			// Update vehicle info if route is turned on
+			if (route) {
+				yield call(updateVehicles, routeKey)
+			}
+		}
+	}
+}
+
+function* updateShuttleClosestStop() {
+	const location = yield select(getLocation)
+	if (location.permission === 'authorized' && location.position && location.position.coords) {
+		const shuttle = yield select(getShuttle)
+		const { stops } = shuttle
+		const currClosestStop = shuttle.closestStop
+
+		let closestDist = 1000000000
+		let closestStop
+		let closestSavedIndex = 0
+
+		if (currClosestStop && currClosestStop.savedIndex) {
+			closestSavedIndex = currClosestStop.savedIndex
+		}
+
+		console.log('closestStop1:')
+		console.log(closestStop)
+
+		Object.keys(stops).forEach((stopID, index) => {
+			const stop = stops[stopID]
+			const distanceFromStop = getDistance(location.position.coords.latitude, location.position.coords.longitude, stop.lat, stop.lon)
+			if (distanceFromStop < closestDist) {
+				closestStop = Object.assign({}, stop)
+				closestDist = distanceFromStop
+			}
+		})
+
+		console.log('closestStop2:')
+		console.log(closestStop)
+
+		closestStop.closest = true
+		closestStop.savedIndex = closestSavedIndex
+
+		console.log('closestStop3:')
+		console.log(closestStop)
+
+		yield put({ type: 'SET_CLOSEST_STOP', closestStop })
+	} else {
+		console.log('location.permission:')
+		console.log(location.permission)
+
+		console.log('location.position:')
+		console.log(location.position)
+		
+		console.log('location.position.coords:')
+		console.log(location.position.coords)
+	}
+}
+
+function* updateShuttleToggledRoute(action) {
 	const { toggles, stops, routes } = yield select(getShuttle)
 	const { route } = action
 
@@ -84,13 +170,7 @@ function* toggleRoute(action) {
 		})
 	}
 
-	yield put({
-		type: 'TOGGLE_ROUTE',
-		route,
-		newRoute,
-		newToggles,
-		newStops
-	})
+	yield put({ type: 'SET_TOGGLED_ROUTE', route, newRoute, newToggles, newStops })
 }
 
 function* addStop(action) {
@@ -201,7 +281,7 @@ function* fetchArrival(stopID) {
 	const shuttle = yield select(getShuttle)
 
 	try {
-		const arrivals = yield call(fetchShuttleArrivalsByStop, stopID)
+		const arrivals = yield call(ShuttleService.FetchShuttleArrivalsByStop, stopID)
 
 		if (arrivals) {
 			// Sort arrivals, should be on lambda?
@@ -229,14 +309,9 @@ function* fetchArrival(stopID) {
 	}
 }
 
-// Manual fetch arrivals
-function* fetchArrivalMan(action) {
-	yield call(fetchArrival, action.stopID)
-}
-
 // Update vehicles for given route
 function* updateVehicles(route) {
-	const vehicles = yield call(fetchVehiclesByRoute, route)
+	const vehicles = yield call(ShuttleService.FetchVehiclesByRoute, route)
 	yield put({
 		type: 'SET_VEHICLES',
 		route,
@@ -244,45 +319,15 @@ function* updateVehicles(route) {
 	})
 }
 
-function* watchArrivals() {
-	while (true) {
-		const { savedStops, closestStop, toggles } = yield select(getShuttle)
-
-		// Update Arrivals
-		if (Array.isArray(savedStops)) {
-			// Fetch arrivals for all saved stops
-			for (let i = 0; i < savedStops.length; ++i) {
-				const stopID = savedStops[i].id
-				yield call(fetchArrival, stopID)
-			}
-			if (closestStop) {
-				yield call(fetchArrival, closestStop.id)
-			}
-		}
-		// Update Vehicles
-		if (toggles) {
-			const toggleKeys = Object.keys(toggles)
-			for (let i = 0; i < toggleKeys.length; ++i) {
-				const routeKey = toggleKeys[i]
-				const route = toggles[routeKey]
-				// Update vehicle info if route is turned on
-				if (route) {
-					yield call(updateVehicles, routeKey)
-				}
-			}
-		}
-		yield delay(SHUTTLE_API_TTL)
-	}
-}
-
 function* shuttleSaga() {
 	yield takeLatest('ADD_STOP', addStop)
 	yield takeLatest('REMOVE_STOP', removeStop)
 	yield takeLatest('ORDER_STOPS', orderStops)
-	yield takeLatest('FETCH_ARRIVAL', fetchArrivalMan)
+	yield takeLatest('UPDATE_SHUTTLE', updateShuttle)
+	yield takeLatest('UPDATE_SHUTTLE_ARRIVALS', updateShuttleArrivals)
+	yield takeLatest('UPDATE_SHUTTLE_CLOSEST_STOP', updateShuttleClosestStop)
 	yield takeLatest('UPDATE_SHUTTLE_SCROLL', setScroll)
-	yield takeLatest('UPDATE_TOGGLE_ROUTE', toggleRoute)
-	yield call(watchArrivals)
+	yield takeLatest('UPDATE_SHUTTLE_TOGGLED_ROUTE', updateShuttleToggledRoute)
 }
 
 export default shuttleSaga

@@ -1,55 +1,28 @@
-
 import { delay } from 'redux-saga'
-import { put, call, select } from 'redux-saga/effects'
-import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
-
+import { put, call } from 'redux-saga/effects'
 import {
 	DATA_SAGA_TTL,
-	SHUTTLE_MASTER_TTL,
 } from '../AppSettings'
-
-const getShuttle = state => (state.shuttle)
 
 function* watchData() {
 	while (true) {
 		try {
-			yield call(updateShuttleMaster)
+			console.log('watchData')
+			// resides in scheduleSaga.js
+			// called by: dataSaga.js, userSaga.js
 			yield put({ type: 'UPDATE_SCHEDULE' })
+
+			// resides in myStudentProfileSaga.js
+			// called by: dataSaga.js, userSaga.js, StudentIDCardContainer.js
 			yield put({ type: 'UPDATE_STUDENT_PROFILE' })
+
+			// resides in userSaga.js
+			// called by dataSaga.js
 			yield put({ type: 'SYNC_USER_PROFILE' })
 		} catch (err) {
 			console.log(err)
 		}
 		yield delay(DATA_SAGA_TTL)
-	}
-}
-
-function* updateShuttleMaster() {
-	const { lastUpdated, routes, stops } = yield select(getShuttle)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const shuttleTTL = SHUTTLE_MASTER_TTL
-
-	if ((timeDiff < shuttleTTL) && (routes !== null) && (stops !== null)) {
-		// Do nothing, don't need to update
-	} else {
-		// Fetch for new data
-		const stopsData = yield call(fetchMasterStopsNoRoutes)
-		const routesData = yield call(fetchMasterRoutes)
-
-		// Set toggles
-		const initialToggles = {}
-		Object.keys(routesData).forEach((key, index) => {
-			initialToggles[key] = false
-		})
-
-		yield put({
-			type: 'SET_SHUTTLE_MASTER',
-			stops: stopsData,
-			routes: routesData,
-			toggles: initialToggles,
-			nowTime
-		})
 	}
 }
 

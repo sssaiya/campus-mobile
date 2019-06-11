@@ -2,12 +2,10 @@ import React from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import moment from 'moment'
 import DiningItem from './DiningItem'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import SafeImage from '../../../common/SafeImage'
-import { militaryToAMPM } from '../../../../util/general'
 
 class DiningList extends React.Component {
 	DiningListItem = (data) => {
@@ -40,10 +38,6 @@ class DiningList extends React.Component {
 	render() {
 		const { type, diningData } = this.props
 		const MAX_ROWS = 3
-
-		console.log('\n--DIningListRender: type: ' + type)
-		console.log(diningData)
-		console.log('--diningData end')
 
 		if (Array.isArray(this.props.diningData)) {
 			let diningDataArray = []
