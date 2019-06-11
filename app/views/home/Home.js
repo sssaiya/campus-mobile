@@ -8,7 +8,7 @@ import EventsCard from './cards/events/EventsCard'
 import LinksCard from './cards/links/LinksCard'
 import NewsCard from './cards/news/NewsCard'
 import DiningCard from './cards/dining/DiningCard'
-import SpecialEventsCardContainer from './cards/specialEvents/SpecialEventsCardContainer'
+import SpecialEventsCard from './cards/specialEvents/SpecialEventsCard'
 import StudentIDCardContainer from './cards/studentId/StudentIDCardContainer'
 import FinalsCard from './cards/finals/FinalsCard'
 import ScheduleCardContainer from './cards/classes/ScheduleCardContainer'
@@ -108,7 +108,7 @@ export class Home extends React.Component {
 
 					switch (card) {
 						case 'specialEvents':
-							activeCards.push(<SpecialEventsCardContainer key="specialEvents" />)
+							activeCards.push(<SpecialEventsCard key="specialEvents" />)
 							break
 						case 'studentId':
 							activeCards.push(<StudentIDCardContainer key="studentId" />)
