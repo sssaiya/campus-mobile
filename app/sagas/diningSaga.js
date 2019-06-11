@@ -1,9 +1,11 @@
 import { put, takeLatest, call, select, race } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
+import moment from 'moment'
+
 import logger from '../util/logger'
 import DiningService from '../services/diningService'
 import { DINING_MENU_API_TTL, HTTP_REQUEST_TTL } from '../AppSettings'
-import { convertMetersToMiles, getDistanceMilesStr, dynamicSort } from '../util/general'
+import { convertMetersToMiles, getDistanceMilesStr, dynamicSort, militaryToAMPM } from '../util/general'
 import { getDistance } from '../util/map'
 
 const getDining = state => (state.dining)
@@ -13,7 +15,8 @@ function* updateDining(action) {
 	const { active } = yield select(diningState)
 	if (active) {
 		const diningData = yield call(DiningService.FetchDining)
-		const diningDataSorted = yield call(_sortDining, diningData)
+		const diningDataParsed = yield call(parseDining, diningData)
+		const diningDataSorted = yield call(sortDining, diningDataParsed)
 		yield put({ type: 'SET_DINING', data: diningDataSorted })
 	}
 }
@@ -25,6 +28,31 @@ function* updateDiningDistance(action) {
 		const diningDataWithDistance = yield call(_setDiningDistance, position, data)
 		yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDistance })
 	}
+}
+
+function parseDining(diningData) {
+	const parsedDiningData = diningData.slice()
+	parsedDiningData.forEach((element, index) => {
+		parsedDiningData[index] = {
+			...element,
+			subtext: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
+			image: element.imagethumb
+		}
+	})
+	return parsedDiningData
+}
+
+function sortDining(diningData) {
+	// Sort dining locations by name
+	return new Promise((resolve, reject) => {
+		if (Array.isArray(diningData)) {
+			const sortedDiningData = diningData.slice()
+			sortedDiningData.sort(dynamicSort('name'))
+			resolve(sortedDiningData)
+		} else {
+			reject(new Error('sortDining: ' + diningData))
+		}
+	})
 }
 
 function* getDiningMenu(action) {
@@ -73,19 +101,6 @@ function* fetchDiningMenu(id) {
 		logger.log(error)
 		yield put({ type: 'GET_DINING_MENU_FAILURE', error })
 	}
-}
-
-function _sortDining(diningData) {
-	// Sort dining locations by name
-	return new Promise((resolve, reject) => {
-		if (Array.isArray(diningData)) {
-			const sortedDiningData = diningData.slice()
-			sortedDiningData.sort(dynamicSort('name'))
-			resolve(sortedDiningData)
-		} else {
-			reject(new Error('Err:_sortDining:' + diningData))
-		}
-	})
 }
 
 function _setDiningDistance(position, diningData) {

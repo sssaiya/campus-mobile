@@ -24,6 +24,7 @@ class AppStateContainer extends React.Component {
 			this.props.updateLinks()
 			this.props.updateNews()
 			this.props.updateParking()
+			this.props.updateSpecialEvents()
 			this.props.updateWeather()
 			// Update Notifications
 			this.props.updateMessages(new Date().getTime())
@@ -43,6 +44,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
 	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
 	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
+	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
 	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
 	// Notifications
 	updateMessages: () => { dispatch({ type: 'UPDATE_MESSAGES' }) },

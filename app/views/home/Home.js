@@ -77,6 +77,7 @@ export class Home extends React.Component {
 		this.props.updateLinks()
 		this.props.updateNews()
 		this.props.updateParking()
+		this.props.updateSpecialEvents()
 		this.props.updateWeather()
 		this.setState({ refreshing: false })
 	}
@@ -190,6 +191,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
 	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
 	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
+	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
 	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
 	// Scroll
 	updateScroll: (scrollY) => { dispatch({ type: 'UPDATE_HOME_SCROLL', scrollY }) },

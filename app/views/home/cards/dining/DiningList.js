@@ -10,25 +10,6 @@ import SafeImage from '../../../common/SafeImage'
 import { militaryToAMPM } from '../../../../util/general'
 
 class DiningList extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { diningData: this.parseEventData(props.diningData) }
-	}
-
-	parseEventData = (diningData) => {
-		if (Array.isArray(diningData)) {
-			const parsedDiningData = diningData.slice()
-			parsedDiningData.forEach((element, index) => {
-				parsedDiningData[index] = {
-					...element,
-					subtext: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-					image: element.imagethumb
-				}
-			})
-			return parsedDiningData
-		}
-	}
-
 	DiningListItem = (data) => {
 		const { navigation } = this.props
 
@@ -57,16 +38,31 @@ class DiningList extends React.Component {
 	}
 
 	render() {
-		const { type } = this.props
+		const { type, diningData } = this.props
 		const MAX_ROWS = 3
 
-		if (Array.isArray(this.state.diningData)) {
+		console.log('\n--DIningListRender: type: ' + type)
+		console.log(diningData)
+		console.log('--diningData end')
+
+		if (Array.isArray(this.props.diningData)) {
+			let diningDataArray = []
+
+			if (type === 'card') {
+				diningDataArray = this.props.diningData.slice(0, MAX_ROWS)
+			} else {
+				diningDataArray = this.props.diningData
+			}
+
+			console.log('diningDataArray:')
+			console.log(diningDataArray)
+
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={type === 'card' ? this.state.diningData.slice(0, MAX_ROWS) : this.state.diningData}
+					data={diningDataArray}
 					scrollEnabled={!(type === 'card')}
-					keyExtractor={(item, index) => (item.id + index)}
+					keyExtractor={(item, index) => (item.id + item.name).trim()}
 					renderItem={({ item: rowData }) => (<DiningItem data={rowData} />)}
 					ItemSeparatorComponent={() => (
 						<View style={css.fl_separator} />
