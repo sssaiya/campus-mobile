@@ -63,9 +63,6 @@ function* updateShuttleClosestStop() {
 			closestSavedIndex = currClosestStop.savedIndex
 		}
 
-		console.log('closestStop1:')
-		console.log(closestStop)
-
 		Object.keys(stops).forEach((stopID, index) => {
 			const stop = stops[stopID]
 			const distanceFromStop = getDistance(location.position.coords.latitude, location.position.coords.longitude, stop.lat, stop.lon)
@@ -75,25 +72,10 @@ function* updateShuttleClosestStop() {
 			}
 		})
 
-		console.log('closestStop2:')
-		console.log(closestStop)
-
 		closestStop.closest = true
 		closestStop.savedIndex = closestSavedIndex
 
-		console.log('closestStop3:')
-		console.log(closestStop)
-
 		yield put({ type: 'SET_CLOSEST_STOP', closestStop })
-	} else {
-		console.log('location.permission:')
-		console.log(location.permission)
-
-		console.log('location.position:')
-		console.log(location.position)
-		
-		console.log('location.position.coords:')
-		console.log(location.position.coords)
 	}
 }
 

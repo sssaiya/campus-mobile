@@ -18,8 +18,7 @@ function* watchLocation() {
 			if (location.permission === 'authorized' && location.position && location.position.coords) {
 				const position = yield call(LocationService.getPosition)
 				yield put({ type: 'SET_POSITION', position })
-				// const closestStop = yield call(getClosestStop, position)
-				// yield put({ type: 'SET_CLOSEST_STOP', closestStop })
+				yield put({ type: 'UPDATE_SHUTTLE_CLOSEST_STOP' })
 				// yield put({ type: 'UPDATE_DINING_DISTANCE', position })
 			} else {
 				const perm = yield call(getPermission, 'location')

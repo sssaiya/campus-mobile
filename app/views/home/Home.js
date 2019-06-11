@@ -72,7 +72,6 @@ export class Home extends React.Component {
 	pullToRefresh = () => {
 		this.setState({ refreshing: true })
 		// Update Cards
-
 		console.log('PULL TO REFRESH - HOME')
 		this.props.updateDining()
 		this.props.updateEvents()
@@ -81,8 +80,6 @@ export class Home extends React.Component {
 		this.props.updateParking()
 		this.props.updateShuttle()
 		this.props.updateShuttleArrivals()
-		// update watchLocation
-		// this.props.updateShuttleClosestStop()
 		this.props.updateSpecialEvents()
 		this.props.updateWeather()
 		this.setState({ refreshing: false })
@@ -199,7 +196,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
 	updateShuttle: () => { dispatch({ type: 'UPDATE_SHUTTLE' }) },
 	updateShuttleArrivals: () => { dispatch({ type: 'UPDATE_SHUTTLE_ARRIVALS' }) },
-	updateShuttleClosestStop: () => { dispatch({ type: 'UPDATE_SHUTTLE_CLOSEST_STOP' }) },
 	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
 	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
 	// Scroll
