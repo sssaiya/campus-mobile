@@ -10,25 +10,22 @@ import css from '../../../../styles/css'
 
 const ParkingCard = props => (
 	<Card id="parking" title="Parking">
-		<View>
-			<ParkingList {...props} />
-			<LastUpdated
-				lastUpdated={props.lastUpdated}
-				error={props.requestError ? "We're having trouble updating right now." : null}
-				warning={props.requestError ? "We're having trouble updating right now." : null}
-				style={css.last_updated_card}
-			/>
-			<Touchable onPress={() => (props.navigation.navigate('ManageParkingLots'))}>
-				<View style={css.card_button_container}>
-					<Text style={css.card_button_text}>Manage Lots</Text>
-				</View>
-			</Touchable>
-		</View>
+		<ParkingList {...props} />
+		<LastUpdated
+			lastUpdated={props.lastUpdated}
+			error={props.requestError ? "We're having trouble updating right now." : null}
+			warning={props.requestError ? "We're having trouble updating right now." : null}
+			style={css.last_updated_card}
+		/>
+		<Touchable onPress={() => props.navigation.navigate('ManageParkingLots')}>
+			<View style={css.card_button_container}>
+				<Text style={css.card_button_text}>Manage Lots</Text>
+			</View>
+		</Touchable>
 	</Card>
 )
 
 const mapStateToProps = state => ({
-	parkingData: state.parking.parkingData,
 	lastUpdated: state.parking.lastUpdated,
 })
 

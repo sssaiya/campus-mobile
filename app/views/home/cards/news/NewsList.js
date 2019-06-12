@@ -65,9 +65,7 @@ class NewsList extends React.Component {
 					scrollEnabled={!(type === 'card')}
 					keyExtractor={(item, index) => (item.title + index)}
 					renderItem={({ item: rowData }) => this.NewsListItem(rowData)}
-					ItemSeparatorComponent={() => (
-						<View style={css.fl_separator} />
-					)}
+					ItemSeparatorComponent={() => (<View style={css.fl_separator} />)}
 				/>
 			)
 		} else {

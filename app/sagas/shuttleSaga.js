@@ -1,6 +1,8 @@
 import { call, fork, put, select, takeLatest } from 'redux-saga/effects'
+import Toast from 'react-native-simple-toast'
 import ShuttleService from '../services/shuttleService'
 import { getDistance } from '../util/map'
+import NavigationService from '../services/navigationService'
 
 const getShuttle = state => (state.shuttle)
 const shuttleState = state => (state.cards.cards.shuttle)
@@ -184,6 +186,9 @@ function* addStop(action) {
 		yield put({ type: 'CHANGED_STOPS', savedStops })
 		yield call(resetScroll)
 		yield fork(fetchArrival, action.stopID)
+
+		Toast.showWithGravity('Stop added.', Toast.SHORT, Toast.CENTER)
+		NavigationService.navigate('Home')
 	}
 }
 

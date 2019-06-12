@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View, Text, FlatList } from 'react-native'
+import { View, Text, FlatList, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
 import Card from '../../../common/Card'
 import LastUpdated from '../../../common/LastUpdated'
@@ -28,36 +28,31 @@ class FinalsCard extends Component {
 	}
 
 	render() {
-		if (!this.state.finalsData) {
-			return null
-		}
+		if (Array.isArray(this.state.finalsData)) {
+			return (
+				<Card id="finals" title="Finals">
+					<FlatList
+						data={this.state.finalsData}
+						ItemSeparatorComponent={() => (<View style={css.finals_separator} />)}
+						keyExtractor={(item, index) => (item.day)}
+						renderItem={({ item: rowData }) => (
+							<ScheduleDay id={rowData.day} data={rowData.data} />
+						)}
+					/>
+					<LastUpdated
+						lastUpdated={this.props.lastUpdated}
+						error={(this.props.requestError === 'App update required.') ? ('App update required.') : null}
+						warning={(this.props.requestError) ? ('We\'re having trouble updating right now.') : null}
+						style={this.css.last_updated_card}
+					/>
+				</Card>
 
-		// if (this.props.scheduleData.length > 0) {
-		return (
-			<Card id="finals" title="Finals">
-				<FlatList
-					data={this.state.finalsData}
-					ItemSeparatorComponent={() => (<View style={css.finals_separator} />)}
-					keyExtractor={(item, index) => (item.day)}
-					renderItem={({ item: rowData }) => (
-						<ScheduleDay id={rowData.day} data={rowData.data} />
-					)}
-				/>
-				<LastUpdated
-					lastUpdated={this.props.lastUpdated}
-					error={
-						(this.props.requestError === 'App update required.') ?
-							('App update required.') :
-							(null)
-					}
-					warning={
-						(this.props.requestError) ?
-							('We\'re having trouble updating right now.') :
-							(null)
-					}
-				/>
-			</Card>
-		)
+			)
+		} else {
+			return (
+				<ActivityIndicator size="large" style={css.activity_indicator} />
+			)
+		}
 	}
 }
 

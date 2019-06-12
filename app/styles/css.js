@@ -115,7 +115,7 @@ const css = StyleSheet.create({
 	fl_row_title_disabled: { flex: 1, color: COLOR.DMGREY, fontSize: 18 },
 	fl_row_arrow: { color: COLOR.CCC },
 	fl_separator: { height: 1, backgroundColor: COLOR.MGREY },
-	fl_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 8, borderTopWidth: 1, marginTop: -1, borderTopColor: COLOR.MGREY },
+	fl_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 8 },
 	// Sortable List View
 	sl_row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderColor: COLOR.MGREY, paddingVertical: 8, marginTop: -1, elevation: 0, backgroundColor: COLOR.WHITE, minHeight: 48 },
 	sl_icon: { color: COLOR.CCC, marginLeft: 8 },

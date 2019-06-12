@@ -1,31 +1,37 @@
 import React from 'react'
-import { Text, FlatList } from 'react-native'
+import { View, Text, FlatList } from 'react-native'
+import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation'
 import Ionicons from 'react-native-vector-icons/Ionicons'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 
-const ShuttleStopsListView = ({ navigation }) => {
-	const { shuttle_stops, addStop } = navigation.state.params
+const ShuttleStopsListView = (props) => {
+	const { shuttle_stops } = props.navigation.state.params
+
 	return (
 		<FlatList
 			style={css.main_full}
 			data={shuttle_stops}
 			keyExtractor={(listItem, index) => (String(listItem.id) + String(index))}
 			renderItem={
-				({ item: rowData }) => (
+				({ item: data }) => (
 					<StopItem
-						data={rowData}
-						addStop={addStop}
+						data={data}
+						props={props}
 					/>
 				)
 			}
+			ItemSeparatorComponent={() => (<View style={css.fl_separator} />)}
 		/>
 	)
 }
 
-const StopItem = ({ data, addStop }) => (
+const StopItem = ({ data, props }) => (
 	<Touchable
-		onPress={() => addStop(data.id, data.name.trim())}
+		onPress={() => {
+			props.addStop(data.id)
+		}}
 		style={css.fl_row}
 		disabled={(data.saved === true)}
 	>
@@ -36,4 +42,8 @@ const StopItem = ({ data, addStop }) => (
 	</Touchable>
 )
 
-export default ShuttleStopsListView
+const mapDispatchtoProps = dispatch => ({
+	addStop: (stopID) => { dispatch({ type: 'ADD_STOP', stopID }) },
+})
+
+export default connect(null, mapDispatchtoProps)(withNavigation(ShuttleStopsListView))

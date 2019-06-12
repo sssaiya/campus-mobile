@@ -7,7 +7,6 @@ import {
 function* watchData() {
 	while (true) {
 		try {
-			console.log('watchData')
 			// resides in scheduleSaga.js
 			// called by: dataSaga.js, userSaga.js
 			yield put({ type: 'UPDATE_SCHEDULE' })

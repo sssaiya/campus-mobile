@@ -1,54 +1,32 @@
 import React from 'react'
-import { Text } from 'react-native'
+import { View, Text } from 'react-native'
+import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-
-import ShuttleOverview from './ShuttleOverview'
-import ScrollCard from '../../../common/ScrollCard'
 import Touchable from '../../../common/Touchable'
 import css from '../../../../styles/css'
+import ShuttleList from './ShuttleList'
+import Card from '../../../common/Card'
+import LastUpdated from '../../../common/LastUpdated'
 
-export const ShuttleCard = ({
-	navigation,
-	stopsData,
-	savedStops,
-	gotoRoutesList,
-	gotoSavedList,
-	updateScroll,
-	lastScroll,
-}) => {
-	const extraActions = [
-		{
-			name: 'Manage Stops',
-			action: gotoSavedList
-		}
-	]
-	return (
-		<ScrollCard
-			id="shuttle"
-			title="Shuttle"
-			scrollData={savedStops}
-			renderItem={
-				({ item: rowData }) => (
-					<ShuttleOverview
-						onPress={() => navigation.navigate('ShuttleStop', { stopID: rowData.id })}
-						stopData={stopsData[rowData.id]}
-						closest={Object.prototype.hasOwnProperty.call(rowData, 'savedIndex')}
-					/>
-				)
-			}
-			actionButton={
-				<Touchable
-					style={css.shuttlecard_addButton}
-					onPress={() => gotoRoutesList()}
-				>
-					<Text style={css.shuttlecard_addText}>Add a Stop</Text>
-				</Touchable>
-			}
-			extraActions={extraActions}
-			updateScroll={updateScroll}
-			lastScroll={lastScroll}
+const ShuttleCard = props => (
+	<Card id="shuttle" title="Shuttle">
+		<ShuttleList {...props} />
+		<LastUpdated
+			lastUpdated={props.lastUpdated}
+			error={props.requestError ? "We're having trouble updating right now." : null}
+			warning={props.requestError ? "We're having trouble updating right now." : null}
+			style={css.last_updated_card}
 		/>
-	)
-}
+		<Touchable onPress={() => (props.navigation.navigate('ShuttleRoutesListView'))}>
+			<View style={css.card_button_container}>
+				<Text style={css.card_button_text}>Add Stop</Text>
+			</View>
+		</Touchable>
+	</Card>
+)
 
-export default withNavigation(ShuttleCard)
+const mapStateToProps = state => ({
+	lastUpdated: state.parking.lastUpdated,
+})
+
+export default connect(mapStateToProps)(withNavigation(ShuttleCard))

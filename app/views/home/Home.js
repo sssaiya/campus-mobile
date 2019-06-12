@@ -3,7 +3,7 @@ import { ScrollView, Alert, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { checkGooglePlayServices } from 'react-native-google-api-availability-bridge'
 import WeatherCard from './cards/weather/WeatherCard'
-import ShuttleCardContainer from './cards/shuttle/ShuttleCardContainer'
+import ShuttleCard from './cards/shuttle/ShuttleCard'
 import EventsCard from './cards/events/EventsCard'
 import LinksCard from './cards/links/LinksCard'
 import NewsCard from './cards/news/NewsCard'
@@ -126,7 +126,7 @@ export class Home extends React.Component {
 							activeCards.push(<WeatherCard key="weather" />)
 							break
 						case 'shuttle':
-							activeCards.push(<ShuttleCardContainer key="shuttle" />)
+							activeCards.push(<ShuttleCard key="shuttle" />)
 							break
 						case 'dining':
 							activeCards.push(<DiningCard key="dining" />)

@@ -1,13 +1,14 @@
 import React from 'react'
-import { Alert } from 'react-native'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
+import { FlatList, Alert } from 'react-native'
 import Toast from 'react-native-simple-toast'
-import ShuttleCard from './ShuttleCard'
+import ShuttleOverview from './ShuttleOverview'
+import css from '../../../../styles/css'
 import logger from '../../../../util/logger'
 
-export class ShuttleCardContainer extends React.Component {
-	gotoRoutesList = (navigation) => {
+class ShuttleList extends React.Component {
+	gotoRoutesList(navigation) {
 		if (Array.isArray(this.props.savedStops) && this.props.savedStops.length < 10) {
 			const { shuttle_routes } = this.props
 			// Sort routes by alphabet
@@ -30,9 +31,8 @@ export class ShuttleCardContainer extends React.Component {
 		}
 	}
 
-	isSaved = (stop) => {
+	isSaved(stop) {
 		const { savedStops } = this.props
-
 		if (Array.isArray(savedStops)) {
 			for (let i = 0; i < savedStops.length; ++i) {
 				if (savedStops[i].id === stop.id) {
@@ -43,16 +43,14 @@ export class ShuttleCardContainer extends React.Component {
 		return false
 	}
 
-	gotoStopsList = (stops) => {
+	gotoStopsList(stops) {
 		const { navigation } = this.props
-
-		// Sort stops by alphabet
+		// Sort stops A->Z
 		const alphaStops = []
 		Object.keys(stops)
 			.sort((a, b) => stops[a].name.trim().localeCompare(stops[b].name.trim()))
 			.forEach((key) => {
 				const stop = Object.assign({}, stops[key])
-
 				if (this.isSaved(stop)) {
 					stop.saved = true
 				}
@@ -62,12 +60,12 @@ export class ShuttleCardContainer extends React.Component {
 		navigation.navigate('ShuttleStopsListView', { shuttle_stops: alphaStops, addStop: this.addStop })
 	}
 
-	gotoSavedList = () => {
+	gotoSavedList() {
 		const { navigation } = this.props
 		navigation.navigate('ShuttleSavedListView', { gotoRoutesList: this.gotoRoutesList })
 	}
 
-	addStop = (stopID, stopName) => {
+	addStop(stopID, stopName) {
 		const { navigation } = this.props
 		logger.ga('Shuttle: Added stop "' + stopName + '"')
 		Toast.showWithGravity('Stop added.', Toast.SHORT, Toast.CENTER)
@@ -76,53 +74,48 @@ export class ShuttleCardContainer extends React.Component {
 	}
 
 	render() {
-		const {
-			navigation,
-			stopsData,
-			savedStops,
-			removeStop,
-			closestStop,
-			updateScroll,
-			lastScroll
-		} = this.props
-
-		const displayStops = savedStops.slice()
-		if (closestStop) {
-			displayStops.splice(closestStop.savedIndex, 0, closestStop)
+		const displayStops = this.props.savedStops.slice()
+		if (this.props.closestStop) {
+			displayStops.splice(this.props.closestStop.savedIndex, 0, this.props.closestStop)
 		}
 
-		return (<ShuttleCard
-			savedStops={displayStops}
-			stopsData={stopsData}
-			gotoSavedList={this.gotoSavedList}
-			gotoRoutesList={() => this.gotoRoutesList(navigation)}
-			removeStop={removeStop}
-			updateScroll={updateScroll}
-			lastScroll={lastScroll}
-		/>)
+		console.log('displayStops---------------')
+		console.log(displayStops)
+
+		return (
+			<FlatList
+				style={css.scrollcard_listStyle}
+				pagingEnabled
+				horizontal
+				showsHorizontalScrollIndicator={true}
+				data={displayStops}
+				keyExtractor={(item, index) => String(item.id)}
+				renderItem={
+					({ item: rowData }) => (
+						<ShuttleOverview
+							onPress={() => this.props.navigation.navigate('ShuttleStop', { stopID: rowData.id })}
+							stopData={this.props.stopsData[rowData.id]}
+							closest={Object.prototype.hasOwnProperty.call(rowData, 'savedIndex')}
+						/>
+					)
+				}
+			/>
+		)
 	}
 }
 
-function mapStateToProps(state, props) {
-	return {
-		closestStop: state.shuttle.closestStop,
-		stopsData: state.shuttle.stops,
-		shuttle_routes: state.shuttle.routes,
-		shuttle_stops: state.shuttle.stops,
-		savedStops: state.shuttle.savedStops,
-		lastScroll: state.shuttle.lastScroll
-	}
-}
+const mapStateToProps = state => ({
+	closestStop: state.shuttle.closestStop,
+	stopsData: state.shuttle.stops,
+	shuttle_routes: state.shuttle.routes,
+	shuttle_stops: state.shuttle.stops,
+	savedStops: state.shuttle.savedStops,
+	lastUpdated: state.shuttle.lastUpdated,
+})
 
-function mapDispatchtoProps(dispatch) {
-	return {
-		addStop: (stopID) => {
-			dispatch({ type: 'ADD_STOP', stopID })
-		},
-		updateScroll: (scrollX) => {
-			dispatch({ type: 'UPDATE_SHUTTLE_SCROLL', scrollX })
-		}
-	}
-}
+const mapDispatchtoProps = dispatch => ({
+	addStop: (stopID) => { dispatch({ type: 'ADD_STOP', stopID }) },
+	updateScroll: (scrollX) => { dispatch({ type: 'UPDATE_SHUTTLE_SCROLL', scrollX }) }
+})
 
-export default connect(mapStateToProps, mapDispatchtoProps)(withNavigation(ShuttleCardContainer))
+export default connect(mapStateToProps, mapDispatchtoProps)(withNavigation(ShuttleList))

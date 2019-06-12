@@ -20,7 +20,7 @@ class ParkingList extends React.Component {
 						style={css.scrollcard_listStyle}
 						pagingEnabled
 						horizontal
-						showsHorizontalScrollIndicator={false}
+						showsHorizontalScrollIndicator={true}
 						onScroll={this.handleScroll}
 						scrollEventThrottle={0}
 						data={updatedSelectedLots}
