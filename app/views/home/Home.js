@@ -11,7 +11,7 @@ import DiningCard from './cards/dining/DiningCard'
 import SpecialEventsCard from './cards/specialEvents/SpecialEventsCard'
 import StudentIDCardContainer from './cards/studentId/StudentIDCardContainer'
 import FinalsCard from './cards/finals/FinalsCard'
-import ScheduleCardContainer from './cards/classes/ScheduleCardContainer'
+import ClassesCardContainer from './cards/classes/ClassesCardContainer'
 import ParkingCard from './cards/parking/ParkingCard'
 import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import logger from '../../util/logger'
@@ -76,6 +76,7 @@ export class Home extends React.Component {
 		this.props.updateLinks()
 		this.props.updateNews()
 		this.props.updateParking()
+		// this.props.updateSchedule()
 		this.props.updateShuttle()
 		this.props.updateShuttleArrivals()
 		this.props.updateSpecialEvents()
@@ -124,7 +125,7 @@ export class Home extends React.Component {
 							activeCards.push(<FinalsCard key="finals" />)
 							break
 						case 'schedule':
-							activeCards.push(<ScheduleCardContainer key="schedule" />)
+							activeCards.push(<ClassesCardContainer key="schedule" />)
 							break
 						case 'weather':
 							activeCards.push(<WeatherCard key="weather" />)
@@ -198,6 +199,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
 	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
 	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
+	// updateSchedule: () => { dispatch({ type: 'UPDATE_SCHEDULE' }) },
 	updateShuttle: () => { dispatch({ type: 'UPDATE_SHUTTLE' }) },
 	updateShuttleArrivals: () => { dispatch({ type: 'UPDATE_SHUTTLE_ARRIVALS' }) },
 	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },

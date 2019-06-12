@@ -13,7 +13,7 @@ import LastUpdated from '../../../common/LastUpdated'
 import css from '../../../../styles/css'
 import COLOR from '../../../../styles/ColorConstants'
 
-const ScheduleCard = ({
+const ClassesCard = ({
 	coursesToShow,
 	totalClasses,
 	waitingData,
@@ -243,4 +243,4 @@ const DayItem = ({ active, data, onClick, index }) => {
 	)
 }
 
-export default ScheduleCard
+export default ClassesCard

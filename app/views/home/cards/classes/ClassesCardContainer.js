@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import moment from 'moment'
 import FullScheduleButton from './FullScheduleButton'
-import ScheduleCard from './ScheduleCard'
+import ClassesCard from './ClassesCard'
 import schedule from '../../../../util/schedule'
 
 let defaultSelectedClass = 0
@@ -102,7 +102,7 @@ const getUpcomingClasses = (scheduleData) => {
 	}
 }
 
-class ScheduleCardContainer extends React.Component {
+class ClassesCardContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
@@ -134,7 +134,7 @@ class ScheduleCardContainer extends React.Component {
 
 	render() {
 		return (
-			<ScheduleCard
+			<ClassesCard
 				onClickCourse={this.onClickCourse}
 				waitingData={this.props.requestStatus}
 				totalClasses={this.state.totalClasses}
@@ -157,4 +157,4 @@ const mapStateToProps = state => ({
 	requestError: state.requestErrors.GET_SCHEDULE
 })
 
-export default connect(mapStateToProps)(ScheduleCardContainer)
+export default connect(mapStateToProps)(ClassesCardContainer)

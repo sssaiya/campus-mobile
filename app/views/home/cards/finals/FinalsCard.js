@@ -8,7 +8,7 @@ import css from '../../../../styles/css'
 
 class FinalsCard extends Component {
 	constructor(props) {
-		super()
+		super(props)
 		this.state = { finalsData: this.getFinalsArray(props.scheduleData) }
 	}
 
@@ -28,9 +28,9 @@ class FinalsCard extends Component {
 	}
 
 	render() {
-		if (Array.isArray(this.state.finalsData)) {
-			return (
-				<Card id="finals" title="Finals">
+		return (
+			<Card id="finals" title="Finals">
+				{Array.isArray(this.state.finalsData) ? (
 					<FlatList
 						data={this.state.finalsData}
 						ItemSeparatorComponent={() => (<View style={css.finals_separator} />)}
@@ -39,20 +39,18 @@ class FinalsCard extends Component {
 							<ScheduleDay id={rowData.day} data={rowData.data} />
 						)}
 					/>
-					<LastUpdated
-						lastUpdated={this.props.lastUpdated}
-						error={(this.props.requestError === 'App update required.') ? ('App update required.') : null}
-						warning={(this.props.requestError) ? ('We\'re having trouble updating right now.') : null}
-						style={this.css.last_updated_card}
-					/>
-				</Card>
+				) : (
+					<ActivityIndicator size="large" style={css.activity_indicator} />
+				)}
 
-			)
-		} else {
-			return (
-				<ActivityIndicator size="large" style={css.activity_indicator} />
-			)
-		}
+				<LastUpdated
+					lastUpdated={this.props.lastUpdated}
+					error={(this.props.requestError === 'App update required.') ? ('App update required.') : null}
+					warning={(this.props.requestError) ? ('We\'re having trouble updating right now.') : null}
+					style={css.last_updated_card}
+				/>
+			</Card>
+		)
 	}
 }
 
@@ -66,7 +64,7 @@ const ScheduleDay = ({ id, data }) => (
 const DayList = ({ courseItems }) => (
 	<FlatList
 		data={courseItems}
-		keyExtractor={(item, index) => (item.course_code + item.section)}
+		keyExtractor={(item, index) => (String(index) + item.course_code + item.section)}
 		renderItem={({ item: rowData }) => (
 			<DayItem data={rowData} />
 		)}

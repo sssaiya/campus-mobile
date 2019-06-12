@@ -14,7 +14,6 @@ import userService from '../services/userService'
 import {
 	SSO_TTL,
 	SSO_IDP_ERROR_RETRY_INCREMENT,
-	USER_PROFILE_SYNC_TTL,
 	UCSD_STUDENT
 } from '../AppSettings'
 import logger from '../util/logger'

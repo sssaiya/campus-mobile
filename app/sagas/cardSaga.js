@@ -61,6 +61,14 @@ function* updateCard(action) {
 				console.log('Update dining from cardSaga')
 				yield put({ type: 'UPDATE_DINING' })
 				break
+			case 'schedule':
+				console.log('Update schedule from cardSaga')
+				yield put({ type: 'UPDATE_SCHEDULE' })
+				break
+			case 'finals':
+				console.log('Update schedule(finals) from cardSaga')
+				yield put({ type: 'UPDATE_SCHEDULE' })
+				break
 			case 'specialEvents':
 				console.log('Update specialEvents from cardSaga')
 				yield put({ type: 'UPDATE_SPECIAL_EVENTS' })
