@@ -12,7 +12,7 @@ const ShuttleCard = props => (
 	<Card id="shuttle" title="Shuttle">
 		<ShuttleList {...props} />
 		<LastUpdated
-			lastUpdated={props.lastUpdated}
+			lastUpdated={props.arrivalsLastUpdated}
 			error={props.requestError ? "We're having trouble updating right now." : null}
 			warning={props.requestError ? "We're having trouble updating right now." : null}
 			style={css.last_updated_card}
@@ -26,7 +26,7 @@ const ShuttleCard = props => (
 )
 
 const mapStateToProps = state => ({
-	lastUpdated: state.parking.lastUpdated,
+	arrivalsLastUpdated: state.shuttle.arrivalsLastUpdated,
 })
 
 export default connect(mapStateToProps)(withNavigation(ShuttleCard))

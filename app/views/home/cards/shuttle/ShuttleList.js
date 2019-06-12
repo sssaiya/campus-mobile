@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import { FlatList, Alert } from 'react-native'
+import { FlatList, Alert, ActivityIndicator } from 'react-native'
 import Toast from 'react-native-simple-toast'
 import ShuttleOverview from './ShuttleOverview'
 import css from '../../../../styles/css'
@@ -74,33 +74,36 @@ class ShuttleList extends React.Component {
 	}
 
 	render() {
-		const displayStops = this.props.savedStops.slice()
-		if (this.props.closestStop) {
-			displayStops.splice(this.props.closestStop.savedIndex, 0, this.props.closestStop)
+		if (Array.isArray(this.props.savedStops)) {
+			const displayStops = this.props.savedStops.slice()
+			if (this.props.closestStop) {
+				displayStops.splice(this.props.closestStop.savedIndex, 0, this.props.closestStop)
+			}
+
+			return (
+				<FlatList
+					style={css.scrollcard_listStyle}
+					pagingEnabled
+					horizontal
+					showsHorizontalScrollIndicator={true}
+					data={displayStops}
+					keyExtractor={(item, index) => String(item.id)}
+					renderItem={
+						({ item: rowData }) => (
+							<ShuttleOverview
+								onPress={() => this.props.navigation.navigate('ShuttleStop', { stopID: rowData.id })}
+								stopData={this.props.stopsData[rowData.id]}
+								closest={Object.prototype.hasOwnProperty.call(rowData, 'savedIndex')}
+							/>
+						)
+					}
+				/>
+			)
+		} else {
+			return (
+				<ActivityIndicator size="large" style={css.activity_indicator} />
+			)
 		}
-
-		console.log('displayStops---------------')
-		console.log(displayStops)
-
-		return (
-			<FlatList
-				style={css.scrollcard_listStyle}
-				pagingEnabled
-				horizontal
-				showsHorizontalScrollIndicator={true}
-				data={displayStops}
-				keyExtractor={(item, index) => String(item.id)}
-				renderItem={
-					({ item: rowData }) => (
-						<ShuttleOverview
-							onPress={() => this.props.navigation.navigate('ShuttleStop', { stopID: rowData.id })}
-							stopData={this.props.stopsData[rowData.id]}
-							closest={Object.prototype.hasOwnProperty.call(rowData, 'savedIndex')}
-						/>
-					)
-				}
-			/>
-		)
 	}
 }
 

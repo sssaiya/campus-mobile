@@ -265,6 +265,8 @@ function* setScroll(action) {
 }
 
 function* fetchArrival(stopID) {
+	console.log('fetchArrival: ' + stopID)
+
 	const shuttle = yield select(getShuttle)
 
 	try {

@@ -17,23 +17,23 @@ import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import logger from '../../util/logger'
 
 export class Home extends React.Component {
-	state = {
-		updatedGoogle: true, // eslint-disable-line
-		refreshing: false,
-	}
-
-	componentWillMount() {
-		if (platformAndroid()) {
-			this.updateGooglePlay()
+	constructor(props) {
+		console.log('AppStateContainer:constructor')
+		super(props)
+		this.state = {
+			updatedGoogle: true, // eslint-disable-line
+			refreshing: false,
 		}
 	}
 
 	componentDidMount() {
 		logger.ga('View Loaded: Home')
 		this._cards = []
-
 		if (this._scrollview) {
 			this._scrollview.scrollTo({ y: this.props.lastScroll, animated: false })
+		}
+		if (platformAndroid()) {
+			this.updateGooglePlay()
 		}
 	}
 
@@ -69,10 +69,8 @@ export class Home extends React.Component {
 		}
 	}
 
-	pullToRefresh = () => {
-		this.setState({ refreshing: true })
-		// Update Cards
-		console.log('PULL TO REFRESH - HOME')
+	updateCards = () => {
+		console.log('Home: updateCards')
 		this.props.updateDining()
 		this.props.updateEvents()
 		this.props.updateLinks()
@@ -82,6 +80,12 @@ export class Home extends React.Component {
 		this.props.updateShuttleArrivals()
 		this.props.updateSpecialEvents()
 		this.props.updateWeather()
+	}
+
+	pullToRefresh = () => {
+		console.log('Home: pullToRefresh')
+		this.setState({ refreshing: true })
+		this.updateCards()
 		this.setState({ refreshing: false })
 	}
 

@@ -6,6 +6,7 @@ const initialState = {
 	vehicles: {},
 	closestStop: null,
 	lastUpdated: 0,
+	arrivalsLastUpdated: 0,
 	lastScroll: 0
 }
 
@@ -34,19 +35,18 @@ function shuttle(state = initialState, action) {
 		}
 		case 'SET_CLOSEST_STOP':
 			newState.closestStop = Object.assign({}, action.closestStop)
+			newState.arrivalsLastUpdated = new Date().getTime()
 			return newState
-		case 'SET_ARRIVALS': {
+		case 'SET_ARRIVALS':
 			newState.stops = action.stops
+			newState.arrivalsLastUpdated = new Date().getTime()
 			return newState
-		}
-		case 'CHANGED_STOPS': {
+		case 'CHANGED_STOPS':
 			newState.savedStops = action.savedStops
 			return newState
-		}
-		case 'SET_SHUTTLE_SCROLL': {
+		case 'SET_SHUTTLE_SCROLL':
 			newState.lastScroll = action.lastScroll
 			return newState
-		}
 		default:
 			return state
 	}

@@ -1,8 +1,6 @@
-/* eslint object-curly-newline: 0 */
 import React, { Component } from 'react'
 import { View, Text } from 'react-native'
 import moment from 'moment'
-
 import FAIcon from 'react-native-vector-icons/FontAwesome'
 import css from '../../styles/css'
 

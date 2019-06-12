@@ -3,8 +3,11 @@ import { AppState } from 'react-native'
 import { connect } from 'react-redux'
 
 class AppStateContainer extends React.Component {
-	state = {
-		appState: AppState.currentState
+	constructor(props) {
+		super(props)
+		this.state = { appState: AppState.currentState }
+		this.updateCards()
+		this.updateMessages()
 	}
 
 	componentDidMount() {
@@ -15,21 +18,29 @@ class AppStateContainer extends React.Component {
 		AppState.removeEventListener('change', this.handleAppStateChange)
 	}
 
+	updateCards() {
+		console.log('AppStateContainer: updateCards: ---------------')
+		this.props.updateDining()
+		this.props.updateEvents()
+		this.props.updateLinks()
+		this.props.updateNews()
+		this.props.updateParking()
+		this.props.updateSpecialEvents()
+		this.props.updateShuttle()
+		this.props.updateShuttleArrivals()
+		this.props.updateWeather()
+	}
+
+	updateMessages() {
+		console.log('AppStateContainer: updateMessages: ---------------')
+		this.props.updateMessages(new Date().getTime())
+	}
+
 	handleAppStateChange = (nextAppState) => {
 		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
 			console.log('APP STATE CHANGE: current: ' + this.state.appState + ', next: ' + nextAppState)
-			// Update Cards
-			this.props.updateDining()
-			this.props.updateEvents()
-			this.props.updateLinks()
-			this.props.updateNews()
-			this.props.updateParking()
-			this.props.updateSpecialEvents()
-			this.props.updateShuttle()
-			this.props.updateShuttleArrivals()
-			this.props.updateWeather()
-			// Update Notifications
-			this.props.updateMessages(new Date().getTime())
+			this.updateCards()
+			this.updateMessages()
 		}
 		this.setState({ appState: nextAppState })
 	}
@@ -54,4 +65,4 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateMessages: () => { dispatch({ type: 'UPDATE_MESSAGES' }) },
 })
 
-module.exports = connect(null, mapDispatchToProps)(AppStateContainer)
+export default connect(null, mapDispatchToProps)(AppStateContainer)
