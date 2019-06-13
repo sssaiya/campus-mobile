@@ -1,10 +1,9 @@
 import { put, takeLatest, call, select, race } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import moment from 'moment'
-
 import logger from '../util/logger'
 import DiningService from '../services/diningService'
-import { DINING_MENU_API_TTL, HTTP_REQUEST_TTL } from '../AppSettings'
+import { TIMEOUT_DEFAULT } from '../AppSettings'
 import { convertMetersToMiles, getDistanceMilesStr, dynamicSort, militaryToAMPM } from '../util/general'
 import { getDistance } from '../util/map'
 
@@ -56,26 +55,11 @@ function sortDining(diningData) {
 }
 
 function* getDiningMenu(action) {
-	const {
-		menus,
-		lookup
-	} = yield select(getDining)
+	const { lookup } = yield select(getDining)
 	const { menuId } = action
-
-	const nowTime = new Date().getTime()
-	const diningMenuTTL = DINING_MENU_API_TTL
-
 	const menuArrayPosition = lookup[menuId]
-	if (menus[menuArrayPosition]) {
-		const menuTimeDiff = nowTime - menus[menuArrayPosition].lastUpdated
-		if (menuTimeDiff > diningMenuTTL || !menus[menuArrayPosition] || !menuTimeDiff) {
-			const currentMenu = yield call(fetchDiningMenu, menuId)
-			yield put({ type: 'SET_DINING_MENU', data: currentMenu, id: menuArrayPosition })
-		}
-	} else {
-		const currentMenu = yield call(fetchDiningMenu, menuId)
-		yield put({ type: 'SET_DINING_MENU', data: currentMenu, id: menuArrayPosition })
-	}
+	const diningMenu = yield call(fetchDiningMenu, menuId)
+	yield put({ type: 'SET_DINING_MENU', data: diningMenu, id: menuArrayPosition })
 }
 
 function* fetchDiningMenu(id) {
@@ -84,7 +68,7 @@ function* fetchDiningMenu(id) {
 	try {
 		const { response, timeout } = yield race({
 			response: call(DiningService.FetchDiningMenu, id),
-			timeout: call(delay, HTTP_REQUEST_TTL)
+			timeout: call(delay, TIMEOUT_DEFAULT)
 		})
 
 		if (timeout) {

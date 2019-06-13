@@ -46,13 +46,10 @@ module.exports = {
 
 	/* TTLs */
 	LOCATION_TTL: 60000, // 15 seconds
-	DINING_MENU_API_TTL: 3600000, // 1 hour
 
 	/* TIMEOUTS */
-	HTTP_REQUEST_TTL: 15000, // 15 seconds
-	SID_CARD_TIMEOUT: 30000, // 30 seconds
-	SSO_TTL: 20000, // 20 seconds
-	MESSAGING_TTL: 15000, // 15 seconds
+	TIMEOUT_DEFAULT: 15000, // 15 seconds
+	TIMEOUT_LONG: 30000, 	// 30 seconds
 
 	/* RETRIES */
 	SSO_IDP_ERROR_RETRY_INCREMENT: 10000, // 10 seconds

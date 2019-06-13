@@ -14,7 +14,7 @@ import {
 	openURL,
 	hideKeyboard
 } from '../../util/general'
-import AppSettings from '../../AppSettings'
+import { ACCOUNT_HELP_URL, TIMEOUT_LONG } from '../../AppSettings'
 import Touchable from '../common/Touchable'
 import css from '../../styles/css'
 import COLOR from '../../styles/ColorConstants'
@@ -41,7 +41,7 @@ class OnboardingLogin extends React.Component {
 		if (this.props.requestStatus) {
 			const now = new Date()
 			const lastPostTime = new Date(this.props.requestStatus.timeRequested)
-			if (now - lastPostTime >= AppSettings.SSO_TTL) {
+			if (now - lastPostTime >= TIMEOUT_LONG) {
 				this.props.timeoutLogin()
 			} else {
 				// timeout after remaining time expires
@@ -170,7 +170,7 @@ class OnboardingLogin extends React.Component {
 									</Touchable>
 
 									<View style={css.ob_actionscontainer}>
-										<Touchable style={css.ob_help_button} onPress={() => openURL(AppSettings.ACCOUNT_HELP_URL)}>
+										<Touchable style={css.ob_help_button} onPress={() => openURL(ACCOUNT_HELP_URL)}>
 											<Text style={css.ob_forgotpass}>Need help logging in?</Text>
 										</Touchable>
 										<Touchable style={css.ob_cancel_button} onPress={() => this.skipSSO()}>

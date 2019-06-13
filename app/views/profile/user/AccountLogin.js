@@ -1,15 +1,8 @@
 import React, { Component } from 'react'
-import {
-	Alert,
-	View,
-	Text,
-	TextInput,
-	ActivityIndicator
-} from 'react-native'
+import { Alert, View, Text, TextInput, ActivityIndicator } from 'react-native'
 import { connect } from 'react-redux'
-
 import AccountPanicked from './AccountPanicked'
-import AppSettings from '../../../AppSettings'
+import { ACCOUNT_HELP_URL, TIMEOUT_LONG } from '../../../AppSettings'
 import Touchable from '../../common/Touchable'
 import css from '../../../styles/css'
 import { openURL } from '../../../util/general'
@@ -32,7 +25,7 @@ class AccountLogin extends Component {
 		if (this.props.requestStatus) {
 			const now = new Date()
 			const lastPostTime = new Date(this.props.requestStatus.timeRequested)
-			if (now - lastPostTime >= AppSettings.SSO_TTL) {
+			if (now - lastPostTime >= TIMEOUT_LONG) {
 				this.props.timeoutLogin()
 			} else {
 				// timeout after remaining time expires
@@ -136,7 +129,7 @@ class AccountLogin extends Component {
 				</Touchable>
 
 				<Touchable
-					onPress={() => openURL(AppSettings.ACCOUNT_HELP_URL)}
+					onPress={() => openURL(ACCOUNT_HELP_URL)}
 					style={css.ua_forgotButton}
 				>
 					<Text style={css.ua_forgotText}>

@@ -1,21 +1,10 @@
-import {
-	call,
-	put,
-	takeLatest,
-	race,
-	select
-} from 'redux-saga/effects'
+import { call, put, takeLatest, race, select } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { Alert } from 'react-native'
 import firebase from 'react-native-firebase'
-
 import ssoService from '../services/ssoService'
 import userService from '../services/userService'
-import {
-	SSO_TTL,
-	SSO_IDP_ERROR_RETRY_INCREMENT,
-	UCSD_STUDENT
-} from '../AppSettings'
+import { TIMEOUT_LONG, SSO_IDP_ERROR_RETRY_INCREMENT, UCSD_STUDENT } from '../AppSettings'
 import logger from '../util/logger'
 
 const auth = require('../util/auth')
@@ -40,7 +29,7 @@ function* doLogin(action) {
 
 		const { response, timeout } = yield race({
 			response: call(ssoService.retrieveAccessToken, loginInfo),
-			timeout: call(delay, SSO_TTL)
+			timeout: call(delay, TIMEOUT_LONG)
 		})
 
 		if (timeout) {
