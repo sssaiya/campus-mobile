@@ -49,7 +49,6 @@ module.exports = {
 	DATA_SAGA_TTL: 60000, // 1 minute
 	DINING_MENU_API_TTL: 3600000, // 1 hour
 	USER_PROFILE_SYNC_TTL: 3600000, // 1 hour
-	SID_API_TTL: 86400000, // 1 day
 
 	/* TIMEOUTS */
 	HTTP_REQUEST_TTL: 15000, // 15 seconds
