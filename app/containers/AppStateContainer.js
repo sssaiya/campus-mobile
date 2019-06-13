@@ -8,6 +8,7 @@ class AppStateContainer extends React.Component {
 		this.state = { appState: AppState.currentState }
 		this.updateCards()
 		this.updateMessages()
+		this.updateProfile()
 	}
 
 	componentDidMount() {
@@ -38,12 +39,25 @@ class AppStateContainer extends React.Component {
 		this.props.updateMessages(new Date().getTime())
 	}
 
+	updateProfile() {
+		this.props.syncUserProfile()
+	}
+
 	handleAppStateChange = (nextAppState) => {
+		// Executes when the app renders in the foreground
 		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
 			console.log('APP STATE CHANGE: current: ' + this.state.appState + ', next: ' + nextAppState)
 			this.updateCards()
 			this.updateMessages()
+			this.updateProfile()
 		}
+
+		// Executes when the app is minimized or closed
+		if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
+			this.updateProfile()
+		}
+
+
 		this.setState({ appState: nextAppState })
 	}
 
@@ -67,6 +81,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
 	// Notifications
 	updateMessages: () => { dispatch({ type: 'UPDATE_MESSAGES' }) },
+	// User Profile Sync
+	syncUserProfile: () => { dispatch({ type: 'SYNC_USER_PROFILE' }) },
 })
 
 export default connect(null, mapDispatchToProps)(AppStateContainer)

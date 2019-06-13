@@ -275,34 +275,41 @@ function* outOfDateAlert() {
 }
 
 // Syncs local profile with remote user profile stored in the cloud
+// User profile should be synced when
+// - app renders in the foreground
+// - app is minimized or closed
+// TODO:
+// - user logs in
+// - user logs out
+// - user performs a profile updating event (i.e. activate a card, add a shuttle stop)
 function* syncUserProfile() {
 	const { isLoggedIn, profile } = yield select(userState)
 
-	if (!isLoggedIn) return
+	if (isLoggedIn) {
+		// Update remote profile with local one
+		const newAttributes = []
 
-	// Update remote profile with local one
-	const newAttributes = []
-
-	Object.keys(profile).forEach((key) => {
-		newAttributes.push({
-			attribute: key,
-			value: profile[key],
+		Object.keys(profile).forEach((key) => {
+			newAttributes.push({
+				attribute: key,
+				value: profile[key],
+			})
 		})
-	})
 
-	yield put({ type: 'POST_PROFILE_REQUEST' })
-	try {
-		yield call(userService.PostUserProfile, newAttributes)
-		// Get latest profile from server
-		yield call(getUserProfile)
-		yield put({ type: 'POST_PROFILE_SUCCESS' })
-		yield put({ type: 'PROFILE_SYNCED' })
+		yield put({ type: 'POST_PROFILE_REQUEST' })
+		try {
+			yield call(userService.PostUserProfile, newAttributes)
+			// Get latest profile from server
+			yield call(getUserProfile)
+			yield put({ type: 'POST_PROFILE_SUCCESS' })
+			yield put({ type: 'PROFILE_SYNCED' })
 
-		// subscribes to firebase topics that have been synced from the server
-		yield put({ type: 'REFRESH_TOPIC_SUBSCRIPTIONS' })
-	} catch (error) {
-		yield put({ type: 'POST_PROFILE_FAILURE' })
-		logger.trackException(error)
+			// subscribes to firebase topics that have been synced from the server
+			yield put({ type: 'REFRESH_TOPIC_SUBSCRIPTIONS' })
+		} catch (error) {
+			yield put({ type: 'POST_PROFILE_FAILURE' })
+			logger.trackException(error)
+		}
 	}
 }
 

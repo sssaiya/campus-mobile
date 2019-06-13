@@ -3,7 +3,6 @@ import cardSaga from './sagas/cardSaga'
 import locationSaga from './sagas/locationSaga'
 import shuttleSaga from './sagas/shuttleSaga'
 import diningSaga from './sagas/diningSaga'
-import dataSaga from './sagas/dataSaga'
 import homeSaga from './sagas/homeSaga'
 import specialEventsSaga from './sagas/specialEventsSaga'
 import userSaga from './sagas/userSaga'
@@ -27,7 +26,6 @@ export default function* rootSaga() {
 		fork(locationSaga),
 		fork(shuttleSaga),
 		fork(diningSaga),
-		fork(dataSaga),
 		fork(homeSaga),
 		fork(routesSaga),
 		fork(specialEventsSaga),
