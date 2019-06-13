@@ -25,7 +25,7 @@ module.exports = {
 	// OTHER
 	NEWS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/allstories.json',
 	EVENTS_API_URL: 'https://2jjml3hf27.execute-api.us-west-2.amazonaws.com/prod/events/student',
-	SPECIAL_EVENT_API_URL: 'https://2jjml3hf27.execute-api.us-west-2.amazonaws.com/prod/events/special',
+	SPECIAL_EVENT_API_URL: 'https://2wxnokqsz2.execute-api.us-west-2.amazonaws.com/dev/GetActiveSpecialEvent',
 	WEATHER_API_URL: 'https://w3wyps9yje.execute-api.us-west-2.amazonaws.com/prod/forecast?',
 	SURF_API_URL: 'https://kusyfng6mg.execute-api.us-west-2.amazonaws.com/prod/v1/surf',
 	DINING_API_URL: 'https://pg83tslbyi.execute-api.us-west-2.amazonaws.com/prod/v3/dining',
@@ -45,9 +45,8 @@ module.exports = {
 	ACCOUNT_HELP_URL: 'https://acms.ucsd.edu/students/accounts-and-passwords/index.html',
 
 	/* TTLs */
-	LOCATION_TTL: 15000, // 15 seconds
+	LOCATION_TTL: 60000, // 15 seconds
 	DATA_SAGA_TTL: 60000, // 1 minute
-	SCHEDULE_TTL: 300000,  // 5 minutes
 	DINING_MENU_API_TTL: 3600000, // 1 hour
 	USER_PROFILE_SYNC_TTL: 3600000, // 1 hour
 	SID_API_TTL: 86400000, // 1 day

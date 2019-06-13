@@ -3,22 +3,18 @@ import ScheduleService from '../services/scheduleService'
 import schedule from '../util/schedule'
 import logger from '../util/logger'
 
-const getSchedule = state => (state.schedule)
+// const getSchedule = state => (state.schedule)
 const getUserData = state => (state.user)
 const scheduleCardActive = state => (state.cards.cards.schedule.active)
 
 // add updateFinals
 function* updateSchedule() {
-	
 	console.log('updateSchedule-------------------')
-	/*
 
-	// const { currentTerm } = yield select(getSchedule)
+	// Something here is broken, causing cards to fail rendering
 	const { isLoggedIn, profile } = yield select(getUserData)
 	const scheduleCardActiveState = yield select(scheduleCardActive)
-	const currentTerm = yield call(ScheduleService.FetchTerm)
-
-	console.log('currentTerm: ' + currentTerm)
+	// const { currentTerm } = yield select(getSchedule)
 
 	// To update schedule, the user must:
 	// - be logged in
@@ -26,6 +22,34 @@ function* updateSchedule() {
 	// - have the classes card set to `active` in card preferences
 	if (isLoggedIn && profile.classifications.student && scheduleCardActiveState) {
 		console.log('t1')
+		const currentTerm = yield call(ScheduleService.FetchTerm)
+
+		console.log('currentTerm:')
+		console.log(currentTerm)
+
+		const scheduleData = yield call(ScheduleService.FetchSchedule, currentTerm.term_code)
+
+		console.log('scheduleData:')
+		console.log(scheduleData)
+
+		if (scheduleData) {
+			yield put({ type: 'SET_SCHEDULE', schedule: scheduleData })
+			yield put({ type: 'SET_SCHEDULE_TERM', term: currentTerm })
+			yield put({ type: 'GET_SCHEDULE_SUCCESS' })
+		}
+/*
+		
+
+		// 
+*/
+	}
+
+	// const { currentTerm } = yield select(getSchedule)
+	/*
+	// const { isLoggedIn, profile } = yield select(getUserData)
+	// const scheduleCardActiveState = yield select(scheduleCardActive)
+
+		
 		try {
 			yield put({ type: 'GET_SCHEDULE_REQUEST' })
 
@@ -100,6 +124,7 @@ function* updateSchedule() {
 		console.log(scheduleCardActiveState)
 	}
 	*/
+	
 }
 
 function* scheduleSaga() {
