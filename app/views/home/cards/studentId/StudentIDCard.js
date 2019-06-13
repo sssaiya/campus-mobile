@@ -5,10 +5,11 @@ import Modal from 'react-native-modal'
 import MCIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import AvatarIcon from 'react-native-vector-icons/Entypo'
 import Card from '../../../common/Card'
+import LastUpdated from '../../../common/LastUpdated'
+import SafeImage from '../../../common/SafeImage'
 import Touchable from '../../../common/Touchable'
 import css from '../../../../styles/css'
 import LAYOUT from '../../../../styles/LayoutConstants'
-import SafeImage from '../../../common/SafeImage'
 
 const defaultBarcodeWidth = (LAYOUT.WINDOW_WIDTH / 280)
 const largeBarcodeWidth = (LAYOUT.WINDOW_HEIGHT / 280)
@@ -90,6 +91,11 @@ const StudentIDCard = ({
 						</View>
 					</Modal>
 				</View>
+				<LastUpdated
+					lastUpdated={studentProfile.lastUpdated}
+					warning={(studentNameRequestError || studentPhotoRequestError || studentProfileRequestError) ? "We're having trouble updating right now." : null}
+					style={css.last_updated_card}
+				/>
 			</Card>
 		)
 	} else if (studentProfileRequestStatus || studentNameRequestStatus || studentPhotoRequestStatus || !studentProfile.lastUpdated) {

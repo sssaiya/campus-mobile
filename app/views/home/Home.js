@@ -76,7 +76,7 @@ export class Home extends React.Component {
 		this.props.updateLinks()
 		this.props.updateNews()
 		this.props.updateParking()
-		// this.props.updateSchedule()
+		this.props.updateSchedule()
 		this.props.updateShuttle()
 		this.props.updateShuttleArrivals()
 		this.props.updateSpecialEvents()
@@ -199,7 +199,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
 	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
 	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
-	// updateSchedule: () => { dispatch({ type: 'UPDATE_SCHEDULE' }) },
+	updateSchedule: () => { dispatch({ type: 'UPDATE_SCHEDULE' }) },
 	updateShuttle: () => { dispatch({ type: 'UPDATE_SHUTTLE' }) },
 	updateShuttleArrivals: () => { dispatch({ type: 'UPDATE_SHUTTLE_ARRIVALS' }) },
 	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
