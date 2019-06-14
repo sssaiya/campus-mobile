@@ -1,45 +1,33 @@
-import {
-	call,
-	put,
-	select,
-	takeLatest
-} from 'redux-saga/effects'
-
+import { call, put, select, takeLatest } from 'redux-saga/effects'
 import ScheduleService from '../services/scheduleService'
 import schedule from '../util/schedule'
-import logger from '../util/logger'
-import { SCHEDULE_TTL } from '../AppSettings'
 
-const getSchedule = state => (state.schedule)
+// const getSchedule = state => (state.schedule)
 const getUserData = state => (state.user)
+const scheduleCardActive = state => (state.cards.cards.schedule.active)
 
+// add updateFinals
 function* updateSchedule() {
-	const { lastUpdated, data, currentTerm } = yield select(getSchedule)
-	const { isLoggedIn, profile } = yield select(getUserData)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
+	try {
+		yield put({ type: 'GET_SCHEDULE_REQUEST' })
+		const { isLoggedIn, profile } = yield select(getUserData)
+		const scheduleCardActiveState = yield select(scheduleCardActive)
 
-	if (
-		isLoggedIn &&
-		profile.classifications.student &&
-		(
-			(currentTerm && currentTerm.term_code !== 'inactive' && !data) ||
-			timeDiff > SCHEDULE_TTL
-		)
-	) {
-		try {
-			yield put({ type: 'GET_SCHEDULE_REQUEST' })
-			const term = yield call(ScheduleService.FetchTerm)
-			if (term) {
-				yield put({ type: 'SET_SCHEDULE_TERM', term })
+		// To update schedule, the user must:
+		// - be logged in
+		// - be a currently enrolled student
+		// - have the classes card set to `active` in card preferences
 
-				const scheduleData = yield call(ScheduleService.FetchSchedule, term.term_code)
-				if (scheduleData) {
-					yield put({ type: 'SET_SCHEDULE', schedule: scheduleData })
-					yield put({ type: 'GET_SCHEDULE_SUCCESS' })
-				}
+		// TODO: separate classes and finals
+		if (isLoggedIn && profile.classifications.student && scheduleCardActiveState) {
+			const currentTerm = yield call(ScheduleService.FetchTerm)
+			if (currentTerm && currentTerm.term_code !== 'inactive') {
+				const scheduleData = yield call(ScheduleService.FetchSchedule, currentTerm.term_code)
+				yield put({ type: 'SET_SCHEDULE', schedule: scheduleData })
+				yield put({ type: 'SET_SCHEDULE_TERM', term: currentTerm })
 				yield put({ type: 'UPDATE_SI_SESSIONS' })
 
+				// TODO: Refactor finals logic - nothing should happen if finals are inactive
 				// check for finals
 				const parsedScheduleData = schedule.getData(scheduleData)
 				const finalsData = schedule.getFinals(parsedScheduleData)
@@ -52,6 +40,7 @@ function* updateSchedule() {
 						})
 					}
 				})
+
 				if (finalsArray.length > 0) {
 					// check if finals are active
 					yield put({ type: 'GET_FINALS_REQUEST' })
@@ -68,22 +57,30 @@ function* updateSchedule() {
 						throw error
 					}
 				}
+				yield put({ type: 'GET_SCHEDULE_SUCCESS' })
 			} else {
 				// There is no term
+				// TODO: is inactiveTerm needed?
 				const inactiveTerm = {
 					term_name: 'No Term',
 					term_code: 'inactive'
 				}
-
 				yield put({ type: 'SET_SCHEDULE_TERM', term: inactiveTerm })
+
+				// If a previous term has ended
+				// - clear that term's schedule data
+				// - hide the finals card
 				yield put({ type: 'SET_SCHEDULE', schedule: null })
 				yield put({ type: 'HIDE_CARD', id: 'finals' })
+
 				yield put({ type: 'GET_SCHEDULE_SUCCESS' })
 			}
-		} catch (error) {
-			yield put({ type: 'GET_SCHEDULE_FAILURE', error })
-			logger.trackException(error)
+		} else {
+			// TODO: revisit isLoggedIn && profile.classifications.student check
+			yield put({ type: 'GET_SCHEDULE_SUCCESS' })
 		}
+	} catch (error) {
+		yield put({ type: 'GET_SCHEDULE_FAILURE', error })
 	}
 }
 

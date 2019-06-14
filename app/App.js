@@ -1,11 +1,12 @@
 import React, { Component } from 'react'
-import { View, StatusBar } from 'react-native'
+import { View } from 'react-native'
 import { setJSExceptionHandler } from 'react-native-exception-handler'
 import { Provider } from 'react-redux'
 import AppRedux from './AppRedux'
-import PushNotificationContainer from './containers/pushNotificationContainer'
-import Router from './navigation/Router'
-import { gracefulFatalReset, platformIOS } from './util/general'
+import PushNotificationContainer from './containers/PushNotificationContainer'
+import AppStateContainer from './containers/AppStateContainer'
+import AppNavigation from './AppNavigation'
+import { gracefulFatalReset } from './util/general'
 import css from './styles/css'
 
 export default class App extends Component {
@@ -28,16 +29,13 @@ export default class App extends Component {
 	}
 
 	render() {
-		if (platformIOS()) {
-			StatusBar.setBarStyle('light-content')
-		}
-
 		if (!this.state.isLoading) {
 			return (
 				<Provider store={this.state.store}>
 					<View style={css.main}>
+						<AppNavigation />
+						<AppStateContainer />
 						<PushNotificationContainer />
-						<Router />
 					</View>
 				</Provider>
 			)

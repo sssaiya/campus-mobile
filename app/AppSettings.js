@@ -21,18 +21,17 @@ module.exports = {
 	SHUTTLE_STOPS_API_URL: 'https://ies4wyrlx9.execute-api.us-west-2.amazonaws.com/prod/v2/stops/',
 	SHUTTLE_VEHICLES_API_URL: 'https://hjr84cay81.execute-api.us-west-2.amazonaws.com/prod?route=',
 	SHUTTLE_ROUTES_MASTER: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_routes_master_map.json',
-	SHUTTLE_STOPS_MASTER: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_stops_master_map.json',
-	SHUTTLE_STOPS_MASTER_NO_ROUTES: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_stops_master_map_no_routes.json',
+	SHUTTLE_STOPS_MASTER: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/shuttle_stops_master_map_no_routes.json',
 	// OTHER
 	NEWS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/allstories.json',
 	EVENTS_API_URL: 'https://2jjml3hf27.execute-api.us-west-2.amazonaws.com/prod/events/student',
-	SPECIAL_EVENT_API_URL: 'https://2jjml3hf27.execute-api.us-west-2.amazonaws.com/prod/events/special',
+	SPECIAL_EVENT_API_URL: 'https://2wxnokqsz2.execute-api.us-west-2.amazonaws.com/dev/GetActiveSpecialEvent',
 	WEATHER_API_URL: 'https://w3wyps9yje.execute-api.us-west-2.amazonaws.com/prod/forecast?',
 	SURF_API_URL: 'https://kusyfng6mg.execute-api.us-west-2.amazonaws.com/prod/v1/surf',
 	DINING_API_URL: 'https://pg83tslbyi.execute-api.us-west-2.amazonaws.com/prod/v3/dining',
 	MAP_SEARCH_API_URL: 'https://xgu9qa7gx4.execute-api.us-west-2.amazonaws.com/prod/v2/map/search?region=0&query=',
 	FEEDBACK_URL: 'https://eforms.ucsd.edu/view.php?id=175631',
-	QUICKLINKS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/quick_links/ucsd-quicklinks-v3.json',
+	LINKS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/quick_links/ucsd-quicklinks-v3.json',
 	PARKING_API_URL: 'https://b2waxbcovi.execute-api.us-west-2.amazonaws.com/prod/parking/v1.1/status',
 	MY_STUDENT_CONTACT_API_URL: 'https://api.ucsd.edu:8243/student/my/student_contact_info/v1',
 	MY_STUDENT_PROFILE_API_URL: 'https://api.ucsd.edu:8243/student/my/v1',
@@ -45,29 +44,14 @@ module.exports = {
 	PRIVACY_POLICY_URL: 'https://mobile.ucsd.edu/privacy-policy.html',
 	ACCOUNT_HELP_URL: 'https://acms.ucsd.edu/students/accounts-and-passwords/index.html',
 
-	/* TTLs */
-	LOCATION_TTL: 15000, // 15 seconds
-	SHUTTLE_API_TTL: 15000, // 15 seconds
-	DATA_SAGA_TTL: 60000, // 1 minute
-	SCHEDULE_TTL: 300000,  // 5 minutes
-	PARKING_API_TTL: 300000,	// 5 minutes
-	WEATHER_API_TTL: 1800000, // 30 minutes
-	SURF_API_TTL: 1800000, // 30 minutes
-	SPECIAL_EVENTS_TTL: 1800000, // 30 minutes
-	EVENTS_API_TTL: 3600000, // 1 hour
-	NEWS_API_TTL: 3600000, // 1 hour
-	DINING_API_TTL: 3600000, // 1 hour
-	DINING_MENU_API_TTL: 3600000, // 1 hour
-	SHUTTLE_MASTER_TTL: 3600000, // 1 hour
-	USER_PROFILE_SYNC_TTL: 3600000, // 1 hour
-	QUICKLINKS_API_TTL: 86400000, // 1 day
-	SID_API_TTL: 86400000, // 1 day
-
 	/* TIMEOUTS */
-	HTTP_REQUEST_TTL: 15000, // 15 seconds
-	SID_CARD_TIMEOUT: 30000, // 30 seconds
-	SSO_TTL: 20000, // 20 seconds
-	MESSAGING_TTL: 15000, // 15 seconds
+	TIMEOUT_DEFAULT: 15000, // 15 seconds
+	TIMEOUT_LONG: 30000, 	// 30 seconds
+
+	/* CARDS */
+	CARD_DEFAULT_ROWS: 3,
+	CARD_LINKS_ROWS: 4,
+	LAST_UPDATED_INTERVAL: 60000, // 1 minute
 
 	/* RETRIES */
 	SSO_IDP_ERROR_RETRY_INCREMENT: 10000, // 10 seconds

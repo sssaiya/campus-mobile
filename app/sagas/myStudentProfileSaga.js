@@ -1,32 +1,17 @@
-import {
-	all,
-	call,
-	put,
-	select,
-	takeLatest,
-	race
-} from 'redux-saga/effects'
+import { all, call, put, select, takeLatest, race } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import logger from '../util/logger'
-import { SID_CARD_TIMEOUT, SID_API_TTL } from '../AppSettings'
+import { TIMEOUT_LONG } from '../AppSettings'
 import StudentIDService from '../services/studentIDService'
 
-
-// const getStudentProfile = state => (state.studentProfile)
 const getUserData = state => (state.user)
-const getStudentProfile =  state => (state.studentProfile)
+const studentIdCardActive = state => (state.cards.cards.studentId.active)
 
 function* updateStudentProfile() {
-	const { lastUpdated, data } = yield select(getStudentProfile)
 	const { isLoggedIn, profile } = yield select(getUserData)
+	const studentIdCardActiveState = yield select(studentIdCardActive)
 
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const sidTTl = SID_API_TTL
-
-	if (timeDiff < sidTTl && data) {
-		// Do nothing, no need to fetch new data
-	} else if (isLoggedIn && profile.classifications.student) {
+	if (isLoggedIn && profile.classifications.student && studentIdCardActiveState) {
 		const fetchArray = [
 			put({ type: 'GET_STUDENT_BARCODE_REQUEST' }),
 			put({ type: 'GET_STUDENT_PROFILE_REQUEST' }),
@@ -41,7 +26,7 @@ function* fetchStudentBarcode() {
 	try {
 		const { response, timeout } = yield race({
 			response: call(StudentIDService.FetchStudentBarcode),
-			timeout: call(delay, SID_CARD_TIMEOUT)
+			timeout: call(delay, TIMEOUT_LONG)
 		})
 
 		if (timeout) {
@@ -61,7 +46,7 @@ function* fetchStudentPhoto() {
 	try {
 		const { response, timeout } = yield race({
 			response: call(StudentIDService.FetchStudentPhoto),
-			timeout: call(delay, SID_CARD_TIMEOUT)
+			timeout: call(delay, TIMEOUT_LONG)
 		})
 
 		if (timeout) {
@@ -81,7 +66,7 @@ function* fetchStudentName() {
 	try {
 		const { response, timeout } = yield race({
 			response: call(StudentIDService.FetchStudentName),
-			timeout: call(delay, SID_CARD_TIMEOUT)
+			timeout: call(delay, TIMEOUT_LONG)
 		})
 
 		if (timeout) {
@@ -101,7 +86,7 @@ function* fetchStudentProfile() {
 	try {
 		const { response, timeout } = yield race({
 			response: call(StudentIDService.FetchStudentProfile),
-			timeout: call(delay, SID_CARD_TIMEOUT)
+			timeout: call(delay, TIMEOUT_LONG)
 		})
 
 		if (timeout) {

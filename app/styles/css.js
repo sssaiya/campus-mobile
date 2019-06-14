@@ -87,18 +87,20 @@ const css = StyleSheet.create({
 	scrollcard_dotStyle: { padding: 6, paddingTop: 3, backgroundColor: 'transparent', color: COLOR.DGREY },
 	scrollcard_dotsContainer: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
 	scrollcard_listStyle: { flexDirection: 'row' },
-	card_last_updated: { flexDirection: 'row', alignItems: 'center', marginLeft: 16, marginBottom: 8 },
-	card_last_updated_text: { fontStyle: 'italic', fontWeight: '300', color: COLOR.DGREY },
+	safe_image_loading_activity_indicator: { flex: 1, alignItems: 'center', justifyContent: 'center' },
+	// Last Updated
+	last_updated: { flexDirection: 'row', paddingTop: 8,  },
+	last_updated_card: { paddingLeft: 8, paddingBottom: 8 },
+	last_updated_text: { fontStyle: 'italic', fontWeight: '300', color: COLOR.DGREY },
 	last_updated_err_icon: { fontSize: 16, marginRight: 6 },
 	last_updated_err_icon_warn: { color: COLOR.WARNING },
 	last_updated_err_icon_error: { color: COLOR.ERROR },
-	safe_image_loading_activity_indicator: { flex: 1, alignItems: 'center', justifyContent: 'center' },
 	// Data
 	DataList_card_list: {  },
 	DataList_full_list: { top: -1 },
 	dataitem_descContainer: { flex: 1 },
 	dataitem_descText: { color: COLOR.VDGREY },
-	dataitem_touchableRow: { paddingVertical: 12, paddingHorizontal: 8, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	dataitem_touchableRow: { paddingVertical: 12, paddingHorizontal: 8 },
 	dataitem_titleText: { fontSize: 17 },
 	dataitem_listInfoContainer: { flexDirection: 'row', paddingVertical: 8 },
 	dataitem_dateText: { color: COLOR.PRIMARY, paddingTop: 8 },
@@ -113,9 +115,9 @@ const css = StyleSheet.create({
 	fl_row_title_disabled: { flex: 1, color: COLOR.DMGREY, fontSize: 18 },
 	fl_row_arrow: { color: COLOR.CCC },
 	fl_separator: { height: 1, backgroundColor: COLOR.MGREY },
-	fl_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 8, borderTopWidth: 1, marginTop: -1, borderTopColor: COLOR.MGREY },
+	fl_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 8 },
 	// Sortable List View
-	sl_row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderColor: COLOR.MGREY, paddingVertical: 8, marginTop: -1, elevation: 0, backgroundColor: COLOR.WHITE, minHeight: 48 },
+	sl_row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: COLOR.MGREY, paddingVertical: 8, elevation: 0, backgroundColor: COLOR.WHITE, minHeight: 48 },
 	sl_icon: { color: COLOR.CCC, marginLeft: 8 },
 	sl_title: { flex: 5, fontSize: 18, marginLeft: 6 },
 	sl_title_disabled: { color: COLOR.CCC },
@@ -125,6 +127,8 @@ const css = StyleSheet.create({
 	button_primary_text: { fontSize: 16, color: COLOR.WHITE },
 	share_button: { justifyContent: 'center', alignItems: 'center', backgroundColor: COLOR.MGREY, borderRadius: 3, marginTop: 20, padding: 10 },
 	share_button_text: { fontSize: 16 },
+	// Loading - ActivityIndicator
+	activity_indicator: { alignItems: 'center', justifyContent: 'center', padding: 20 },
 	// Checkbox
 	ccb_checkBoxContainer: { flexDirection: 'row', alignItems: 'center' },
 	ccb_center: { justifyContent: 'center', alignItems: 'center' },
@@ -227,8 +231,8 @@ const css = StyleSheet.create({
 	 *  05 - Classes
 	 */
 	cc_loadingContainer: { alignItems: 'center', justifyContent: 'center', paddingHorizontal: 10, paddingVertical: 40 },
-	cc_messageText: { fontWeight: '400', fontSize: 20 },
-	cc_container: { flexDirection: 'row', width: LAYOUT.MAX_CARD_WIDTH, height: (LAYOUT.MAX_CARD_WIDTH / 1.6216) + 44, paddingTop: LAYOUT.MAX_CARD_WIDTH * 0.05, paddingBottom: LAYOUT.MAX_CARD_WIDTH * 0.05, paddingLeft: LAYOUT.MAX_CARD_WIDTH * 0.04, paddingRight: LAYOUT.MAX_CARD_WIDTH * 0.04 },
+	cc_messageText: { fontSize: 20 },
+	cc_container: { flexDirection: 'row', width: LAYOUT.MAX_CARD_WIDTH, height: (LAYOUT.MAX_CARD_WIDTH / 1.6216) + 44, padding: 8 },
 	cc_leftHalf: { flex: 6 },
 	cc_leftHalf_upper: { flex: 3 },
 	cc_leftHalf_upper_timeText: { fontSize: CC_LEFT * 7, color: COLOR.DGREY },
@@ -250,7 +254,7 @@ const css = StyleSheet.create({
 	cc_rightHalf_each_class_text: { paddingTop: 4, fontSize: 10 * CC_RIGHT },
 	cc_Half_each_classAndItsType_class: { width: CC_RIGHT * 55, fontSize: CC_RIGHT * 11 },
 	cc_rightHalf_each_inActiveText: { color: COLOR.DGREY },
-	cc_last_updated: { marginLeft: 18, marginTop: 8 },
+	cc_last_updated: { paddingLeft: 8, paddingBottom: 8 },
 	cc_noclasses: { fontSize: 16, textAlign: 'center' },
 	schedule_full_button_touchable: { borderTopWidth: 1, borderTopColor: COLOR.MGREY, width: LAYOUT.MAX_CARD_WIDTH },
 	schedule_full_button_text: { fontSize: 20, fontWeight: '300', color: COLOR.PRIMARY, paddingHorizontal: 14, paddingVertical: 10 },
@@ -297,7 +301,8 @@ const css = StyleSheet.create({
 	sslv_listRow: { backgroundColor: COLOR.WHITE, flexDirection: 'row', alignItems: 'center', width: LAYOUT.DEVICE_WIDTH, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY, height: 50,	...Platform.select({ ios: { shadowOpacity: 0, shadowOffset: { height: 2, width: 2 }, shadowRadius: 2 }, android: { margin: 0, elevation: 0 } }) },
 	sslv_nameText: { flex: 1, margin: 7 },
 	sslv_cancelButton: { justifyContent: 'center', alignItems: 'center', width: 50, height: 50 },
-	sslv_addNoticeText: { lineHeight: 28, fontSize: 15, color: COLOR.DGREY, textAlign: 'center' },
+	sslv_addNotice: { alignItems: 'center', paddingHorizontal: 20, paddingVertical: 20 },
+	sslv_addNoticeText: { fontSize: 20, paddingTop: 20 },
 	ssl_nextText: { fontSize: 20, fontWeight: '300', padding: 8 },
 	ssl_rowContainer: { flexDirection: 'row', marginBottom: 8, marginHorizontal: 8, alignItems: 'center', justifyContent: 'flex-start' },
 	ssl_circle: { borderRadius: 18, width: 36, height: 36, justifyContent: 'center', overflow: 'hidden' },
@@ -318,7 +323,7 @@ const css = StyleSheet.create({
 	/**
 	 *  07 - Dining
 	 */
-	dl_row: { flexDirection: 'row', padding: 10, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	dl_row: { flexDirection: 'row', padding: 10 },
 	dl_row_container_left: { flex: 4, flexDirection: 'column', justifyContent: 'flex-start', paddingRight: 8 },
 	dl_row_container_right: { flex: 1, alignItems: 'center', justifyContent: 'flex-end' },
 	dl_title_row: { flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', flexWrap: 'wrap' },
@@ -416,7 +421,7 @@ const css = StyleSheet.create({
 	/**
 	 *  10 - Links
 	 */
-	links_row_container: { paddingVertical: 8, paddingHorizontal: 16, borderTopWidth: 1, borderTopColor: COLOR.MGREY },
+	links_row_container: { paddingVertical: 8, paddingHorizontal: 16 },
 	links_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center' },
 	links_icon: { height: 28, width: 28 },
 	links_icon_fa: { paddingLeft: 8, paddingRight: 5, color: COLOR.PRIMARY },
@@ -440,10 +445,10 @@ const css = StyleSheet.create({
 	wd_maxText: { fontSize: 14, fontWeight: '300', paddingTop: 10 },
 	ww_weekContainer: { flexDirection: 'row', padding: 20 },
 	sr_headerImage: { width: LAYOUT.WINDOW_WIDTH, height: round(LAYOUT.WINDOW_WIDTH * 0.361) },
-	sr_container: { paddingHorizontal: 10, paddingTop: 10 },
+	sr_container: { padding: 10 },
 	sr_beach_list: { marginTop: 20 },
 	sr_surf_row: { marginBottom: 15 },
-	sr_title: { fontSize: 22, fontWeight: '400', color: COLOR.PRIMARY },
+	sr_title: { fontSize: 22, color: COLOR.PRIMARY },
 	sr_desc: { fontSize: 16, marginTop: 5 },
 	sr_beach_name: { fontSize: 18 },
 	sr_beach_surf: { fontSize: 16, paddingTop: 4, paddingLeft: 8 },
@@ -592,8 +597,7 @@ const css = StyleSheet.create({
 	po_acp_gap_1: { paddingHorizontal: 20 },
 	po_acp_gap_2: { paddingHorizontal: 10 },
 	// ParkingCard
-	pc_nolots_container: { paddingHorizontal: 20, paddingVertical: 40 },
-	pc_nolots_text: {  alignSelf: 'center', fontSize: 18 },
+	pc_nolots_text: {  alignSelf: 'center', fontSize: 18, paddingHorizontal: 20, paddingVertical: 40 },
 
 	mpl_row_view: { flexDirection: 'row', flex: 1, padding: 12, alignItems: 'center', justifyContent: 'center' },
 	mpl_row_text_unselected: { flex: 1, fontSize: 20, justifyContent: 'flex-start', color: COLOR.VDGREY2 },
@@ -608,7 +612,7 @@ const css = StyleSheet.create({
 	notifications_row: { paddingVertical: 10, paddingRight: 10, flexDirection: 'row', justifyContent: 'flex-start', borderBottomWidth: 1, borderBottomColor: COLOR.MGREY },
 	notifications_vector_icon: { justifyContent: 'center', alignItems: 'center', marginLeft: 10, marginRight: 16 },
 	notifications_timestamp_text: { color: COLOR.TIME, fontWeight: 'bold', fontSize: 10 },
-	notifications_title_text: { color: COLOR.BLACK, fontWeight: '400', fontSize: platformAndroid() ? 16 : 20 },
+	notifications_title_text: { color: COLOR.BLACK, fontSize: platformAndroid() ? 16 : 20 },
 	notifications_body_text_container: { paddingTop: 10 },
 	notifications_body_text: { color: COLOR.VDGREY, fontSize: 14 },
 	notifications_section_list_separator: { height: 1, backgroundColor: COLOR.MGREY },

@@ -32,6 +32,58 @@ function* reorderCard(action) {
 function* updateCard(action) {
 	const { id, state } = action
 	yield put({ type: 'SET_CARD_STATE', id, active: state })
+
+	console.log('updateCard: state: ' + state + ', id: ' + id)
+
+	if (state) {
+		switch (id) {
+			case 'events':
+				console.log('Update events from cardSaga')
+				yield put({ type: 'UPDATE_EVENTS' })
+				break
+			case 'news':
+				console.log('Update news from cardSaga')
+				yield put({ type: 'UPDATE_NEWS' })
+				break
+			case 'links':
+				console.log('Update links from cardSaga')
+				yield put({ type: 'UPDATE_LINKS' })
+				break
+			case 'weather':
+				console.log('Update weather from cardSaga')
+				yield put({ type: 'UPDATE_WEATHER' })
+				break
+			case 'parking':
+				console.log('Update parking from cardSaga')
+				yield put({ type: 'UPDATE_PARKING' })
+				break
+			case 'dining':
+				console.log('Update dining from cardSaga')
+				yield put({ type: 'UPDATE_DINING' })
+				break
+			case 'schedule':
+				console.log('Update schedule from cardSaga')
+				yield put({ type: 'UPDATE_SCHEDULE' })
+				break
+			case 'finals':
+				console.log('Update schedule(finals) from cardSaga')
+				yield put({ type: 'UPDATE_SCHEDULE' })
+				break
+			case 'studentId':
+				console.log('Update studentId from cardSaga')
+				yield put({ type: 'UPDATE_STUDENT_PROFILE' })
+				break
+			case 'specialEvents':
+				console.log('Update specialEvents from cardSaga')
+				yield put({ type: 'UPDATE_SPECIAL_EVENTS' })
+				break
+			case 'shuttle':
+				console.log('Update shuttle from cardSaga')
+				yield put({ type: 'UPDATE_SHUTTLE' })
+				yield put({ type: 'UPDATE_SHUTTLE_ARRIVALS' })
+				break
+		}
+	}
 }
 
 function* updateAutoactivated(action) {

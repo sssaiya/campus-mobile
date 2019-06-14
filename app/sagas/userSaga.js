@@ -1,22 +1,10 @@
-import {
-	call,
-	put,
-	takeLatest,
-	race,
-	select
-} from 'redux-saga/effects'
+import { call, put, takeLatest, race, select } from 'redux-saga/effects'
 import { delay } from 'redux-saga'
 import { Alert } from 'react-native'
 import firebase from 'react-native-firebase'
-
 import ssoService from '../services/ssoService'
 import userService from '../services/userService'
-import {
-	SSO_TTL,
-	SSO_IDP_ERROR_RETRY_INCREMENT,
-	USER_PROFILE_SYNC_TTL,
-	UCSD_STUDENT
-} from '../AppSettings'
+import { TIMEOUT_LONG, SSO_IDP_ERROR_RETRY_INCREMENT, UCSD_STUDENT } from '../AppSettings'
 import logger from '../util/logger'
 
 const auth = require('../util/auth')
@@ -41,7 +29,7 @@ function* doLogin(action) {
 
 		const { response, timeout } = yield race({
 			response: call(ssoService.retrieveAccessToken, loginInfo),
-			timeout: call(delay, SSO_TTL)
+			timeout: call(delay, TIMEOUT_LONG)
 		})
 
 		if (timeout) {
@@ -276,34 +264,41 @@ function* outOfDateAlert() {
 }
 
 // Syncs local profile with remote user profile stored in the cloud
+// User profile should be synced when
+// - app renders in the foreground
+// - app is minimized or closed
+// TODO:
+// - user logs in
+// - user logs out
+// - user performs a profile updating event (i.e. activate a card, add a shuttle stop)
 function* syncUserProfile() {
 	const { isLoggedIn, profile } = yield select(userState)
 
-	if (!isLoggedIn) return
+	if (isLoggedIn) {
+		// Update remote profile with local one
+		const newAttributes = []
 
-	// Update remote profile with local one
-	const newAttributes = []
-
-	Object.keys(profile).forEach((key) => {
-		newAttributes.push({
-			attribute: key,
-			value: profile[key],
+		Object.keys(profile).forEach((key) => {
+			newAttributes.push({
+				attribute: key,
+				value: profile[key],
+			})
 		})
-	})
 
-	yield put({ type: 'POST_PROFILE_REQUEST' })
-	try {
-		yield call(userService.PostUserProfile, newAttributes)
-		// Get latest profile from server
-		yield call(getUserProfile)
-		yield put({ type: 'POST_PROFILE_SUCCESS' })
-		yield put({ type: 'PROFILE_SYNCED' })
+		yield put({ type: 'POST_PROFILE_REQUEST' })
+		try {
+			yield call(userService.PostUserProfile, newAttributes)
+			// Get latest profile from server
+			yield call(getUserProfile)
+			yield put({ type: 'POST_PROFILE_SUCCESS' })
+			yield put({ type: 'PROFILE_SYNCED' })
 
-		// subscribes to firebase topics that have been synced from the server
-		yield put({ type: 'REFRESH_TOPIC_SUBSCRIPTIONS' })
-	} catch (error) {
-		yield put({ type: 'POST_PROFILE_FAILURE' })
-		logger.trackException(error)
+			// subscribes to firebase topics that have been synced from the server
+			yield put({ type: 'REFRESH_TOPIC_SUBSCRIPTIONS' })
+		} catch (error) {
+			yield put({ type: 'POST_PROFILE_FAILURE' })
+			logger.trackException(error)
+		}
 	}
 }
 

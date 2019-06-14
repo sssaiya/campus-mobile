@@ -1,19 +1,18 @@
 import React from 'react'
-import { ScrollView, Alert } from 'react-native'
+import { ScrollView, Alert, RefreshControl } from 'react-native'
 import { connect } from 'react-redux'
 import { checkGooglePlayServices } from 'react-native-google-api-availability-bridge'
-
-import WeatherCardContainer from '../weather/WeatherCardContainer'
-import ShuttleCardContainer from '../shuttle/ShuttleCardContainer'
-import EventCardContainer from '../events/EventCardContainer'
-import QuicklinksCardContainer from '../quicklinks/QuicklinksCardContainer'
-import NewsCardContainer from '../news/NewsCardContainer'
-import DiningCardContainer from '../dining/DiningCardContainer'
-import SpecialEventsCardContainer from '../specialEvents/SpecialEventsCardContainer'
-import StudentIDCardContainer from '../studentId/StudentIDCardContainer'
-import FinalsCard from '../schedule/FinalsCard'
-import ScheduleCardContainer from '../schedule/ScheduleCardContainer'
-import ParkingCardContainer from '../parking/ParkingCardContainer'
+import WeatherCard from './cards/weather/WeatherCard'
+import ShuttleCard from './cards/shuttle/ShuttleCard'
+import EventsCard from './cards/events/EventsCard'
+import LinksCard from './cards/links/LinksCard'
+import NewsCard from './cards/news/NewsCard'
+import DiningCard from './cards/dining/DiningCard'
+import SpecialEventsCard from './cards/specialEvents/SpecialEventsCard'
+import StudentIDCardContainer from './cards/studentId/StudentIDCardContainer'
+import FinalsCard from './cards/finals/FinalsCard'
+import ClassesCardContainer from './cards/classes/ClassesCardContainer'
+import ParkingCard from './cards/parking/ParkingCard'
 import { platformAndroid, gracefulFatalReset } from '../../util/general'
 import logger from '../../util/logger'
 
@@ -21,22 +20,19 @@ export class Home extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
-			updatedGoogle: true // eslint-disable-line
-		}
-	}
-
-	componentWillMount() {
-		if (platformAndroid()) {
-			this.updateGooglePlay()
+			updatedGoogle: true, // eslint-disable-line
+			refreshing: false,
 		}
 	}
 
 	componentDidMount() {
 		logger.ga('View Loaded: Home')
 		this._cards = []
-
 		if (this._scrollview) {
 			this._scrollview.scrollTo({ y: this.props.lastScroll, animated: false })
+		}
+		if (platformAndroid()) {
+			this.updateGooglePlay()
 		}
 	}
 
@@ -72,13 +68,35 @@ export class Home extends React.Component {
 		}
 	}
 
+	updateCards = () => {
+		console.log('Home: updateCards')
+		this.props.updateDining()
+		this.props.updateEvents()
+		this.props.updateLinks()
+		this.props.updateNews()
+		this.props.updateParking()
+		this.props.updateSchedule()
+		this.props.updateShuttle()
+		this.props.updateShuttleArrivals()
+		this.props.updateSpecialEvents()
+		this.props.updateStudentProfile()
+		this.props.updateWeather()
+	}
+
+	pullToRefresh = () => {
+		console.log('Home: pullToRefresh')
+		this.setState({ refreshing: true })
+		this.updateCards()
+		this.setState({ refreshing: false })
+	}
+
 	handleScroll = (event) => {
 		if (this.props.updateScroll) {
 			this.props.updateScroll(event.nativeEvent.contentOffset.y)
 		}
 	}
 
-	_getCards = () => {
+	loadCards = () => {
 		const activeCards = []
 
 		if (Array.isArray(this.props.cardOrder)) {
@@ -98,7 +116,7 @@ export class Home extends React.Component {
 
 					switch (card) {
 						case 'specialEvents':
-							activeCards.push(<SpecialEventsCardContainer key="specialEvents" />)
+							activeCards.push(<SpecialEventsCard key="specialEvents" />)
 							break
 						case 'studentId':
 							activeCards.push(<StudentIDCardContainer key="studentId" />)
@@ -107,28 +125,28 @@ export class Home extends React.Component {
 							activeCards.push(<FinalsCard key="finals" />)
 							break
 						case 'schedule':
-							activeCards.push(<ScheduleCardContainer key="schedule" />)
+							activeCards.push(<ClassesCardContainer key="schedule" />)
 							break
 						case 'weather':
-							activeCards.push(<WeatherCardContainer key="weather" />)
+							activeCards.push(<WeatherCard key="weather" />)
 							break
 						case 'shuttle':
-							activeCards.push(<ShuttleCardContainer key="shuttle" />)
+							activeCards.push(<ShuttleCard key="shuttle" />)
 							break
 						case 'dining':
-							activeCards.push(<DiningCardContainer key="dining" />)
+							activeCards.push(<DiningCard key="dining" />)
 							break
 						case 'events':
-							activeCards.push(<EventCardContainer key="events" />)
+							activeCards.push(<EventsCard key="events" />)
 							break
-						case 'quicklinks':
-							activeCards.push(<QuicklinksCardContainer key="quicklinks" />)
+						case 'links':
+							activeCards.push(<LinksCard key="links" />)
 							break
 						case 'news':
-							activeCards.push(<NewsCardContainer key="news" />)
+							activeCards.push(<NewsCard key="news" />)
 							break
 						case 'parking':
-							activeCards.push(<ParkingCardContainer key="parking" />)
+							activeCards.push(<ParkingCard key="parking" />)
 							break
 						default:
 							return gracefulFatalReset(new Error('Invalid card in state: ', card))
@@ -153,28 +171,42 @@ export class Home extends React.Component {
 				ref={(c) => { this._scrollview = c }}
 				onScroll={this.handleScroll}
 				scrollEventThrottle={0}
+				refreshControl={
+					<RefreshControl
+						refreshing={this.state.refreshing}
+						onRefresh={() => this.pullToRefresh()}
+					/>
+				}
 			>
 				{/* LOAD CARDS */}
-				{ this._getCards() }
+				{ this.loadCards() }
 			</ScrollView>
 		)
 	}
 }
 
-function mapStateToProps(state, props) {
-	return {
-		cards: state.cards.cards,
-		cardOrder: state.cards.cardOrder,
-		lastScroll: state.home.lastScroll,
-		user: state.user
-	}
-}
+const mapStateToProps = (state, props) => ({
+	cards: state.cards.cards,
+	cardOrder: state.cards.cardOrder,
+	lastScroll: state.home.lastScroll,
+	user: state.user
+})
 
-function mapDispatchtoProps(dispatch) {
-	return {
-		updateScroll: (scrollY) => {
-			dispatch({ type: 'UPDATE_HOME_SCROLL', scrollY })
-		}
-	}
-}
-export default connect(mapStateToProps, mapDispatchtoProps)(Home)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	// Cards
+	updateDining: () => { dispatch({ type: 'UPDATE_DINING' }) },
+	updateEvents: () => { dispatch({ type: 'UPDATE_EVENTS' }) },
+	updateLinks: () => { dispatch({ type: 'UPDATE_LINKS' }) },
+	updateNews: () => { dispatch({ type: 'UPDATE_NEWS' }) },
+	updateParking: () => { dispatch({ type: 'UPDATE_PARKING' }) },
+	updateSchedule: () => { dispatch({ type: 'UPDATE_SCHEDULE' }) },
+	updateShuttle: () => { dispatch({ type: 'UPDATE_SHUTTLE' }) },
+	updateShuttleArrivals: () => { dispatch({ type: 'UPDATE_SHUTTLE_ARRIVALS' }) },
+	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
+	updateStudentProfile: () => { dispatch({ type: 'UPDATE_STUDENT_PROFILE' }) },
+	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
+	// Scroll
+	updateScroll: (scrollY) => { dispatch({ type: 'UPDATE_HOME_SCROLL', scrollY }) },
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(Home)

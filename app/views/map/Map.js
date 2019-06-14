@@ -116,6 +116,7 @@ export class Map extends React.Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		// Don't re-render if location hasn't changed
+		// TODO: revisit
 		if (((this.props.location.coords.latitude !== nextProps.location.coords.latitude) ||
 			(this.props.location.coords.longitude !== nextProps.location.coords.longitude)) ||
 			this.state !== nextState ||
@@ -263,6 +264,7 @@ export class Map extends React.Component {
 					</TouchableOpacity>
 				</View>
 			)
+		// TODO: revisit
 		} else if (this.props.location.coords) {
 			return (
 				<View>
@@ -343,7 +345,6 @@ export class Map extends React.Component {
 const mapStateToProps = (state, props) => (
 	{
 		location: state.location.position,
-		locationPermission: state.location.permission,
 		toggles: state.shuttle.toggles,
 		routes: state.shuttle.routes,
 		shuttle_routes: state.shuttle.routes,
@@ -363,7 +364,7 @@ const mapDispatchToProps = (dispatch, ownProps) => (
 			dispatch({ type: 'FETCH_MAP_SEARCH', term, location })
 		},
 		toggle: (route) => {
-			dispatch({ type: 'UPDATE_TOGGLE_ROUTE', route })
+			dispatch({ type: 'UPDATE_SHUTTLE_TOGGLED_ROUTE', route })
 		},
 		removeHistory: (index) => {
 			dispatch({ type: 'REMOVE_HISTORY', index })

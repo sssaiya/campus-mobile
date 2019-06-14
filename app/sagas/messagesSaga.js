@@ -13,7 +13,7 @@ import moment from 'moment'
 
 import MessagesService from '../services/messagesService'
 import logger from '../util/logger'
-import { MESSAGING_TTL } from '../AppSettings'
+import { TIMEOUT_DEFAULT } from '../AppSettings'
 
 const getUserData = state => (state.user),
 	getMessages = state => (state.messages),
@@ -25,7 +25,7 @@ function* getTopics() {
 
 		const { response, timeout } = yield race({
 			response: call(MessagesService.FetchTopics),
-			timeout: call(delay, MESSAGING_TTL)
+			timeout: call(delay, TIMEOUT_DEFAULT)
 		})
 
 		if (timeout) {
@@ -51,7 +51,7 @@ function* registerToken(action) {
 
 			const { response, timeout } = yield race({
 				response: call(MessagesService.PostPushToken, token, Device.getUniqueID()),
-				timeout: call(delay, MESSAGING_TTL)
+				timeout: call(delay, TIMEOUT_DEFAULT)
 			})
 
 			if (timeout) {
@@ -77,7 +77,7 @@ function* unregisterToken(action) {
 
 		const { response, timeout } = yield race({
 			response: call(MessagesService.DeletePushToken, fcmToken, accessToken),
-			timeout: call(delay, MESSAGING_TTL)
+			timeout: call(delay, TIMEOUT_DEFAULT)
 		})
 
 		if (timeout) {
@@ -109,7 +109,7 @@ function* updateMessages(action) {
 
 			const { response, timeout } = yield race({
 				response: call(MessagesService.FetchMyMessages, timestamp),
-				timeout: call(delay, MESSAGING_TTL)
+				timeout: call(delay, TIMEOUT_DEFAULT)
 			})
 
 			if (timeout) {
@@ -149,7 +149,7 @@ function* updateMessages(action) {
 
 			const { response, timeout } = yield race({
 				response: call(MessagesService.FetchTopicMessages, userTopics, timestamp),
-				timeout: call(delay, MESSAGING_TTL)
+				timeout: call(delay, TIMEOUT_DEFAULT)
 			})
 
 			if (timeout) {
