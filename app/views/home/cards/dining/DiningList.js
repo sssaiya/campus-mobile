@@ -2,7 +2,7 @@ import React from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import DiningItem from './DiningItem'
+import DiningLocation from './DiningLocation'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import SafeImage from '../../../common/SafeImage'
@@ -57,7 +57,7 @@ class DiningList extends React.Component {
 					data={diningDataArray}
 					scrollEnabled={!(type === 'card')}
 					keyExtractor={(item, index) => (item.id + item.name).trim()}
-					renderItem={({ item: rowData }) => (<DiningItem data={rowData} />)}
+					renderItem={({ item: rowData }) => (<DiningLocation data={rowData} />)}
 					ItemSeparatorComponent={() => (
 						<View style={css.fl_separator} />
 					)}

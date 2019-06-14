@@ -22,7 +22,6 @@ function dining(state = initialState, action) {
 			return newState
 		}
 		case 'SET_DINING_DISTANCE':
-			console.log('SET_DINING_DISTANCE')
 			newState.data = action.data
 			return newState
 		case 'SET_DINING_MENU': {

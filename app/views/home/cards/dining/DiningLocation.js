@@ -15,6 +15,14 @@ const general = require('../../../../util/general')
 const dining = require('../../../../util/dining')
 
 class DiningLocation extends Component {
+	componentDidMount() {
+		this.interval = setInterval(() => this.forceUpdate(), 950)
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval)
+	}
+
 	render() {
 		const { navigation, data } = this.props
 

@@ -22,28 +22,15 @@ function* updateDining(action) {
 }
 
 function* updateDiningDistance() {
-	console.log('\n## updateDiningDistance -----------------------')
-
-	console.log('updateDiningDistance, location:')
 	const location = yield select(getLocation)
-	console.log(location)
-	console.log('##--------')
-
-
 	// TODO: revisit
 	if (location &&
 		location.position &&
 		location.position.coords &&
 		location.position.coords.latitude &&
 		location.position.coords.longitude) {
-		console.log('has location--------------------')
 		const { data } = yield select(getDining)
-
-		console.log('dining data: ')
-		console.log(data)
-
 		const diningDataWithDistance = yield call(_setDiningDistance, location, data)
-		console.log(diningDataWithDistance)
 		yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDistance })
 	}
 }
