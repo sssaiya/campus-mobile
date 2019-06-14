@@ -116,6 +116,7 @@ export class Map extends React.Component {
 
 	shouldComponentUpdate(nextProps, nextState) {
 		// Don't re-render if location hasn't changed
+		// TODO: revisit
 		if (((this.props.location.coords.latitude !== nextProps.location.coords.latitude) ||
 			(this.props.location.coords.longitude !== nextProps.location.coords.longitude)) ||
 			this.state !== nextState ||
@@ -263,6 +264,7 @@ export class Map extends React.Component {
 					</TouchableOpacity>
 				</View>
 			)
+		// TODO: revisit
 		} else if (this.props.location.coords) {
 			return (
 				<View>
@@ -343,7 +345,6 @@ export class Map extends React.Component {
 const mapStateToProps = (state, props) => (
 	{
 		location: state.location.position,
-		locationPermission: state.location.permission,
 		toggles: state.shuttle.toggles,
 		routes: state.shuttle.routes,
 		shuttle_routes: state.shuttle.routes,

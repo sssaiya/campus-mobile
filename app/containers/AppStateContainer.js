@@ -1,14 +1,21 @@
 import React from 'react'
-import { AppState } from 'react-native'
+import { View, Text, AppState } from 'react-native'
 import { connect } from 'react-redux'
+import { getDistance } from '../util/map'
 
 class AppStateContainer extends React.Component {
 	constructor(props) {
 		super(props)
-		this.state = { appState: AppState.currentState }
-		this.updateCards()
-		this.updateMessages()
-		this.updateProfile()
+		this.state = {
+			appState: AppState.currentState,
+			latitude: null,
+			longitude: null,
+			error: null,
+			updates: 0,
+			distanceFromLastUpdate: 0,
+			avgDistance: 0,
+			totalDistance: 0,
+		}
 	}
 
 	componentDidMount() {
@@ -17,6 +24,26 @@ class AppStateContainer extends React.Component {
 
 	componentWillUnmount() {
 		AppState.removeEventListener('change', this.handleAppStateChange)
+	}
+
+	handleAppStateChange = (nextAppState) => {
+		// Executes when the app renders in the foreground
+		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+			console.log('\n## handleAppStateChange - OPENED')
+			this.updateCards()
+			this.updateMessages()
+			this.updateProfile()
+			this.watchLocation()
+		}
+
+		// Executes when the app is minimized or closed
+		if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
+			console.log('\n## handleAppStateChange - CLOSED')
+			this.updateProfile()
+			this.unwatchLocation()
+		}
+
+		this.setState({ appState: nextAppState })
 	}
 
 	updateCards() {
@@ -35,7 +62,6 @@ class AppStateContainer extends React.Component {
 	}
 
 	updateMessages() {
-		console.log('AppStateContainer: updateMessages: ---------------')
 		this.props.updateMessages(new Date().getTime())
 	}
 
@@ -43,26 +69,87 @@ class AppStateContainer extends React.Component {
 		this.props.syncUserProfile()
 	}
 
-	handleAppStateChange = (nextAppState) => {
-		// Executes when the app renders in the foreground
-		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-			console.log('APP STATE CHANGE: current: ' + this.state.appState + ', next: ' + nextAppState)
-			this.updateCards()
-			this.updateMessages()
-			this.updateProfile()
-		}
+	watchLocation() {
+		this.watchPositionId = navigator.geolocation.watchPosition(
+			(position) => {
+				console.log('\n\n## watchLocation: lat: ' + position.coords.latitude + ', lon:' + position.coords.longitude)
+				if (position.coords.latitude && position.coords.longitude) {
+					const newPosition = {
+						coords: {
+							latitude: position.coords.latitude,
+							longitude: position.coords.longitude
+						}
+					}
+					console.log('newPosition:')
+					console.log(newPosition)
 
-		// Executes when the app is minimized or closed
-		if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
-			this.updateProfile()
-		}
+					this.props.updatePosition(newPosition)
+					// update closest stop
+					this.props.updateShuttleClosestStop()
+					// yield put({ type: 'UPDATE_DINING', position })
 
+					const distanceDelta = getDistance(
+						position.coords.latitude,
+						position.coords.longitude,
+						this.state.latitude,
+						this.state.longitude
+					)
 
-		this.setState({ appState: nextAppState })
+					const totalDist = this.state.totalDistance + distanceDelta
+
+					this.setState({
+						latitude: position.coords.latitude,
+						longitude: position.coords.longitude,
+						error: null,
+						updates: this.state.updates + 1,
+						distanceFromLastUpdate: distanceDelta,
+						totalDistance: totalDist,
+						avgDistance: parseInt((totalDist / (this.state.updates + 1))),
+					})
+				} else {
+					console.log('LatLon ERR------------###########')
+				}
+			},
+			(error) => {
+				console.log('\n\n## watchLocation: errorlat:')
+				console.log(error)
+				console.log('## setting coords.latitude and coords.longitude to null')
+				const newPosition = {
+					coords: {
+						latitude: null,
+						longitude: null
+					}
+				}
+				this.props.updatePosition(newPosition)
+			},
+			{
+				enableHighAccuracy: true,
+				timeout: 5000,
+				maximumAge: 0,
+				distanceFilter: 10
+			},
+		)
+
+		console.log('## watchLocation id: ' + this.watchId)
 	}
 
+	unwatchLocation() {
+		navigator.geolocation.clearWatch(this.watchPositionId)
+	}
+
+
 	render() {
-		return null
+		return (
+			<View style={{ position: 'absolute', backgroundColor: 'white', borderTopWidth: 1, borderRightWidth: 1, padding: 8, bottom: 0, left: 0, marginBottom: 70, width: 300 }}>
+				<Text>Latitude: {this.state.latitude}</Text>
+				<Text>Longitude: {this.state.longitude}</Text>
+				<Text>Updates: {this.state.updates}</Text>
+				<Text>Distance: {this.state.distanceFromLastUpdate}</Text>
+				<Text>Avg Distance: {this.state.avgDistance}</Text>
+				<Text>Total Distance: {this.state.totalDistance}</Text>
+				{this.state.error ? <Text>Error: {this.state.error}</Text> : null}
+			</View>
+		)
 	}
 }
 
@@ -76,6 +163,7 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateSchedule: () => { dispatch({ type: 'UPDATE_SCHEDULE' }) },
 	updateShuttle: () => { dispatch({ type: 'UPDATE_SHUTTLE' }) },
 	updateShuttleArrivals: () => { dispatch({ type: 'UPDATE_SHUTTLE_ARRIVALS' }) },
+	updateShuttleClosestStop: () => { dispatch({ type: 'UPDATE_SHUTTLE_CLOSEST_STOP' }) },
 	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
 	updateStudentProfile: () => { dispatch({ type: 'UPDATE_STUDENT_PROFILE' }) },
 	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
@@ -83,6 +171,9 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateMessages: () => { dispatch({ type: 'UPDATE_MESSAGES' }) },
 	// User Profile Sync
 	syncUserProfile: () => { dispatch({ type: 'SYNC_USER_PROFILE' }) },
+	// Location
+	updatePosition: (position) => { dispatch({ type: 'SET_POSITION', position }) },
+
 })
 
 export default connect(null, mapDispatchToProps)(AppStateContainer)

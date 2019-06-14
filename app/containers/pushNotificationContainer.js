@@ -129,7 +129,6 @@ class PushNotificationContainer extends React.Component {
 	}
 
 	render() {
-		// TODO: render error message if user does not allow location
 		return null
 	}
 }

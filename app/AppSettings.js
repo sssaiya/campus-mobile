@@ -45,7 +45,7 @@ module.exports = {
 	ACCOUNT_HELP_URL: 'https://acms.ucsd.edu/students/accounts-and-passwords/index.html',
 
 	/* TTLs */
-	LOCATION_TTL: 60000, // 15 seconds
+	LOCATION_TTL: 5000, // 15 seconds
 
 	/* TIMEOUTS */
 	TIMEOUT_DEFAULT: 15000, // 15 seconds

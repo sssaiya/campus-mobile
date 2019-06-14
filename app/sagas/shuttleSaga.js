@@ -52,7 +52,7 @@ function* updateShuttleArrivals() {
 
 function* updateShuttleClosestStop() {
 	const location = yield select(getLocation)
-	if (location.permission === 'authorized' && location.position && location.position.coords) {
+	if (location.position && location.position.coords) {
 		const shuttle = yield select(getShuttle)
 		const { stops } = shuttle
 		const currClosestStop = shuttle.closestStop

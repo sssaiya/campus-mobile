@@ -18,7 +18,6 @@ import logger from '../../util/logger'
 
 export class Home extends React.Component {
 	constructor(props) {
-		console.log('AppStateContainer:constructor')
 		super(props)
 		this.state = {
 			updatedGoogle: true, // eslint-disable-line

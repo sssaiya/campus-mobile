@@ -4,6 +4,7 @@ import EventsService from '../services/eventsService'
 const eventsState = state => (state.cards.cards.events)
 
 function* updateEvents() {
+	console.log('updateEvents---------------------------------------------------------38')
 	const { active } = yield select(eventsState)
 	if (active) {
 		const events = yield call(EventsService.FetchEvents)

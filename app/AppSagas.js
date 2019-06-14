@@ -1,6 +1,5 @@
 import { all, fork } from 'redux-saga/effects'
 import cardSaga from './sagas/cardSaga'
-import locationSaga from './sagas/locationSaga'
 import shuttleSaga from './sagas/shuttleSaga'
 import diningSaga from './sagas/diningSaga'
 import homeSaga from './sagas/homeSaga'
@@ -23,7 +22,6 @@ import surfSaga from './sagas/surfSaga'
 export default function* rootSaga() {
 	yield all([
 		fork(cardSaga),
-		fork(locationSaga),
 		fork(shuttleSaga),
 		fork(diningSaga),
 		fork(homeSaga),
