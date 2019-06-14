@@ -1,6 +1,6 @@
 import React from 'react'
 import { View, Text, ScrollView } from 'react-native'
-
+import Hyperlink from 'react-native-hyperlink'
 import { openURL } from '../../../../util/general'
 import Touchable from '../../../common/Touchable'
 import logger from '../../../../util/logger'
@@ -8,7 +8,7 @@ import css from '../../../../styles/css'
 
 const DiningNutrition = ({ navigation }) => {
 	const { params } = navigation.state
-	const { menuItem, disclaimer, disclaimerEmail } = params
+	const { menuItem, disclaimer } = params
 	logger.ga('View Loaded: Dining Nutrition: ' + menuItem.name )
 
 	return (
@@ -63,16 +63,16 @@ const DiningNutrition = ({ navigation }) => {
 				) : null }
 
 				<View style={css.dn_info_container}>
-					<Text>
-						<Text style={css.dn_bold}>Disclaimer: </Text>{disclaimer}
-					</Text>
+					<Hyperlink
+						onPress={(url, text) => openURL(url)}
+						linkStyle={(css.hyperlink)}
+					>
+						<Text>
+							<Text style={css.dn_bold}>Disclaimer: </Text>
+							{disclaimer}
+						</Text>
+					</Hyperlink>
 				</View>
-
-				{disclaimerEmail ? (
-					<DisclaimerEmailButton
-						disclaimerEmail={disclaimerEmail}
-					/>
-				) : null }
 			</View>
 		</ScrollView>
 	)

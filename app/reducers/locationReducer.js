@@ -11,6 +11,7 @@ function location(state = initialState, action) {
 	const newState = { ...state }
 	switch (action.type) {
 		case 'SET_POSITION':
+			console.log('SET_POSITION')
 			newState.position = Object.assign({}, action.position)
 			return newState
 		case 'SET_PERMISSION':

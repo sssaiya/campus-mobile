@@ -1,13 +1,14 @@
 import React from 'react'
 import { View, Text, AppState } from 'react-native'
 import { connect } from 'react-redux'
-import { getDistance } from '../util/map'
+// import { getDistance } from '../util/map'
 
 class AppStateContainer extends React.Component {
 	constructor(props) {
 		super(props)
 		this.state = {
 			appState: AppState.currentState,
+			/*
 			latitude: null,
 			longitude: null,
 			error: null,
@@ -15,6 +16,7 @@ class AppStateContainer extends React.Component {
 			distanceFromLastUpdate: 0,
 			avgDistance: 0,
 			totalDistance: 0,
+			*/
 		}
 	}
 
@@ -80,14 +82,12 @@ class AppStateContainer extends React.Component {
 							longitude: position.coords.longitude
 						}
 					}
-					console.log('newPosition:')
-					console.log(newPosition)
 
 					this.props.updatePosition(newPosition)
-					// update closest stop
 					this.props.updateShuttleClosestStop()
-					// yield put({ type: 'UPDATE_DINING', position })
+					this.props.updateDiningDistance()
 
+					/*
 					const distanceDelta = getDistance(
 						position.coords.latitude,
 						position.coords.longitude,
@@ -106,6 +106,7 @@ class AppStateContainer extends React.Component {
 						totalDistance: totalDist,
 						avgDistance: parseInt((totalDist / (this.state.updates + 1))),
 					})
+					*/
 				} else {
 					console.log('LatLon ERR------------###########')
 				}
@@ -126,11 +127,11 @@ class AppStateContainer extends React.Component {
 				enableHighAccuracy: true,
 				timeout: 5000,
 				maximumAge: 0,
-				distanceFilter: 10
+				distanceFilter: 50
 			},
 		)
 
-		console.log('## watchLocation id: ' + this.watchId)
+		console.log('## watchLocation id: ' + this.watchPositionId)
 	}
 
 	unwatchLocation() {
@@ -139,6 +140,8 @@ class AppStateContainer extends React.Component {
 
 
 	render() {
+		return null
+		/*
 		return (
 			<View style={{ position: 'absolute', backgroundColor: 'white', borderTopWidth: 1, borderRightWidth: 1, padding: 8, bottom: 0, left: 0, marginBottom: 70, width: 300 }}>
 				<Text>Latitude: {this.state.latitude}</Text>
@@ -150,6 +153,7 @@ class AppStateContainer extends React.Component {
 				{this.state.error ? <Text>Error: {this.state.error}</Text> : null}
 			</View>
 		)
+		*/
 	}
 }
 
@@ -163,7 +167,6 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	updateSchedule: () => { dispatch({ type: 'UPDATE_SCHEDULE' }) },
 	updateShuttle: () => { dispatch({ type: 'UPDATE_SHUTTLE' }) },
 	updateShuttleArrivals: () => { dispatch({ type: 'UPDATE_SHUTTLE_ARRIVALS' }) },
-	updateShuttleClosestStop: () => { dispatch({ type: 'UPDATE_SHUTTLE_CLOSEST_STOP' }) },
 	updateSpecialEvents: () => { dispatch({ type: 'UPDATE_SPECIAL_EVENTS' }) },
 	updateStudentProfile: () => { dispatch({ type: 'UPDATE_STUDENT_PROFILE' }) },
 	updateWeather: () => { dispatch({ type: 'UPDATE_WEATHER' }) },
@@ -173,7 +176,8 @@ const mapDispatchToProps = (dispatch, ownProps) => ({
 	syncUserProfile: () => { dispatch({ type: 'SYNC_USER_PROFILE' }) },
 	// Location
 	updatePosition: (position) => { dispatch({ type: 'SET_POSITION', position }) },
-
+	updateShuttleClosestStop: () => { dispatch({ type: 'UPDATE_SHUTTLE_CLOSEST_STOP' }) },
+	updateDiningDistance: () => { dispatch({ type: 'UPDATE_DINING_DISTANCE' }) },
 })
 
 export default connect(null, mapDispatchToProps)(AppStateContainer)

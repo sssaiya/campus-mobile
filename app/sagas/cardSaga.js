@@ -81,7 +81,6 @@ function* updateCard(action) {
 				console.log('Update shuttle from cardSaga')
 				yield put({ type: 'UPDATE_SHUTTLE' })
 				yield put({ type: 'UPDATE_SHUTTLE_ARRIVALS' })
-				yield put({ type: 'UPDATE_SHUTTLE_CLOSEST_STOP' })
 				break
 		}
 	}

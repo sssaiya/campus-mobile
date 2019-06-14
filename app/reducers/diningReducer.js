@@ -21,12 +21,10 @@ function dining(state = initialState, action) {
 			newState.lookup = newLookup
 			return newState
 		}
-
-		case 'SET_DINING_DISTANCE': {
+		case 'SET_DINING_DISTANCE':
+			console.log('SET_DINING_DISTANCE')
 			newState.data = action.data
 			return newState
-		}
-
 		case 'SET_DINING_MENU': {
 			const newMenusArray = {
 				...newState.menus,
@@ -35,11 +33,9 @@ function dining(state = initialState, action) {
 					lastUpdated: new Date().getTime()
 				}
 			}
-
 			newState.menus = newMenusArray
 			return newState
 		}
-
 		default:
 			return state
 	}

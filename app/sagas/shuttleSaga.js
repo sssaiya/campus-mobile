@@ -51,8 +51,14 @@ function* updateShuttleArrivals() {
 }
 
 function* updateShuttleClosestStop() {
+	console.log('updateShuttleClosestStop')
 	const location = yield select(getLocation)
-	if (location.position && location.position.coords) {
+	// TODO: revisit
+	if (location &&
+		location.position &&
+		location.position.coords &&
+		location.position.coords.latitude &&
+		location.position.coords.longitude) {
 		const shuttle = yield select(getShuttle)
 		const { stops } = shuttle
 		const currClosestStop = shuttle.closestStop
@@ -99,12 +105,6 @@ function* updateShuttleToggledRoute(action) {
 			if (stops[stop]) {
 				const newStop = { ...stops[stop] }
 				delete newStop.routes[route]
-				/*
-				newStops = {
-					...newStops,
-					newStop
-				}
-				*/
 				newStops[stop] = newStop
 			}
 		})
@@ -119,12 +119,6 @@ function* updateShuttleToggledRoute(action) {
 					if (stops[stop]) {
 						const newStop = { ...stops[stop] }
 						delete newStop.routes[route]
-						/*
-						newStops = {
-							...newStops,
-							newStop
-						}
-						*/
 						newStops[stop] = newStop
 					}
 				})
@@ -141,13 +135,6 @@ function* updateShuttleToggledRoute(action) {
 					...stops[stop],
 					routes: {}
 				}
-				/*
-				newStop.routes[route] = routes[route]
-				newStops = {
-					...newStops,
-					newStop
-				}
-				*/
 				newStop.routes[route] = true
 				newStops[stop] = newStop
 			}

@@ -9,6 +9,7 @@ import { getDistance } from '../util/map'
 
 const getDining = state => (state.dining)
 const diningState = state => (state.cards.cards.dining)
+const getLocation = state => (state.location)
 
 function* updateDining(action) {
 	const { active } = yield select(diningState)
@@ -20,11 +21,29 @@ function* updateDining(action) {
 	}
 }
 
-function* updateDiningDistance(action) {
-	const { position } = action
-	const { data } = yield select(getDining)
-	if (position) {
-		const diningDataWithDistance = yield call(_setDiningDistance, position, data)
+function* updateDiningDistance() {
+	console.log('\n## updateDiningDistance -----------------------')
+
+	console.log('updateDiningDistance, location:')
+	const location = yield select(getLocation)
+	console.log(location)
+	console.log('##--------')
+
+
+	// TODO: revisit
+	if (location &&
+		location.position &&
+		location.position.coords &&
+		location.position.coords.latitude &&
+		location.position.coords.longitude) {
+		console.log('has location--------------------')
+		const { data } = yield select(getDining)
+
+		console.log('dining data: ')
+		console.log(data)
+
+		const diningDataWithDistance = yield call(_setDiningDistance, location, data)
+		console.log(diningDataWithDistance)
 		yield put({ type: 'SET_DINING_DISTANCE', data: diningDataWithDistance })
 	}
 }
@@ -87,14 +106,14 @@ function* fetchDiningMenu(id) {
 	}
 }
 
-function _setDiningDistance(position, diningData) {
+function _setDiningDistance(location, diningData) {
 	// Calc distance from dining locations
 	return new Promise((resolve, reject) => {
 		if (Array.isArray(diningData)) {
 			resolve(diningData.map((eatery) => {
 				let distance
 				if (eatery.coords) {
-					distance = getDistance(position.coords.latitude, position.coords.longitude, eatery.coords.lat, eatery.coords.lon)
+					distance = getDistance(location.position.coords.latitude, location.position.coords.longitude, eatery.coords.lat, eatery.coords.lon)
 					if (distance) {
 						eatery = {
 							...eatery,

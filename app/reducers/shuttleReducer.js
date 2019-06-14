@@ -34,6 +34,7 @@ function shuttle(state = initialState, action) {
 			return newState
 		}
 		case 'SET_CLOSEST_STOP':
+			console.log('SET_CLOSEST_STOP')
 			newState.closestStop = Object.assign({}, action.closestStop)
 			newState.arrivalsLastUpdated = new Date().getTime()
 			return newState
