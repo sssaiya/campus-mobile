@@ -41,7 +41,8 @@ class AppStateContainer extends React.Component {
 		// Executes when the app is minimized or closed
 		if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
 			console.log('\n## handleAppStateChange - CLOSED')
-			this.updateProfile()
+			// TODO: revisit
+			// this.updateProfile()
 			this.unwatchLocation()
 		}
 

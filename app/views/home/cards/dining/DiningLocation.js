@@ -1,9 +1,5 @@
 import React, { Component } from 'react'
-import {
-	View,
-	Text,
-} from 'react-native'
-
+import { View, Text } from 'react-native'
 import Icon from 'react-native-vector-icons/Ionicons'
 import { withNavigation } from 'react-navigation'
 import ColoredDot from '../../../common/ColoredDot'
@@ -15,17 +11,10 @@ const general = require('../../../../util/general')
 const dining = require('../../../../util/dining')
 
 class DiningLocation extends Component {
-	componentDidMount() {
-		this.interval = setInterval(() => this.forceUpdate(), 950)
-	}
-
-	componentWillUnmount() {
-		clearInterval(this.interval)
-	}
-
 	render() {
 		const { navigation, data } = this.props
 
+		// TODO: revisit
 		if (!data.name) return null
 		const status = dining.getOpenStatus(data.regularHours)
 		const areSpecialHours = data.specialHours

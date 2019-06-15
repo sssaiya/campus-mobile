@@ -117,7 +117,7 @@ const css = StyleSheet.create({
 	fl_separator: { height: 1, backgroundColor: COLOR.MGREY },
 	fl_row: { flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 8 },
 	// Sortable List View
-	sl_row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderTopWidth: 1, borderColor: COLOR.MGREY, paddingVertical: 8, marginTop: -1, elevation: 0, backgroundColor: COLOR.WHITE, minHeight: 48 },
+	sl_row: { flexDirection: 'row', alignItems: 'center', borderBottomWidth: 1, borderColor: COLOR.MGREY, paddingVertical: 8, elevation: 0, backgroundColor: COLOR.WHITE, minHeight: 48 },
 	sl_icon: { color: COLOR.CCC, marginLeft: 8 },
 	sl_title: { flex: 5, fontSize: 18, marginLeft: 6 },
 	sl_title_disabled: { color: COLOR.CCC },
@@ -301,7 +301,8 @@ const css = StyleSheet.create({
 	sslv_listRow: { backgroundColor: COLOR.WHITE, flexDirection: 'row', alignItems: 'center', width: LAYOUT.DEVICE_WIDTH, borderBottomWidth: 1, borderBottomColor: COLOR.MGREY, height: 50,	...Platform.select({ ios: { shadowOpacity: 0, shadowOffset: { height: 2, width: 2 }, shadowRadius: 2 }, android: { margin: 0, elevation: 0 } }) },
 	sslv_nameText: { flex: 1, margin: 7 },
 	sslv_cancelButton: { justifyContent: 'center', alignItems: 'center', width: 50, height: 50 },
-	sslv_addNoticeText: { lineHeight: 28, fontSize: 15, color: COLOR.DGREY, textAlign: 'center' },
+	sslv_addNotice: { alignItems: 'center', paddingHorizontal: 20, paddingVertical: 20 },
+	sslv_addNoticeText: { fontSize: 20, paddingTop: 20 },
 	ssl_nextText: { fontSize: 20, fontWeight: '300', padding: 8 },
 	ssl_rowContainer: { flexDirection: 'row', marginBottom: 8, marginHorizontal: 8, alignItems: 'center', justifyContent: 'flex-start' },
 	ssl_circle: { borderRadius: 18, width: 36, height: 36, justifyContent: 'center', overflow: 'hidden' },

@@ -9,7 +9,20 @@ import LastUpdated from '../../../common/LastUpdated'
 import css from '../../../../styles/css'
 
 const ParkingCard = props => (
-	<Card id="parking" title="Parking">
+	<Card
+		id="parking"
+		title="Parking"
+		extraActions={[
+			{
+				name: 'Manage Lots',
+				action: () => props.navigation.navigate('ManageParkingLots')
+			},
+			{
+				name: 'Spot Types',
+				action: () => props.navigation.navigate('ParkingSpotType')
+			},
+		]}
+	>
 		<ParkingList {...props} />
 		<LastUpdated
 			lastUpdated={props.lastUpdated}

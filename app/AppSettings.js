@@ -44,12 +44,14 @@ module.exports = {
 	PRIVACY_POLICY_URL: 'https://mobile.ucsd.edu/privacy-policy.html',
 	ACCOUNT_HELP_URL: 'https://acms.ucsd.edu/students/accounts-and-passwords/index.html',
 
-	/* TTLs */
-	LOCATION_TTL: 5000, // 15 seconds
-
 	/* TIMEOUTS */
 	TIMEOUT_DEFAULT: 15000, // 15 seconds
 	TIMEOUT_LONG: 30000, 	// 30 seconds
+
+	/* CARDS */
+	CARD_DEFAULT_ROWS: 3,
+	CARD_LINKS_ROWS: 4,
+	LAST_UPDATED_INTERVAL: 60000, // 1 minute
 
 	/* RETRIES */
 	SSO_IDP_ERROR_RETRY_INCREMENT: 10000, // 10 seconds

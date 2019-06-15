@@ -9,7 +9,16 @@ import Card from '../../../common/Card'
 import LastUpdated from '../../../common/LastUpdated'
 
 const ShuttleCard = props => (
-	<Card id="shuttle" title="Shuttle">
+	<Card
+		id="shuttle"
+		title="Shuttle"
+		extraActions={[
+			{
+				name: 'Manage Stops',
+				action: () => props.navigation.navigate('ShuttleSavedListView')
+			},
+		]}
+	>
 		<ShuttleList {...props} />
 		<LastUpdated
 			lastUpdated={props.arrivalsLastUpdated}

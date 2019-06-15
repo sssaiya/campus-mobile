@@ -1,16 +1,11 @@
 import React from 'react'
-import {
-	Text,
-	Animated,
-	Platform,
-	Easing,
-	TouchableOpacity,
-	View,
-} from 'react-native'
+import { Text, Animated, Platform, Easing, TouchableOpacity, View } from 'react-native'
 import SortableList from 'react-native-sortable-list'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
+import { withNavigation } from 'react-navigation'
 import Toast from 'react-native-simple-toast'
+import Touchable from '../../../common/Touchable'
 import css from '../../../../styles/css'
 import COLOR from '../../../../styles/ColorConstants'
 
@@ -75,37 +70,38 @@ class ShuttleSavedListView extends React.Component {
 	}
 
 	render() {
-		const { removeStop } = this.props
-
-		if (Object.keys(this.state.savedObject).length < 1) {
-			return (
-				<View
-					style={css.main_full}
-				>
-					<Text
-						style={css.sslv_addNoticeText}
-					>
-						To manage your shuttle stops please add a stop.
-					</Text>
-				</View>
-			)
-		} else {
+		if (Object.keys(this.state.savedObject).length > 0) {
 			return (
 				<SortableList
 					style={css.main_full_flex}
 					data={this.state.savedObject}
 					renderRow={
-						({ data, active, disabled }) => (
+						({ index, data, active, disabled }) => (
 							<SavedItem
+								index={index}
 								data={data}
 								active={active}
-								removeStop={removeStop}
 							/>
 						)
 					}
 					onChangeOrder={(nextOrder) => { this._order = nextOrder }}
 					onReleaseRow={key => this._handleRelease()}
 				/>
+			)
+		} else {
+			return (
+				<View style={css.main_full_flex}>
+					<View style={css.sslv_addNotice}>
+						<Text style={css.sslv_addNoticeText}>
+							No shuttle stops found.
+						</Text>
+						<Touchable onPress={() => (this.props.navigation.navigate('ShuttleRoutesListView'))}>
+							<Text style={[css.sslv_addNoticeText, css.hyperlink]}>
+								Add a Stop
+							</Text>
+						</Touchable>
+					</View>
+				</View>
 			)
 		}
 	}
@@ -158,13 +154,16 @@ class SavedItem extends React.Component {
 		}
 	}
 
-	_handleRemove = (stopID) => {
+	removeShuttleStop = (stopID) => {
 		this.props.removeStop(stopID)
 		Toast.showWithGravity(this.props.data.name.trim() + ' removed.', Toast.SHORT, Toast.CENTER)
 	}
 
 	render() {
-		const { data } = this.props
+		const { index, data } = this.props
+
+		console.log('saved index: ' + index)
+
 		return (
 			<Animated.View style={[css.sl_row, this._style]}>
 				<Icon style={css.sl_icon} name="drag-handle" size={20} />
@@ -173,7 +172,7 @@ class SavedItem extends React.Component {
 				</Text>
 				{ !data.closest ? (
 					<TouchableOpacity
-						onPressOut={() => this._handleRemove(data.id)}
+						onPressOut={() => this.removeShuttleStop(data.id)}
 						style={css.sl_switch_container}
 					>
 						<Icon name="remove" size={24} color={COLOR.DGREY} />
@@ -193,16 +192,9 @@ function mapStateToProps(state, props) {
 
 function mapDispatchtoProps(dispatch) {
 	return {
-		orderStops: (newOrder) => {
-			dispatch({ type: 'ORDER_STOPS', newOrder })
-		},
-		removeStop: (stopID) => {
-			dispatch({ type: 'REMOVE_STOP', stopID })
-		}
+		orderStops: (newOrder) => { dispatch({ type: 'ORDER_STOPS', newOrder }) },
+		removeStop: (stopID) => { dispatch({ type: 'REMOVE_STOP', stopID }) }
 	}
 }
 
-export default connect(
-	mapStateToProps,
-	mapDispatchtoProps
-)(ShuttleSavedListView)
+export default connect(mapStateToProps,mapDispatchtoProps)(withNavigation(ShuttleSavedListView))
