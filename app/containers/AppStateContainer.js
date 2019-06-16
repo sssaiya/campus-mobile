@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 class AppStateContainer extends React.Component {
 	constructor(props) {
+		console.log('\n\n## AppStateContainer constructor')
 		super(props)
 		this.state = {
 			appState: AppState.currentState,
@@ -22,6 +23,7 @@ class AppStateContainer extends React.Component {
 
 	componentDidMount() {
 		AppState.addEventListener('change', this.handleAppStateChange)
+		console.log('\n\n## AppStateContainer mounted')
 	}
 
 	componentWillUnmount() {
@@ -29,9 +31,10 @@ class AppStateContainer extends React.Component {
 	}
 
 	handleAppStateChange = (nextAppState) => {
+		console.log('\n## nextAppState: ' + nextAppState)
 		// Executes when the app renders in the foreground
-		if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
-			console.log('\n## handleAppStateChange - OPENED')
+		if (this.state.appState === 'background' && nextAppState === 'active') {
+			console.log('\n## App State Change - OPENED')
 			this.updateCards()
 			this.updateMessages()
 			this.updateProfile()
@@ -39,8 +42,8 @@ class AppStateContainer extends React.Component {
 		}
 
 		// Executes when the app is minimized or closed
-		if (this.state.appState === 'active' && nextAppState.match(/inactive|background/)) {
-			console.log('\n## handleAppStateChange - CLOSED')
+		if (this.state.appState === 'active' && nextAppState === 'background') {
+			console.log('\n## App State Change - CLOSED')
 			// TODO: revisit
 			// this.updateProfile()
 			this.unwatchLocation()
@@ -50,7 +53,7 @@ class AppStateContainer extends React.Component {
 	}
 
 	updateCards() {
-		console.log('AppStateContainer: updateCards: ---------------')
+		console.log('## AppStateContainer: updateCards')
 		this.props.updateDining()
 		this.props.updateEvents()
 		this.props.updateLinks()
@@ -65,17 +68,19 @@ class AppStateContainer extends React.Component {
 	}
 
 	updateMessages() {
+		console.log('## AppStateContainer: updateMessages')
 		this.props.updateMessages(new Date().getTime())
 	}
 
 	updateProfile() {
+		console.log('## AppStateContainer: updateProfile')
 		this.props.syncUserProfile()
 	}
 
 	watchLocation() {
 		this.watchPositionId = navigator.geolocation.watchPosition(
 			(position) => {
-				console.log('\n\n## watchLocation: lat: ' + position.coords.latitude + ', lon:' + position.coords.longitude)
+				console.log('\n## watchLocation: lat: ' + position.coords.latitude + ', lon:' + position.coords.longitude)
 				if (position.coords.latitude && position.coords.longitude) {
 					const newPosition = {
 						coords: {
@@ -109,7 +114,9 @@ class AppStateContainer extends React.Component {
 					})
 					*/
 				} else {
-					console.log('LatLon ERR------------###########')
+					// TODO: set to initial location
+
+
 				}
 			},
 			(error) => {

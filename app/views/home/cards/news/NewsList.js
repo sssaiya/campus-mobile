@@ -2,30 +2,12 @@ import React from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import moment from 'moment'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import SafeImage from '../../../common/SafeImage'
+import { CARD_DEFAULT_ROWS } from '../../../../AppSettings'
 
 class NewsList extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { newsData: this.parseNewsData(props.newsData) }
-	}
-
-	parseNewsData = (newsData) => {
-		if (Array.isArray(newsData)) {
-			const parsedNewsData = newsData.slice()
-			parsedNewsData.forEach((element, index) => {
-				parsedNewsData[index] = {
-					...element,
-					subtext: moment(element.date).format('MMM Do, YYYY')
-				}
-			})
-			return parsedNewsData
-		}
-	}
-
 	NewsListItem = (data) => {
 		const { navigation } = this.props
 
@@ -54,16 +36,15 @@ class NewsList extends React.Component {
 	}
 
 	render() {
-		const { type } = this.props
-		const MAX_ROWS = 3
+		const { newsData, type } = this.props
 
-		if (Array.isArray(this.state.newsData)) {
+		if (Array.isArray(newsData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={type === 'card' ? this.state.newsData.slice(0, MAX_ROWS) : this.state.newsData}
+					data={type === 'card' ? newsData.slice(0, CARD_DEFAULT_ROWS) : newsData}
 					scrollEnabled={!(type === 'card')}
-					keyExtractor={(item, index) => (item.title + index)}
+					keyExtractor={(item, index) => String(item.title + index)}
 					renderItem={({ item: rowData }) => this.NewsListItem(rowData)}
 					ItemSeparatorComponent={() => (<View style={css.fl_separator} />)}
 				/>

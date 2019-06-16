@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, NativeModules } from 'react-native'
 import { setJSExceptionHandler } from 'react-native-exception-handler'
 import { Provider } from 'react-redux'
 import AppRedux from './AppRedux'
@@ -18,6 +18,12 @@ export default class App extends Component {
 		}
 	}
 
+	componentDidMount() {
+		if (__DEV__) {
+			NativeModules.DevSettings.setIsDebuggingRemotely(true)
+		}
+	}
+
 	finishLoading = () => {
 		this.setState({ isLoading: false })
 		const errorHandler = (e, isFatal) => {
@@ -29,13 +35,12 @@ export default class App extends Component {
 	}
 
 	render() {
-		if (!this.state.isLoading) {
+		if (!this.state.isLoading && this.state.store) {
 			return (
 				<Provider store={this.state.store}>
 					<View style={css.main}>
 						<AppNavigation />
 						<AppStateContainer />
-						<PushNotificationContainer />
 					</View>
 				</Provider>
 			)

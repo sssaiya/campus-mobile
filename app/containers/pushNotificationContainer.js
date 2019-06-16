@@ -7,6 +7,7 @@ import NavigationService from '../services/navigationService'
 
 class PushNotificationContainer extends React.Component {
 	async componentDidMount() {
+		console.log('## PushNotificationContainer - componentDidMount')
 		this.checkPermission()
 
 		this.onTokenRefreshListener = firebase.messaging().onTokenRefresh((fcmToken) => {

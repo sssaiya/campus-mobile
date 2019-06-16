@@ -2,32 +2,12 @@ import React from 'react'
 import { FlatList, View, ActivityIndicator, Text } from 'react-native'
 import { connect } from 'react-redux'
 import { withNavigation } from 'react-navigation'
-import moment from 'moment'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import SafeImage from '../../../common/SafeImage'
-import { militaryToAMPM } from '../../../../util/general'
+import { CARD_DEFAULT_ROWS } from '../../../../AppSettings'
 
 class EventsList extends React.Component {
-	constructor(props) {
-		super(props)
-		this.state = { eventsData: this.parseEventData(props.eventsData) }
-	}
-
-	parseEventData = (eventsData) => {
-		if (Array.isArray(eventsData)) {
-			const parsedEventsData = eventsData.slice()
-			parsedEventsData.forEach((element, index) => {
-				parsedEventsData[index] = {
-					...element,
-					subtext: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-					image: element.imagethumb
-				}
-			})
-			return parsedEventsData
-		}
-	}
-
 	EventsListItem = (data) => {
 		const { navigation } = this.props
 
@@ -56,20 +36,17 @@ class EventsList extends React.Component {
 	}
 
 	render() {
-		const { type } = this.props
-		const MAX_ROWS = 3
+		const { eventsData, type } = this.props
 
-		if (Array.isArray(this.state.eventsData)) {
+		if (Array.isArray(eventsData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={type === 'card' ? this.state.eventsData.slice(0, MAX_ROWS) : this.state.eventsData}
+					data={type === 'card' ? eventsData.slice(0, CARD_DEFAULT_ROWS) : eventsData}
 					scrollEnabled={!(type === 'card')}
-					keyExtractor={(item, index) => (item.id + index)}
+					keyExtractor={(item, index) => String(item.id + index)}
 					renderItem={({ item: rowData }) => this.EventsListItem(rowData)}
-					ItemSeparatorComponent={() => (
-						<View style={css.fl_separator} />
-					)}
+					ItemSeparatorComponent={() => (<View style={css.fl_separator} />)}
 				/>
 			)
 		} else {
