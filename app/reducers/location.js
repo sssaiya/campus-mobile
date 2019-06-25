@@ -6,7 +6,7 @@ const initialState = {
 		}
 	},
 	permission: 'undetermined',
-	enabled: false
+	enabled: true
 }
 
 function location(state = initialState, action) {
