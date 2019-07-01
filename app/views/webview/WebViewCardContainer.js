@@ -62,7 +62,7 @@ export class WebViewCardContainer extends Component {
 				style={{ height: 400, backgroundColor: COLOR.WHITE, margin: 6, borderRadius: 3  }}
 			>
 				<WebView
-					source={{ uri: 'http://10.0.2.2:8080/index.html' }}
+					source={{ uri: 'http://10.0.3.2:8080/index.html' }} // 10.0.3.2 = Genymotion, 10.0.2.2 = Android Studio
 					ref={this._reWebView}
 				/>
 			</Card>

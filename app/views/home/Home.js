@@ -5,6 +5,7 @@ import { checkGooglePlayServices } from 'react-native-google-api-availability-br
 
 import WebViewCardContainer from '../webview/WebViewCardContainer'
 import WebViewVideoContainer from '../webview/WebViewVideoContainer'
+import WebViewRadioContainer from '../webview/WebViewRadioContainer'
 import WeatherCardContainer from '../weather/WeatherCardContainer'
 import ShuttleCardContainer from '../shuttle/ShuttleCardContainer'
 import EventCardContainer from '../events/EventCardContainer'
@@ -82,6 +83,7 @@ export class Home extends React.Component {
 
 		activeCards.push(<WebViewCardContainer key="webviews" />)
 		activeCards.push(<WebViewVideoContainer key="youtube" />)
+		activeCards.push(<WebViewRadioContainer key="radio" />)
 
 		if (Array.isArray(this.props.cardOrder)) {
 			this.props.cardOrder.forEach((card) => {
