@@ -164,9 +164,6 @@ const mapDispatchToProps = dispatch => (
 		updateSelectedLots: (add, name, selectedLots) => {
 			dispatch({ type: 'UPDATE_PARKING_LOT_SELECTIONS', add, name, selectedLots })
 		},
-		renderWarning: (showWarning) => {
-			dispatch({ type: 'SET_WARNING_SIGN', showWarning })
-		},
 		reorderParkingLots: (newParkingData) => {
 			dispatch({ type: 'SET_PARKING_DATA', newParkingData })
 		}

@@ -1,14 +1,22 @@
 import React from 'react'
 import { View, Text, FlatList } from 'react-native'
+import Toast from 'react-native-simple-toast'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import { connect } from 'react-redux'
 import COLOR from '../../styles/ColorConstants'
 import Touchable from '../common/Touchable'
 import css from '../../styles/css'
 
+
 const ParkingTypes = require('./ParkingSpotTypeList.json')
 
 class ParkingSpotType extends React.Component {
+	// returns the warning sign
+	_displayWarning = () =>  {
+		const messageString = 'Only up to 3 type selections are allowed at one time'
+		Toast.showWithGravity(messageString, Toast.LONG, Toast.BOTTOM)
+	}
+
 	rowTouched(parkingObj) {
 		const { isChecked, updateSelectedTypes, selectedSpots, renderWarning } = this.props
 		const ids = [...isChecked]
@@ -26,7 +34,7 @@ class ParkingSpotType extends React.Component {
 			parkingObj.separators.highlight()
 			updateSelectedTypes(ids, selectedSpots.length + 1)
 		} else {
-			renderWarning(true)
+			this._displayWarning()
 		}
 		// user tried to select a row but reached limit, so do nothing
 	}
@@ -45,6 +53,7 @@ class ParkingSpotType extends React.Component {
 			</Touchable>
 		)
 	}
+
 
 	// the flat list doesn't need extraData prop becuase it rerenders when an item is highlighted or unhighlighted
 	// the highlight and unhihglight methods are given in renderItem prop (parkingObj)
@@ -73,7 +82,6 @@ class ParkingSpotType extends React.Component {
 					ListFooterComponent={renderSeparator(false)}
 					ListHeaderComponent={renderSeparator(false)}
 				/>
-				{this.props.showWarning ? displayWarning() : null}
 			</View>
 		)
 	}
@@ -91,28 +99,6 @@ const renderSeparator = (highlighted) => {
 	}
 	return <View style={css.pst_flat_list_separator} />
 }
-
-// returns the warning sign
-const displayWarning = () =>  (
-	<View style={css.pst_warning_container_view}>
-		<Text style={css.pst_warning_header_text} >
-			{'Max Selection (3)'}
-		</Text>
-		<Text>
-			{'Only up to 3 type selections'}
-		</Text>
-		<Text>
-			{'are allowed at one time.'}
-		</Text>
-		<Text>
-			{'\nCancel a parking type selection to'}
-		</Text>
-		<Text>
-			{'add another parking type.'}
-		</Text>
-	</View>
-
-)
 
 
 // returns an elevated view that contains all elemnts of a selected row
@@ -175,7 +161,6 @@ const uncheckedIcon = () => (
 const mapStateToProps = state => ({
 	isChecked: state.parking.isChecked,
 	selectedSpots: state.parking.selectedSpots,
-	showWarning: state.parking.showWarning
 })
 
 
@@ -183,9 +168,6 @@ const mapDispatchToProps = dispatch => (
 	{
 		updateSelectedTypes: (isChecked) => {
 			dispatch({ type: 'SET_PARKING_TYPE_SELECTION', isChecked })
-		},
-		renderWarning: (showWarning) => {
-			dispatch({ type: 'SET_WARNING_SIGN', showWarning })
 		}
 	}
 )

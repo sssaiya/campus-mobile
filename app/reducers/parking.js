@@ -40,10 +40,6 @@ function parking(state = initialState, action) {
 			newState.lastUpdated = new Date().getTime()
 			return newState
 		}
-		case 'SET_WARNING_SIGN': {
-			newState.showWarning = action.showWarning
-			return newState
-		}
 		case 'SET_PARKING_LOT_SELECTION': {
 			let temp = [...state.selectedLots]
 			if (action.add) {
