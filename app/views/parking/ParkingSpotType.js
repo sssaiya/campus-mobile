@@ -64,7 +64,7 @@ class ParkingSpotType extends React.Component {
 			>
 				<FlatList
 					style={css.pst_flat_list}
-					scrollEnabled={false}
+					scrollEnabled={true}
 					showsVerticalScrollIndicator={false}
 					keyExtractor={parkingType => parkingType.id.toString()}
 					data={ParkingTypes}
