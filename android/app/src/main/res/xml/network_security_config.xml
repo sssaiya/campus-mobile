@@ -1,0 +1,7 @@
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">localhost</domain> <!-- Usb Device -->
+		<domain includeSubdomains="true">10.0.2.2</domain> <!-- Android Studio Emulator -->
+		<domain includeSubdomains="true">10.0.3.2</domain> <!-- Genymotion Emulator -->
+    </domain-config>
+</network-security-config>
