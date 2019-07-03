@@ -64,13 +64,9 @@ class OnboardingLogin extends React.Component {
 					console.log('Access Token: ', token)
 				})
 
-			if (!this.props.onBoardingViewed) {
-				// If we're onboarding, set viewed to true
-				this.props.setOnboardingViewed(true)
-			} else {
-				// If we're not onboarding, pop the view
-				this.props.navigation.pop()
-			}
+			// PICK UP HERE
+			this.props.appOnboardingComplete()
+			this.props.navigation.pop()
 		}
 	}
 
@@ -102,16 +98,6 @@ class OnboardingLogin extends React.Component {
 		newCredentials[fieldName] = e.nativeEvent.text
 
 		this.setState({ credentials: newCredentials })
-	}
-
-	skipSSO = () => {
-		if (!this.props.onBoardingViewed) {
-			// If we're onboarding, set viewed to true
-			this.props.setOnboardingViewed(true)
-		} else {
-			// If we're not onboarding, pop the view
-			this.props.navigation.pop()
-		}
 	}
 
 	render() {
@@ -173,7 +159,7 @@ class OnboardingLogin extends React.Component {
 										<Touchable style={css.ob_help_button} onPress={() => openURL(ACCOUNT_HELP_URL)}>
 											<Text style={css.ob_forgotpass}>Need help logging in?</Text>
 										</Touchable>
-										<Touchable style={css.ob_cancel_button} onPress={() => this.skipSSO()}>
+										<Touchable style={css.ob_cancel_button} onPress={() => this.props.appOnboardingComplete()}>
 											<Text style={css.ob_cancel}>Skip</Text>
 										</Touchable>
 									</View>
@@ -187,33 +173,18 @@ class OnboardingLogin extends React.Component {
 	}
 }
 
-const mapStateToProps = (state, props) => (
-	{
-		user: state.user,
-		onBoardingViewed: state.routes.onBoardingViewed,
-		requestStatus: state.requestStatuses.LOG_IN,
-		requestError: state.requestErrors.LOG_IN
-	}
-)
+const mapStateToProps = (state, props) => ({
+	user: state.user,
+	onboardingComplete: state.app.onboardingComplete,
+	requestStatus: state.requestStatuses.LOG_IN,
+	requestError: state.requestErrors.LOG_IN
+})
 
-const mapDispatchToProps = (dispatch, ownProps) => (
-	{
-		setOnboardingViewed: (viewed) => {
-			dispatch({
-				type: 'SET_ONBOARDING_VIEWED',
-				viewed
-			})
-		},
-		doLogin: (username, password) => {
-			dispatch({ type: 'USER_LOGIN', username, password })
-		},
-		doLogout: () => {
-			dispatch({ type: 'USER_LOGOUT' })
-		},
-		timeoutLogin: () => {
-			dispatch({ type: 'USER_LOGIN_TIMEOUT' })
-		}
-	}
-)
+const mapDispatchToProps = (dispatch, ownProps) => ({
+	appOnboardingComplete: () => { dispatch({ type: 'SET_APP_ONBOARDING_COMPLETE' }) },
+	doLogin: (username, password) => { dispatch({ type: 'USER_LOGIN', username, password }) },
+	doLogout: () => { dispatch({ type: 'USER_LOGOUT' }) },
+	timeoutLogin: () => { dispatch({ type: 'USER_LOGIN_TIMEOUT' }) }
+})
 
 export default connect(mapStateToProps, mapDispatchToProps)(OnboardingLogin)

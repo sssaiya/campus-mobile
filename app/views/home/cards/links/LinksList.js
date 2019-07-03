@@ -7,6 +7,7 @@ import Ionicons from 'react-native-vector-icons/Ionicons'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import { openURL } from '../../../../util/general'
+import { CARD_LINKS_ROWS } from '../../../../AppSettings'
 
 class LinksList extends React.Component {
 	LinksListItem = (data) => {
@@ -36,16 +37,15 @@ class LinksList extends React.Component {
 	}
 
 	render() {
-		const { type } = this.props
-		const MAX_ROWS = 4
+		const { linksData, type } = this.props
 
-		if (Array.isArray(this.props.linksData)) {
+		if (Array.isArray(linksData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={type === 'card' ? this.props.linksData.slice(0, MAX_ROWS) : this.props.linksData}
+					data={type === 'card' ? linksData.slice(0, CARD_LINKS_ROWS) : linksData}
 					scrollEnabled={!(type === 'card')}
-					keyExtractor={(item, index) => (item.name + index)}
+					keyExtractor={(item, index) => String(item.name + index)}
 					renderItem={({ item: rowData }) => this.LinksListItem(rowData)}
 					ItemSeparatorComponent={() => (
 						<View style={css.fl_separator} />

@@ -27,6 +27,11 @@ export class Home extends React.Component {
 
 	componentDidMount() {
 		logger.ga('View Loaded: Home')
+
+		this.props.navigation.addListener('willFocus', () => {
+			this.updateCards()
+		})
+
 		this._cards = []
 		if (this._scrollview) {
 			this._scrollview.scrollTo({ y: this.props.lastScroll, animated: false })
@@ -69,7 +74,6 @@ export class Home extends React.Component {
 	}
 
 	updateCards = () => {
-		console.log('Home: updateCards')
 		this.props.updateDining()
 		this.props.updateEvents()
 		this.props.updateLinks()
@@ -84,7 +88,6 @@ export class Home extends React.Component {
 	}
 
 	pullToRefresh = () => {
-		console.log('Home: pullToRefresh')
 		this.setState({ refreshing: true })
 		this.updateCards()
 		this.setState({ refreshing: false })

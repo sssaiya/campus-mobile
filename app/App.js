@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { View } from 'react-native'
+import { View, NativeModules } from 'react-native'
 import { setJSExceptionHandler } from 'react-native-exception-handler'
 import { Provider } from 'react-redux'
 import AppRedux from './AppRedux'
@@ -15,6 +15,12 @@ export default class App extends Component {
 		this.state = {
 			store: AppRedux({}, this.finishLoading),
 			isLoading: true,
+		}
+	}
+
+	componentDidMount() {
+		if (__DEV__) {
+			NativeModules.DevSettings.setIsDebuggingRemotely(true)
 		}
 	}
 
@@ -35,7 +41,6 @@ export default class App extends Component {
 					<View style={css.main}>
 						<AppNavigation />
 						<AppStateContainer />
-						<PushNotificationContainer />
 					</View>
 				</Provider>
 			)

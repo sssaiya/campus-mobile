@@ -1,15 +1,15 @@
 const initialState = {
 	data: null,
-	lastUpdated: new Date().getTime(),
+	lastUpdated: null,
 }
 
 function news(state = initialState, action) {
 	const newState = { ...state }
+	newState.lastUpdated = new Date().getTime()
 
 	switch (action.type) {
 		case 'SET_NEWS':
-			newState.data = action.news
-			newState.lastUpdated = new Date().getTime()
+			newState.data = action.newsData
 			return newState
 		default:
 			return state
