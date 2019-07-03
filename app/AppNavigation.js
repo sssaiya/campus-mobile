@@ -266,8 +266,10 @@ let OnboardingStack = createStackNavigator(
 MainStack = createAppContainer(MainStack)
 OnboardingStack = createAppContainer(OnboardingStack)
 
-const Router = ({ onBoardingViewed }) => {
-	if (onBoardingViewed) {
+// TODO: circle back on Monday
+
+const AppNavigation = ({ onboardingComplete }) => {
+	if (onboardingComplete) {
 		return (
 			<MenuProvider>
 				<MainStack ref={navigatorRef => NavigationService.setTopLevelNavigator(navigatorRef)} />
@@ -281,7 +283,7 @@ const Router = ({ onBoardingViewed }) => {
 }
 
 const mapStateToProps = (state, props) => (
-	{ onBoardingViewed: state.routes.onBoardingViewed }
+	{ onboardingComplete: state.app.onboardingComplete }
 )
 
-export default connect(mapStateToProps)(Router)
+export default connect(mapStateToProps)(AppNavigation)

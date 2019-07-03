@@ -1,5 +1,6 @@
 import { combineReducers } from 'redux'
 import cardReducer from './reducers/cardReducer'
+import appReducer from './reducers/appReducer'
 import diningReducer from './reducers/diningReducer'
 import eventsReducer from './reducers/eventsReducer'
 import feedbackReducer from './reducers/feedbackReducer'
@@ -12,7 +13,6 @@ import newsReducer from './reducers/newsReducer'
 import parkingReducer from './reducers/parkingReducer'
 import requestErrorsReducer from './reducers/requestErrorsReducer'
 import requestStatusesReducer from './reducers/requestStatusesReducer'
-import routesReducer from './reducers/routesReducer'
 import scheduleReducer from './reducers/scheduleReducer'
 import shuttleReducer from './reducers/shuttleReducer'
 import specialEventsReducer from './reducers/specialEventsReducer'
@@ -24,6 +24,7 @@ import weatherReducer from './reducers/weatherReducer'
 
 module.exports = combineReducers({
 	cards: cardReducer,
+	app: appReducer,
 	dining: diningReducer,
 	events: eventsReducer,
 	feedback: feedbackReducer,
@@ -36,7 +37,6 @@ module.exports = combineReducers({
 	parking: parkingReducer,
 	requestErrors: requestErrorsReducer,
 	requestStatuses: requestStatusesReducer,
-	routes: routesReducer,
 	schedule: scheduleReducer,
 	shuttle: shuttleReducer,
 	specialEvents: specialEventsReducer,

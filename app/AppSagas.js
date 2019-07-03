@@ -7,7 +7,6 @@ import specialEventsSaga from './sagas/specialEventsSaga'
 import userSaga from './sagas/userSaga'
 import mapSaga from './sagas/mapSaga'
 import feedbackSaga from './sagas/feedbackSaga'
-import routesSaga from './sagas/routesSaga'
 import scheduleSaga from './sagas/scheduleSaga'
 import parkingSaga from './sagas/parkingSaga'
 import messagesSaga from './sagas/messagesSaga'
@@ -25,7 +24,6 @@ export default function* rootSaga() {
 		fork(shuttleSaga),
 		fork(diningSaga),
 		fork(homeSaga),
-		fork(routesSaga),
 		fork(specialEventsSaga),
 		fork(userSaga),
 		fork(mapSaga),

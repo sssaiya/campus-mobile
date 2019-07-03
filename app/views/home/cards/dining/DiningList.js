@@ -6,6 +6,7 @@ import DiningLocation from './DiningLocation'
 import css from '../../../../styles/css'
 import Touchable from '../../../common/Touchable'
 import SafeImage from '../../../common/SafeImage'
+import { CARD_DEFAULT_ROWS } from '../../../../AppSettings'
 
 class DiningList extends React.Component {
 	DiningListItem = (data) => {
@@ -24,7 +25,7 @@ class DiningList extends React.Component {
 								style={css.dataitem_descText}
 								numberOfLines={2}
 							>
-								{data.description.trim()}
+								{data.description}
 							</Text>
 						) : null }
 						<Text style={css.dataitem_dateText}>{data.subtext}</Text>
@@ -36,27 +37,15 @@ class DiningList extends React.Component {
 	}
 
 	render() {
-		const { type, diningData } = this.props
-		const MAX_ROWS = 3
+		const { diningData, type,  } = this.props
 
-		if (Array.isArray(this.props.diningData)) {
-			let diningDataArray = []
-
-			if (type === 'card') {
-				diningDataArray = this.props.diningData.slice(0, MAX_ROWS)
-			} else {
-				diningDataArray = this.props.diningData
-			}
-
-			console.log('diningDataArray:')
-			console.log(diningDataArray)
-
+		if (Array.isArray(diningData)) {
 			return (
 				<FlatList
 					style={css.scroll_default}
-					data={diningDataArray}
+					data={type === 'card' ? diningData.slice(0, CARD_DEFAULT_ROWS) : diningData}
 					scrollEnabled={!(type === 'card')}
-					keyExtractor={(item, index) => (item.id + item.name).trim()}
+					keyExtractor={(item, index) => String(item.id + item.name)}
 					renderItem={({ item: rowData }) => (<DiningLocation data={rowData} />)}
 					ItemSeparatorComponent={() => (
 						<View style={css.fl_separator} />

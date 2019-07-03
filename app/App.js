@@ -35,7 +35,7 @@ export default class App extends Component {
 	}
 
 	render() {
-		if (!this.state.isLoading && this.state.store) {
+		if (!this.state.isLoading) {
 			return (
 				<Provider store={this.state.store}>
 					<View style={css.main}>
