@@ -18,7 +18,7 @@ class ParkingSpotType extends React.Component {
 	}
 
 	rowTouched(parkingObj) {
-		const { isChecked, updateSelectedTypes, selectedSpots, renderWarning } = this.props
+		const { isChecked, updateSelectedTypes, selectedSpots } = this.props
 		const ids = [...isChecked]
 		const index = parkingObj.item.id
 
@@ -27,7 +27,6 @@ class ParkingSpotType extends React.Component {
 			ids[index] = !ids[index]
 			parkingObj.separators.unhighlight()
 			updateSelectedTypes(ids, selectedSpots.length - 1)
-			renderWarning(false)
 		} else if (selectedSpots.length < 3) {
 			// user is trying to select a row
 			ids[index] = !ids[index]
