@@ -6,8 +6,6 @@ import COLOR from '../../styles/ColorConstants'
 import Touchable from '../common/Touchable'
 import css from '../../styles/css'
 
-const ParkingTypes = require('./ParkingSpotTypeList.json')
-
 class ParkingSpotType extends React.Component {
 	rowTouched(parkingObj) {
 		const { isChecked, updateSelectedTypes, selectedSpots, renderWarning } = this.props
@@ -58,7 +56,7 @@ class ParkingSpotType extends React.Component {
 					scrollEnabled={false}
 					showsVerticalScrollIndicator={false}
 					keyExtractor={parkingType => parkingType.id.toString()}
-					data={ParkingTypes}
+					data={this.props.parkingSpotData}
 					renderItem={parkingObj => this.renderRow(parkingObj)}
 					enableEmptySections={true}
 					ItemSeparatorComponent={
@@ -175,7 +173,8 @@ const uncheckedIcon = () => (
 const mapStateToProps = state => ({
 	isChecked: state.parking.isChecked,
 	selectedSpots: state.parking.selectedSpots,
-	showWarning: state.parking.showWarning
+	showWarning: state.parking.showWarning,
+	parkingSpotData: state.parking.parkingSpotData,
 })
 
 

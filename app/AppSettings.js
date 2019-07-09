@@ -34,6 +34,7 @@ module.exports = {
 	FEEDBACK_URL: 'https://eforms.ucsd.edu/view.php?id=175631',
 	QUICKLINKS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/quick_links/ucsd-quicklinks-v3.json',
 	PARKING_API_URL: 'https://b2waxbcovi.execute-api.us-west-2.amazonaws.com/prod/parking/v1.1/status',
+	PARKING_SPOT_TYPES_API_URL: 'https://4pefyt8qv7.execute-api.us-west-2.amazonaws.com/dev/parking/v1.1/parking-spot-types',
 	MY_STUDENT_CONTACT_API_URL: 'https://api.ucsd.edu:8243/student/my/student_contact_info/v1',
 	MY_STUDENT_PROFILE_API_URL: 'https://api.ucsd.edu:8243/student/my/v1',
 
@@ -62,6 +63,7 @@ module.exports = {
 	USER_PROFILE_SYNC_TTL: 3600000, // 1 hour
 	QUICKLINKS_API_TTL: 86400000, // 1 day
 	SID_API_TTL: 86400000, // 1 day
+	PARKING_SPOT_TTL: 86400000, // 1 day
 
 	/* TIMEOUTS */
 	HTTP_REQUEST_TTL: 15000, // 15 seconds

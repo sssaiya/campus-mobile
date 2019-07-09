@@ -19,7 +19,8 @@ import {
 	NEWS_API_TTL,
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
-	PARKING_API_TTL
+	PARKING_API_TTL,
+	PARKING_SPOT_TTL,
 } from '../AppSettings'
 
 const getWeather = state => (state.weather)
@@ -32,6 +33,7 @@ const getCards = state => (state.cards)
 const getShuttle = state => (state.shuttle)
 const getUserData = state => (state.user)
 const getParkingData = state => (state.parking)
+const getParkingSpotTypes = state => (state.parking)
 
 function* watchData() {
 	while (true) {
@@ -41,6 +43,7 @@ function* watchData() {
 			yield call(updateSpecialEvents)
 			yield call(updateLinks)
 			yield call(updateParking)
+			yield call(updateParkingSpotTypes)
 			yield call(updateEvents)
 			yield call(updateNews)
 			yield call(updateShuttleMaster)
@@ -199,7 +202,7 @@ function* updateParking() {
 			newParkingData.sort(sortByOldParkingData(parkingData))
 			yield put({ type: 'SET_PARKING_DATA', newParkingData })
 		}
-		// get previously selected lots from users synced profile
+		// Get previously selected lots from users synced profile
 		const userData = yield select(getUserData)
 		const prevSelectedParkingLots = userData.profile.selectedLots
 		if (prevSelectedParkingLots) {
@@ -212,6 +215,30 @@ function* updateParking() {
 function sortByOldParkingData(parkingData) {
 	return function (a, b) {
 		return parkingData.findIndex(x => x.LocationName === a.LocationName) - parkingData.findIndex(x => x.LocationName === b.LocationName)
+	}
+}
+
+function* updateParkingSpotTypes() { 
+	const { lastUpdated, parkingSpotData } = yield select(getParkingSpotTypes),
+		nowTime = new Date().getTime(),
+		ttl = PARKING_SPOT_TTL,
+		timeDiff = nowTime - lastUpdated
+
+	if (timeDiff < ttl && parkingSpotData) {
+		// Do nothing, no need to fetch new data
+	} else {
+		// Fetch for new data
+		const parkingSpotDataResp = yield call(ParkingService.FetchParkingSpotTypes)
+		const newParkingSpotData = parkingSpotDataResp.parkingSpotTypes
+		console.log(newParkingSpotData)
+		yield put({ type: 'SET_PARKING_SPOT_DATA', newParkingSpotData })
+
+		// Get previously selected lots from users synced profile
+		const userData = yield select(getUserData)
+		const prevSelectedPakingSpots = userData.profile.selectedSpots
+		if (prevSelectedPakingSpots) {
+			yield put({ type: 'SYNC_PARKING_SPOT_DATA', prevSelectedPakingSpots })
+		}
 	}
 }
 

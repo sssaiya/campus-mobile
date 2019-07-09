@@ -40,6 +40,11 @@ function parking(state = initialState, action) {
 			newState.lastUpdated = new Date().getTime()
 			return newState
 		}
+		case 'SET_PARKING_SPOT_DATA': {
+			newState.parkingSpotData = [...action.newParkingSpotData]
+			newState.lastUpdated = new Date().getTime()
+			return newState
+		}
 		case 'SET_WARNING_SIGN': {
 			newState.showWarning = action.showWarning
 			return newState
@@ -56,6 +61,10 @@ function parking(state = initialState, action) {
 		}
 		case 'SYNC_PARKING_LOTS_DATA': {
 			newState.selectedLots = [...action.prevSelectedParkingLots]
+			return newState
+		}
+		case 'SYNC_PARKING_SPOT_DATA': {
+			newState.selectedSpots = [...action.prevSelectedPakingSpots]
 			return newState
 		}
 		default:
