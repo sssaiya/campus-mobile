@@ -133,17 +133,20 @@ class ListItem extends React.Component {
 	render() {
 		const { data, selectedLots, updateSelectedLots } = this.props
 
+		const regex = /\d/g
+		const lotName = regex.test(data.LocationName) ? data.LocationContext + '/' +  data.LocationName : data.LocationName
+
 		return (
 			<Animated.View style={[css.sl_row, this._style]}>
 				<Icon style={css.sl_icon} name="drag-handle" size={20} />
-				<Text style={[css.sl_title, !selectedLots.includes(data.LocationName) ? css.sl_title_disabled : null]}>
-					{ data.LocationName }
+				<Text style={[css.sl_title, !selectedLots.includes(lotName) ? css.sl_title_disabled : null]}>
+					{ lotName }
 				</Text>
 				<TouchableOpacity
-					onPress={() => { updateSelectedLots(!selectedLots.includes(data.LocationName), data.LocationName, selectedLots) }}
+					onPress={() => { updateSelectedLots(!selectedLots.includes(lotName), lotName, selectedLots) }}
 					style={css.sl_switch_container}
 				>
-					{selectedLots.includes(data.LocationName) ? (
+					{selectedLots.includes(lotName) ? (
 						<Icon name="remove" size={24} color={COLOR.DGREY} />
 					) : (
 						<Icon name="add" size={24} color={COLOR.DGREY} />
