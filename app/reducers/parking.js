@@ -44,7 +44,7 @@ function parking(state = initialState, action) {
 		}
 		case 'ADD_PARKING_SPOT_TYPE': {
 			const temp = [...state.selectedSpotIds]
-			temp.push(action.spotTypeId)
+			if (!temp.includes(action.spotTypeId)) temp.push(action.spotTypeId)
 			newState.selectedSpotIds = [...temp]
 			return newState
 		}
