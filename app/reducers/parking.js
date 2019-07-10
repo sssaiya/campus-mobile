@@ -39,13 +39,13 @@ function parking(state = initialState, action) {
 		case 'REMOVE_PARKING_SPOT_TYPE': {
 			let temp = [...state.selectedSpotIds]
 			temp = temp.filter(e => e !== action.spotTypeId)
-			newState.selectedLots = [...temp]
+			newState.selectedSpotIds = [...temp]
 			return newState
 		}
 		case 'ADD_PARKING_SPOT_TYPE': {
 			const temp = [...state.selectedSpotIds]
 			temp.push(action.spotTypeId)
-			newState.selectedLots = [...temp]
+			newState.selectedSpotIds = [...temp]
 			return newState
 		}
 		case 'SET_PARKING_DATA': {
