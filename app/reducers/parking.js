@@ -1,6 +1,7 @@
 const initialState = {
 	isChecked: [true, true, true, false, false],
 	selectedSpots: ['S', 'B', 'A'],
+	selectedSpotIds: [0, 1, 2],
 	parkingData: [],
 	selectedLots: ['Osler'],
 	showWarning: false,
@@ -33,6 +34,18 @@ function parking(state = initialState, action) {
 				}
 			}
 			newState.selectedSpots = [...tempArray]
+			return newState
+		}
+		case 'REMOVE_PARKING_SPOT_TYPE': {
+			let temp = [...state.selectedSpotIds]
+			temp = temp.filter(e => e !== action.spotTypeId)
+			newState.selectedLots = [...temp]
+			return newState
+		}
+		case 'ADD_PARKING_SPOT_TYPE': {
+			const temp = [...state.selectedSpotIds]
+			temp.push(action.spotTypeId)
+			newState.selectedLots = [...temp]
 			return newState
 		}
 		case 'SET_PARKING_DATA': {
