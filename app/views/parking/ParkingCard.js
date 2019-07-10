@@ -38,7 +38,7 @@ const ParkingCard = ({
 	// only display the selcted parking lots
 	const data = []
 	savedStructures.forEach((obj) => {
-		if (selectedLots.includes(obj.LocationName)) {
+		if (selectedLots.includes(obj.LocationId)) {
 			data.push(obj)
 		}
 	})

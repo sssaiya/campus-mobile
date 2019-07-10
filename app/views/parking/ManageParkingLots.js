@@ -136,14 +136,14 @@ class ListItem extends React.Component {
 		return (
 			<Animated.View style={[css.sl_row, this._style]}>
 				<Icon style={css.sl_icon} name="drag-handle" size={20} />
-				<Text style={[css.sl_title, !selectedLots.includes(data.LocationName) ? css.sl_title_disabled : null]}>
+				<Text style={[css.sl_title, !selectedLots.includes(data.LocationId) ? css.sl_title_disabled : null]}>
 					{ data.LocationName }
 				</Text>
 				<TouchableOpacity
-					onPress={() => { updateSelectedLots(!selectedLots.includes(data.LocationName), data.LocationName, selectedLots) }}
+					onPress={() => { updateSelectedLots(!selectedLots.includes(data.LocationId), data.LocationId, selectedLots) }}
 					style={css.sl_switch_container}
 				>
-					{selectedLots.includes(data.LocationName) ? (
+					{selectedLots.includes(data.LocationId) ? (
 						<Icon name="remove" size={24} color={COLOR.DGREY} />
 					) : (
 						<Icon name="add" size={24} color={COLOR.DGREY} />
@@ -161,8 +161,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
 	{
-		updateSelectedLots: (add, name, selectedLots) => {
-			dispatch({ type: 'UPDATE_PARKING_LOT_SELECTIONS', add, name, selectedLots })
+		updateSelectedLots: (add, lotID, selectedLots) => {
+			dispatch({ type: 'UPDATE_PARKING_LOT_SELECTIONS', add, lotID, selectedLots })
 		},
 		renderWarning: (showWarning) => {
 			dispatch({ type: 'SET_WARNING_SIGN', showWarning })

@@ -47,9 +47,9 @@ function parking(state = initialState, action) {
 		case 'SET_PARKING_LOT_SELECTION': {
 			let temp = [...state.selectedLots]
 			if (action.add) {
-				temp.push(action.name)
+				temp.push(action.lotID)
 			} else {
-				temp = temp.filter(e => e !== action.name)
+				temp = temp.filter(e => e !== action.lotID)
 			}
 			newState.selectedLots = [...temp]
 			return newState
