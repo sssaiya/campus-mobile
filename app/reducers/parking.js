@@ -77,7 +77,7 @@ function parking(state = initialState, action) {
 			return newState
 		}
 		case 'SYNC_PARKING_SPOT_DATA': {
-			newState.selectedSpots = [...action.prevSelectedPakingSpots]
+			newState.selectedSpotIds = [...action.prevSelectedPakingSpotIds]
 			return newState
 		}
 		default:

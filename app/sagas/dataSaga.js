@@ -218,7 +218,7 @@ function sortByOldParkingData(parkingData) {
 	}
 }
 
-function* updateParkingSpotTypes() { 
+function* updateParkingSpotTypes() {
 	const { lastUpdated, parkingSpotData } = yield select(getParkingSpotTypes),
 		nowTime = new Date().getTime(),
 		ttl = PARKING_SPOT_TTL,
@@ -235,9 +235,9 @@ function* updateParkingSpotTypes() {
 
 		// Get previously selected lots from users synced profile
 		const userData = yield select(getUserData)
-		const prevSelectedPakingSpots = userData.profile.selectedSpots
-		if (prevSelectedPakingSpots) {
-			yield put({ type: 'SYNC_PARKING_SPOT_DATA', prevSelectedPakingSpots })
+		const prevSelectedPakingSpotIds = userData.profile.selectedSpotIds
+		if (prevSelectedPakingSpotIds) {
+			yield put({ type: 'SYNC_PARKING_SPOT_DATA', prevSelectedPakingSpotIds })
 		}
 	}
 }
