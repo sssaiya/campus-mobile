@@ -7,33 +7,7 @@ import css from '../../styles/css'
 
 
 class ParkingDetail extends Component {
-	mapSpotToColor() {
-		const { spotType } = this.props
-		switch (spotType) {
-			case 'A':
-				return ColorConstants.MRED
-			case 'B':
-				return ColorConstants.MGREEN
-			case 'S':
-				return ColorConstants.YELLOW
-			case 'V':
-				return ColorConstants.BLACK
-			case 'Accessible':
-				return ColorConstants.MBLUE
-			default:
-				return null
-		}
-	}
 
-	mapSpotToLetterColor() {
-		const { spotType } = this.props
-		switch (spotType) {
-			case 'S':
-				return ColorConstants.BLACK
-			default:
-				return ColorConstants.WHITE
-		}
-	}
 
 	mapAvailabilityToColor()  {
 		const { spotsAvailable, totalSpots } = this.props
@@ -83,7 +57,8 @@ class ParkingDetail extends Component {
 
 	render() {
 		const {
-			spotType,
+			spotTypeId,
+			parkingSpotData,
 			spotsAvailable,
 			totalSpots,
 			size,
@@ -92,6 +67,8 @@ class ParkingDetail extends Component {
 			letterSize,
 		} = this.props
 		const fillAmount = (spotsAvailable / totalSpots) * 100
+		const { textColor, backgroundColor, shortName } = parkingSpotData[spotTypeId]
+
 		return (
 			<View style={{ alignItems: 'center' }}>
 				<AnimatedCircularProgress
@@ -113,9 +90,9 @@ class ParkingDetail extends Component {
 						</View>
 					)}
 				</AnimatedCircularProgress>
-				<View style={[css.po_circle,{ backgroundColor: this.mapSpotToColor() },{ borderRadius: circleRadius, width: (circleRadius * 2), height: (circleRadius * 2) }]}>
-					<Text style={[css.po_character, { color: this.mapSpotToLetterColor() }, { fontSize: letterSize }]}>
-						{this.mapSpotToColor() === ColorConstants.MBLUE ? this.accessibleIcon() : spotType}
+				<View style={[css.po_circle,{ backgroundColor },{ borderRadius: circleRadius, width: (circleRadius * 2), height: (circleRadius * 2) }]}>
+					<Text style={[css.po_character, { color: textColor }, { fontSize: letterSize }]}>
+						{shortName || this.accessibleIcon()}
 					</Text>
 				</View>
 			</View>

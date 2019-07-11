@@ -7,9 +7,9 @@ import logger from '../../util/logger'
 
 
 class ParkingOverview extends Component {
-	getSpotType(SpotId) {
+	getSpotType(spotTypeId) {
 		const { parkingSpotData } = this.props
-		const parkingSpot = parkingSpotData[SpotId]
+		const parkingSpot = parkingSpotData[spotTypeId]
 		if (parkingSpot.shortName === '') {
 			return 'Accessible'
 		} else {
@@ -58,14 +58,15 @@ class ParkingOverview extends Component {
 
 
 	renderDetails() {
-		const { selectedSpotIds } = this.props
+		const { selectedSpotIds, parkingSpotData  } = this.props
 		if (selectedSpotIds.length === 0) {
 			return null
 		} else if (selectedSpotIds.length === 1) {
 			return (
 				<View style={css.po_one_spot_selected}>
 					<ParkingDetail
-						spotType={this.getSpotType(selectedSpotIds[0])}
+						spotTypeId={selectedSpotIds[0]}
+						parkingSpotData={parkingSpotData}
 						spotsAvailable={this.getOpenPerType(this.getSpotType(selectedSpotIds[0]))}
 						totalSpots={this.getTotalPerType(this.getSpotType(selectedSpotIds[0]))}
 						size={LAYOUT.MAX_CARD_WIDTH * 0.38}
@@ -81,7 +82,8 @@ class ParkingOverview extends Component {
 			return (
 				<View style={css.po_two_spots_selected}>
 					<ParkingDetail
-						spotType={this.getSpotType(selectedSpotIds[0])}
+						spotTypeId={selectedSpotIds[0]}
+						parkingSpotData={parkingSpotData}
 						spotsAvailable={this.getOpenPerType(this.getSpotType(selectedSpotIds[0]))}
 						totalSpots={this.getTotalPerType(this.getSpotType(selectedSpotIds[0]))}
 						size={LAYOUT.MAX_CARD_WIDTH * 0.32}
@@ -93,7 +95,8 @@ class ParkingOverview extends Component {
 					/>
 					<View style={css.po_acp_gap_1} />
 					<ParkingDetail
-						spotType={this.getSpotType(selectedSpotIds[1])}
+						spotTypeId={selectedSpotIds[1]}
+						parkingSpotData={parkingSpotData}
 						spotsAvailable={this.getOpenPerType(this.getSpotType(selectedSpotIds[1]))}
 						totalSpots={this.getTotalPerType(this.getSpotType(selectedSpotIds[1]))}
 						size={LAYOUT.MAX_CARD_WIDTH * 0.32}
@@ -109,7 +112,8 @@ class ParkingOverview extends Component {
 			return (
 				<View style={css.po_three_spots_selected}>
 					<ParkingDetail
-						spotType={this.getSpotType(selectedSpotIds[0])}
+						spotTypeId={selectedSpotIds[0]}
+						parkingSpotData={parkingSpotData}
 						spotsAvailable={this.getOpenPerType(this.getSpotType(selectedSpotIds[0]))}
 						totalSpots={this.getTotalPerType(this.getSpotType(selectedSpotIds[0]))}
 						size={LAYOUT.MAX_CARD_WIDTH * 0.25}
@@ -121,7 +125,8 @@ class ParkingOverview extends Component {
 					/>
 					<View style={css.po_acp_gap_2} />
 					<ParkingDetail
-						spotType={this.getSpotType(selectedSpotIds[1])}
+						spotTypeId={selectedSpotIds[1]}
+						parkingSpotData={parkingSpotData}
 						spotsAvailable={this.getOpenPerType(this.getSpotType(selectedSpotIds[1]))}
 						totalSpots={this.getTotalPerType(this.getSpotType(selectedSpotIds[1]))}
 						size={LAYOUT.MAX_CARD_WIDTH * 0.25}
@@ -133,7 +138,8 @@ class ParkingOverview extends Component {
 					/>
 					<View style={css.po_acp_gap_2} />
 					<ParkingDetail
-						spotType={this.getSpotType(selectedSpotIds[2])}
+						spotTypeId={selectedSpotIds[2]}
+						parkingSpotData={parkingSpotData}
 						spotsAvailable={this.getOpenPerType(this.getSpotType(selectedSpotIds[2]))}
 						totalSpots={this.getTotalPerType(this.getSpotType(selectedSpotIds[2]))}
 						size={LAYOUT.MAX_CARD_WIDTH * 0.25}
