@@ -8,23 +8,17 @@ import css from '../../styles/css'
 
 class ParkingSpotType extends React.Component {
 	rowTouched(parkingObj) {
-		const { isChecked, updateSelectedTypes, removeSpotType, addSpotType, selectedSpots, renderWarning, selectedSpotIds } = this.props
-		const ids = [...isChecked]
+		const { removeSpotType, addSpotType,  renderWarning, selectedSpotIds } = this.props
 		const spotTypeId = parkingObj.item.id
 
-		if (ids[spotTypeId]) {
 		if (selectedSpotIds.includes(spotTypeId)) {
 			// user is trying to unselect a row
-			ids[spotTypeId] = !ids[spotTypeId]
 			parkingObj.separators.unhighlight()
-			updateSelectedTypes(ids, selectedSpots.length - 1)
 			removeSpotType( spotTypeId, selectedSpotIds)
 			renderWarning(false)
 		} else if (selectedSpotIds.length < 3) {
 			// user is trying to select a row
-			ids[spotTypeId] = !ids[spotTypeId]
 			parkingObj.separators.highlight()
-			updateSelectedTypes(ids, selectedSpots.length + 1)
 			addSpotType( spotTypeId, selectedSpotIds)
 		} else {
 			renderWarning(true)
@@ -36,13 +30,13 @@ class ParkingSpotType extends React.Component {
 	// also decides if the row is selected or unselcted based on the state
 	renderRow(parkingObj) {
 		const { id } = parkingObj.item
-		const { isChecked } = this.props
+		const { selectedSpotIds } = this.props
 
 		return (
 			<Touchable
 				onPress={() => this.rowTouched(parkingObj)}
 			>
-				{isChecked[id] ? getSelectedRow({ parkingObj }) : getUnselectedRow({ parkingObj })}
+				{selectedSpotIds.includes(id) ? getSelectedRow({ parkingObj }) : getUnselectedRow({ parkingObj })}
 			</Touchable>
 		)
 	}
@@ -65,7 +59,7 @@ class ParkingSpotType extends React.Component {
 					ItemSeparatorComponent={
 						({ leadingItem, highlighted }) => {
 							// added a one because leadingItem is the object preceding the seperator
-							if (this.props.isChecked[leadingItem.id + 1]) {
+							if (this.props.selectedSpotIds.includes(leadingItem.id + 1)) {
 								return renderSeparator(true)
 							}
 							return renderSeparator(false)
@@ -174,8 +168,6 @@ const uncheckedIcon = () => (
 )
 
 const mapStateToProps = state => ({
-	isChecked: state.parking.isChecked,
-	selectedSpots: state.parking.selectedSpots,
 	selectedSpotIds: state.parking.selectedSpotIds,
 	showWarning: state.parking.showWarning,
 	parkingSpotData: state.parking.parkingSpotData,
@@ -184,9 +176,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => (
 	{
-		updateSelectedTypes: (isChecked) => {
-			dispatch({ type: 'SET_PARKING_TYPE_SELECTION', isChecked })
-		},
 		removeSpotType: (spotTypeId) => {
 			dispatch({ type: 'REMOVE_PARKING_SPOT_TYPE', spotTypeId })
 		},

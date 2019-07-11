@@ -12,7 +12,6 @@ const ParkingCard = ({
 	navigation,
 	gotoParkingSpotType,
 	gotoManageParkingLots,
-	selectedSpots,
 	selectedSpotIds,
 	parkingSpotData,
 	selectedLots
@@ -53,7 +52,6 @@ const ParkingCard = ({
 				renderItem={({ item }) => (
 					<ParkingOverview
 						structureData={item}
-						selectedSpots={selectedSpots}
 						selectedSpotIds={selectedSpotIds}
 						parkingSpotData={parkingSpotData}
 						totalLotCount={savedStructures.length}

@@ -230,7 +230,6 @@ function* updateParkingSpotTypes() {
 		// Fetch for new data
 		const parkingSpotDataResp = yield call(ParkingService.FetchParkingSpotTypes)
 		const newParkingSpotData = parkingSpotDataResp.parkingSpotTypes
-		console.log(newParkingSpotData)
 		yield put({ type: 'SET_PARKING_SPOT_DATA', newParkingSpotData })
 
 		// Get previously selected lots from users synced profile

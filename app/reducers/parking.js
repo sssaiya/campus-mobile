@@ -1,6 +1,4 @@
 const initialState = {
-	isChecked: [true, true, true, false, false],
-	selectedSpots: ['S', 'B', 'A'],
 	selectedSpotIds: [0, 1, 2],
 	parkingData: [],
 	selectedLots: ['Osler'],
@@ -11,31 +9,6 @@ const initialState = {
 function parking(state = initialState, action) {
 	const newState = { ...state }
 	switch (action.type) {
-		case 'SET_PARKING_TYPE_SELECTION': {
-			newState.isChecked = action.isChecked
-			const tempArray = []
-			for (let i = 0; i < 5; i++) {
-				switch (i) {
-					case 0:
-						if (newState.isChecked[i]) tempArray.push('S')
-						break
-					case 1:
-						if (newState.isChecked[i]) tempArray.push('B')
-						break
-					case 2:
-						if (newState.isChecked[i]) tempArray.push('A')
-						break
-					case 3:
-						if (newState.isChecked[i]) tempArray.push('Accessible')
-						break
-					case 4:
-						if (newState.isChecked[i]) tempArray.push('V')
-						break
-				}
-			}
-			newState.selectedSpots = [...tempArray]
-			return newState
-		}
 		case 'REMOVE_PARKING_SPOT_TYPE': {
 			let temp = [...state.selectedSpotIds]
 			temp = temp.filter(e => e !== action.spotTypeId)
