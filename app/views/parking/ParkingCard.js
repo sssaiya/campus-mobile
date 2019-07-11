@@ -13,6 +13,8 @@ const ParkingCard = ({
 	gotoParkingSpotType,
 	gotoManageParkingLots,
 	selectedSpots,
+	selectedSpotIds,
+	parkingSpotData,
 	selectedLots
 }) => {
 	const extraActions = [
@@ -52,10 +54,12 @@ const ParkingCard = ({
 					<ParkingOverview
 						structureData={item}
 						selectedSpots={selectedSpots}
+						selectedSpotIds={selectedSpotIds}
+						parkingSpotData={parkingSpotData}
 						totalLotCount={savedStructures.length}
 					/>
 				)}
-				extraData={selectedSpots}
+				extraData={selectedSpotIds}
 				scrollData={data}
 				extraActions={extraActions}
 				actionButton={ManageLotsButton}
