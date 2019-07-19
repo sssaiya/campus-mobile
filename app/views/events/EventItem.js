@@ -1,13 +1,14 @@
 import React from 'react'
 import { withNavigation } from 'react-navigation'
 
-import DataItem from '../common/DataItem'
+import DataItemStar from '../common/DataItemStar'
 
 const EventItem = ({ navigation, data, card }) => (
-	<DataItem
+	<DataItemStar
 		data={data}
 		card={card}
 		onPress={() => { navigation.navigate('EventDetail', { data }) }}
+		isStared={false}
 	/>
 )
 
