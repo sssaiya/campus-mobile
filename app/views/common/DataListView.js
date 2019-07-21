@@ -15,7 +15,7 @@ import css from '../../styles/css'
  * @param {Boolean} card Display rows with card styling (if available);
  * @return {JSX} Returns presentation JSX DataListView component
  */
-const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
+const DataListView = ({ style, data, rows, scrollEnabled, item, card, onStarPress }) => (
 	<DataFlatList
 		style={style}
 		data={data}
@@ -23,10 +23,11 @@ const DataListView = ({ style, data, rows, scrollEnabled, item, card }) => (
 		scrollEnabled={scrollEnabled}
 		item={item}
 		card={card}
+		onStarPress={onStarPress}
 	/>
 )
 
-const DataFlatList = ({ style, data, rows, scrollEnabled, item, card }) => (
+const DataFlatList = ({ style, data, rows, scrollEnabled, item, card, onStarPress }) => (
 	<FlatList
 		style={[style, css.scroll_default]}
 		contentContainerStyle={rows ? null : css.main_full}
@@ -61,7 +62,7 @@ const DataFlatList = ({ style, data, rows, scrollEnabled, item, card }) => (
 			// Should revisit to see if this can be simplified
 			switch (item) {
 				case 'EventItem': {
-					return (<EventItem data={rowData} card={card} />)
+					return (<EventItem data={rowData} onStarPress={onStarPress} card={card} />)
 				}
 				case 'NewsItem': {
 					return (<NewsItem data={rowData} card={card} />)

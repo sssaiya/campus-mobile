@@ -5,7 +5,7 @@ import css from '../../styles/css'
 
 const DataListViewAll = ({ navigation }) => {
 	const { params } = navigation.state
-	const { title, data, item, card } = params
+	const { title, data, item, card, onStarPress } = params
 	logger.ga('View Loaded: ' + title + ' (View All)')
 	return (
 		<DataListView
@@ -14,6 +14,7 @@ const DataListViewAll = ({ navigation }) => {
 			scrollEnabled={true}
 			item={item}
 			card={card}
+			onStarPress={onStarPress}
 		/>
 	)
 }

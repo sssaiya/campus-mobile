@@ -6,7 +6,7 @@ import Touchable from './Touchable'
 import SafeImage from './SafeImage'
 import css from '../../styles/css'
 
-const DataItemStar = ({ data, card, onPress, isStared }) => (
+const DataItemStar = ({ data, card, onPress, isStared, onStarPress }) => (
 	<View style={css.dataitem_row}>
 		<View style={css.dataitem_titleRow}>
 			<Touchable
@@ -15,9 +15,12 @@ const DataItemStar = ({ data, card, onPress, isStared }) => (
 			>
 				<Text style={css.dataitem_titleText}>{data.title}</Text>
 			</Touchable>
-			<View style={css.dataitem_touchableStar}>
+			<Touchable
+				onPress={() => onStarPress(data.id)}
+				style={css.dataitem_touchableStar}
+			>
 				{isStared ?  (<Icon name="md-star" size={32} color={COLOR.GOLD} />) : (<Icon name="md-star-outline" size={32} color={COLOR.GOLD} />) }
-			</View>
+			</Touchable>
 		</View>
 		<Touchable
 			onPress={() => onPress(data)}

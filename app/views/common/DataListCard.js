@@ -14,7 +14,7 @@ import css from '../../styles/css'
  * @param {Function} cardSort array sorting function
  * @return {JSX} Generic component for list type cards
  */
-export const DataListCard = ({ navigation, id, title, data, item, rows, cardSort }) => {
+export const DataListCard = ({ navigation, id, title, data, item, rows, cardSort, onStarPress }) => {
 	let sortedData = data
 	if (cardSort && sortedData) {
 		sortedData = sortedData.slice().sort(cardSort)
@@ -31,8 +31,9 @@ export const DataListCard = ({ navigation, id, title, data, item, rows, cardSort
 							scrollEnabled={false}
 							item={item}
 							card={false}
+							onStarPress={onStarPress}
 						/>
-						<Touchable onPress={() => (navigation.navigate('DataListViewAll', { title, data, item }))}>
+						<Touchable onPress={() => (navigation.navigate('DataListViewAll', { title, data, item, onStarPress }))}>
 							<View style={css.card_button_container}>
 								<Text style={css.card_button_text}>View All</Text>
 							</View>
