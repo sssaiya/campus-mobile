@@ -6,7 +6,7 @@ import Touchable from './Touchable'
 import SafeImage from './SafeImage'
 import css from '../../styles/css'
 
-const DataItemStar = ({ data, card, onPress, isStared, onStarPress }) => (
+const DataItemStar = ({ data, card, onPress, onStarPress }) => (
 	<View style={css.dataitem_row}>
 		<View style={css.dataitem_titleRow}>
 			<Touchable
@@ -19,7 +19,7 @@ const DataItemStar = ({ data, card, onPress, isStared, onStarPress }) => (
 				onPress={() => onStarPress(data.id)}
 				style={css.dataitem_touchableStar}
 			>
-				{isStared ?  (<Icon name="md-star" size={32} color={COLOR.GOLD} />) : (<Icon name="md-star-outline" size={32} color={COLOR.GOLD} />) }
+				{data.stared ?  (<Icon name="md-star" size={32} color={COLOR.GOLD} />) : (<Icon name="md-star-outline" size={32} color={COLOR.GOLD} />) }
 			</Touchable>
 		</View>
 		<Touchable
@@ -35,7 +35,7 @@ const DataItemStar = ({ data, card, onPress, isStared, onStarPress }) => (
 							{data.description.trim()}
 						</Text>
 					) : null }
-					<Text style={css.dataitem_dateText}>{data.subtext}</Text>
+					<Text style={css.dataitem_dateText}>{data.formattedDate}</Text>
 				</View>
 				<SafeImage style={css.dataitem_image} source={{ uri: data.image }} />
 			</View>

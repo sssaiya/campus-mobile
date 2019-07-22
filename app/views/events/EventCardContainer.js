@@ -23,7 +23,6 @@ export class EventCardContainer extends Component {
 
 const mapStateToProps = state => ({
 	eventsData: state.events.data,
-	staredEventIds: state.events.staredEventIds
 })
 
 const mapDispatchToProps = dispatch => (

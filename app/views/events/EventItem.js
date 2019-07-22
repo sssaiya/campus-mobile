@@ -8,7 +8,6 @@ const EventItem = ({ navigation, data, card, onStarPress }) => (
 		data={data}
 		card={card}
 		onPress={() => { navigation.navigate('EventDetail', { data }) }}
-		isStared={data.stared}
 		onStarPress={onStarPress}
 	/>
 )
