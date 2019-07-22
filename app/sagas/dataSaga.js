@@ -2,6 +2,7 @@
 import { delay } from 'redux-saga'
 import { put, call, select } from 'redux-saga/effects'
 import { Image } from 'react-native'
+import moment from 'moment'
 
 import WeatherService from '../services/weatherService'
 import SpecialEventsService from '../services/specialEventsService'
@@ -9,6 +10,7 @@ import LinksService from '../services/quicklinksService'
 import EventService from '../services/eventService'
 import NewsService from '../services/newsService'
 import ParkingService from '../services/parkingService'
+import { militaryToAMPM } from '../util/general'
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
 import {
 	WEATHER_API_TTL,
@@ -216,7 +218,7 @@ function sortByOldParkingData(parkingData) {
 }
 
 function* updateEvents() {
-	const { lastUpdated, data } = yield select(getEvents)
+	const { lastUpdated, data, staredEventIds } = yield select(getEvents)
 	const nowTime = new Date().getTime()
 	const timeDiff = nowTime - lastUpdated
 	const ttl = EVENTS_API_TTL
@@ -226,8 +228,24 @@ function* updateEvents() {
 	} else {
 		// Fetch for new data
 		const events = yield call(EventService.FetchEvents)
-		yield put({ type: 'SET_EVENTS', events })
+
+		// Parse events
+		const parsedEvents = parseEventData(events, staredEventIds)
+		yield put({ type: 'SET_EVENTS', parsedEvents })
 	}
+}
+
+function parseEventData( eventsData, staredEventIds) {
+	const parsedEventsData = eventsData.slice()
+	parsedEventsData.forEach((element, index) => {
+		parsedEventsData[index] = {
+			...element,
+			formatDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
+			image: element.imagethumb,
+			stared: staredEventIds.includes(element.id)
+		}
+	})
+	return parsedEventsData
 }
 
 function* updateNews() {
