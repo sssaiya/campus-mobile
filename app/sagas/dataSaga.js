@@ -240,7 +240,7 @@ function parseEventData( eventsData, staredEventIds) {
 	parsedEventsData.forEach((element, index) => {
 		parsedEventsData[index] = {
 			...element,
-			formatDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
+			formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
 			image: element.imagethumb,
 			stared: staredEventIds.includes(element.id)
 		}
