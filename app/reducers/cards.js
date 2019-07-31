@@ -7,6 +7,14 @@ const initialState = {
 			name: 'Special Events',
 			component: 'SpecialEventsCard'
 		},
+		studentId: {
+			id: 'studentId',
+			active: true,
+			name: 'Student ID',
+			component: 'StudentIDCard',
+			authenticated: true,
+			classifications: { student: true }
+		},
 		finals: {
 			id: 'finals',
 			active: true,
@@ -71,20 +79,27 @@ const initialState = {
 			active: true,
 			name: 'KSDT Radio',
 			component: 'RadioCard'
-		}
+		},
+		occuspace: {
+			id: 'occuspace',
+			active: true,
+			name: 'Availability',
+			component: 'occuspaceCard'
+		},
 	},
 
 	// Only cards that show up by default
 	// on first launch should appear here.
 	cardOrder: [
 		'radio',
+		'occuspace',
 		'shuttle',
 		'parking',
 		'dining',
 		'events',
 		'news',
 		'quicklinks',
-		'weather'
+		'weather',
 	],
 }
 

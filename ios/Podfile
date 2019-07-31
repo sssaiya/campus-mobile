@@ -44,7 +44,7 @@ target 'CampusMobile' do
 
   pod 'ReactNativePermissions', :path => '../node_modules/react-native-permissions'
 
-  pod 'react-native-video', :path => '../node_modules/react-native-video'
+  pod 'ReactNativeAudioToolkit', :path => '../node_modules/@react-native-community/audio-toolkit'
 
   # target 'CampusMobileTests' do
   #   inherit! :search_paths

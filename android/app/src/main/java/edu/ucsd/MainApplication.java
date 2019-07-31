@@ -19,6 +19,7 @@ import com.github.wumke.RNExitApp.RNExitAppPackage;
 import com.masteratul.exceptionhandler.ReactNativeExceptionHandlerPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.bugsnag.BugsnagReactNative;
+import com.ninty.system.setting.SystemSettingPackage;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.horcrux.svg.SvgPackage;
@@ -65,25 +66,14 @@ public class MainApplication extends Application implements ReactApplication {
             new ReactNativeGooglePlayServicesPackage(),
             new GoogleAnalyticsBridgePackage(),
             new RNGestureHandlerPackage(),
-            new RNFirebasePackage(),
             new RNExitAppPackage(),
             new ReactNativeExceptionHandlerPackage(),
             new RNDeviceInfo(),
             BugsnagReactNative.getPackage(),
-            new RNGestureHandlerPackage(),
-            new VectorIconsPackage(),
-            new SvgPackage(),
+            new SystemSettingPackage(),
             new RNFirebasePackage(),
             new RNFirebaseNotificationsPackage(),
             new RNFirebaseMessagingPackage(),
-            BugsnagReactNative.getPackage(),
-            new ReactNativeRestartPackage(),
-            new GoogleAnalyticsBridgePackage(),
-            new KeychainPackage(),
-            new RNExitAppPackage(),
-            new RNDeviceInfo(),
-            new ReactNativeGooglePlayServicesPackage(),
-            new MapsPackage()
       );
     }
 
