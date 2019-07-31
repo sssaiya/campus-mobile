@@ -7,7 +7,7 @@
 import React, { Component } from 'react'
 import { View, Text, Image } from 'react-native'
 import { withNavigation } from 'react-navigation'
-import { Player } from 'react-native-audio-toolkit'
+import { Player } from '@react-native-community/audio-toolkit'
 import CSS from '../../styles/css'
 import Card from '../common/Card'
 import RedDot from '../common/RedDot'

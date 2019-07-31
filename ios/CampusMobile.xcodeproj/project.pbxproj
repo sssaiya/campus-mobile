@@ -39,8 +39,6 @@
 		330478A2741E403296E72257 /* libRCTRestart.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DA0A90092F6143FD9A55C1C9 /* libRCTRestart.a */; };
 		361344A133BE41A4AA3C4637 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7B00B28711D44FBF87709AA6 /* EvilIcons.ttf */; };
 		37D3F36A04EB4215BDBD8B6B /* Feather.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 230FAC3D7C9F494BA604EC42 /* Feather.ttf */; };
-		390987EE22A0EF1800F3B09F /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
-		3909885B22A0F6D700F3B09F /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 3909882E22A0F6D700F3B09F /* libz.tbd */; };
 		512E3F5B94B54A9DAAA3CC9C /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A8BC55F615424915A9F6F5F0 /* Zocial.ttf */; };
 		5DCA2160FF774AA990983A9B /* libRNFirebase.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 72B03AF307194CB6B268AFD8 /* libRNFirebase.a */; };
 		5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
@@ -212,13 +210,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 9936F32F1F5F2E5B0010BF04;
 			remoteInfo = "privatedata-tvOS";
-		};
-		392D0A6A2297249B00030CCA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 0954B24B220B429EAC6EAF13 /* ReactNativeAudioToolkit.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5E8FD9831D269F5D00CF68CC;
-			remoteInfo = ReactNativeAudioToolkit;
 		};
 		3DAD3E831DF850E9000B6D8A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -672,14 +663,6 @@
 				842AEF96081751E0E2FA43DF /* libPods-CampusMobile.a */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		392D0A672297249B00030CCA /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				392D0A6B2297249B00030CCA /* libReactNativeAudioToolkit.a */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		5E91572E1DD0AC6500FF2AA8 /* Products */ = {
@@ -1239,13 +1222,6 @@
 			remoteRef = 2DF0FFEC2056DD460020B375 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		392D0A6B2297249B00030CCA /* libReactNativeAudioToolkit.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libReactNativeAudioToolkit.a;
-			remoteRef = 392D0A6A2297249B00030CCA /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3DAD3E841DF850E9000B6D8A /* libRCTImage-tvOS.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -1597,7 +1573,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				390987EE22A0EF1800F3B09F /* AppDelegate.m in Sources */,
 				00E356F31AD99517003FC87E /* CampusMobileTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
