@@ -22,8 +22,6 @@ class RadioCard extends Component {
 		this.state = ({
 			error: null,
 			paused: true,
-			currentlyPlaying: '',
-			upNext: ''
 		})
 	}
 
@@ -53,7 +51,7 @@ class RadioCard extends Component {
 		  autoDestroy: false
 		}).prepare((err) => {
 		  if (err) {
-			console.log('error at _reloadPlayer():')
+			console.log('ERROR AT RELOAD PLAYER')
 			console.log(err)
 		  } 
 		})
@@ -69,11 +67,10 @@ class RadioCard extends Component {
 					<View style={{ justifyContent: 'space-evenly', alignItems: 'baseline' }}>
 						<Image source={require('../../assets/images/radio/ksdt.png')} />
 						<Text>{this.state.currentlyPlaying}</Text>
-						<Text style={{ color: ColorConstants.DMGREY }}>Coming up next: {this.state.upNext}</Text>
 					</View>
-					<View style={{ flexDirection: 'column', paddingLeft: 15 }}>
+					<View style={{ flexDirection: 'column', paddingLeft: 15, alignItems: 'center' }}>
 						<View style={{ flexDirection: 'row' }}>
-							<RedDot dotSize={20} dotStyle={{ right: 2, top: -40, position: 'relative' }} />
+							<RedDot dotSize={20} dotStyle={{ right: 2, top: 15, position: 'relative' }} />
 							<Text>Listen Live</Text>
 						</View>
 						<RadioControls
