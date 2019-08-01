@@ -34,6 +34,10 @@ module.exports = {
 	FEEDBACK_URL: 'https://eforms.ucsd.edu/view.php?id=175631',
 	QUICKLINKS_API_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/now_ucsandiego/v1/quick_links/ucsd-quicklinks-v3.json',
 	PARKING_API_URL: 'https://b2waxbcovi.execute-api.us-west-2.amazonaws.com/prod/parking/v1.1/status',
+	OCCUSPACE_API_URL: 'https://api.ucsd.edu:8243/occuspace/v1.0',
+	MOBILE_API_AUTH_URL: 'https://api.ucsd.edu:8243/token',
+	MY_STUDENT_CONTACT_API_URL: 'https://api.ucsd.edu:8243/student/my/student_contact_info/v1',
+	MY_STUDENT_PROFILE_API_URL: 'https://api.ucsd.edu:8243/student/my/v1',
 
 	/* RESOURCES */
 	WEATHER_ICON_BASE_URL: 'https://s3-us-west-2.amazonaws.com/ucsd-its-wts/images/v1/weather-icons/',
@@ -46,7 +50,7 @@ module.exports = {
 	/* TTLs */
 	LOCATION_TTL: 15000, // 15 seconds
 	SHUTTLE_API_TTL: 15000, // 15 seconds
-	DATA_SAGA_TTL: 60000, // 1 minute
+	DATA_SAGA_TTL: 10000, // 10 seconds
 	SCHEDULE_TTL: 300000,  // 5 minutes
 	PARKING_API_TTL: 300000,	// 5 minutes
 	WEATHER_API_TTL: 1800000, // 30 minutes
@@ -59,17 +63,24 @@ module.exports = {
 	SHUTTLE_MASTER_TTL: 3600000, // 1 hour
 	USER_PROFILE_SYNC_TTL: 3600000, // 1 hour
 	QUICKLINKS_API_TTL: 86400000, // 1 day
+	SID_API_TTL: 86400000, // 1 day
 
 	/* TIMEOUTS */
 	HTTP_REQUEST_TTL: 15000, // 15 seconds
+	SID_CARD_TIMEOUT: 30000, // 30 seconds
 	SSO_TTL: 20000, // 20 seconds
 	MESSAGING_TTL: 15000, // 15 seconds
+	PUBLIC_MOBILE_AUTH_TIMEOUT: 15000, // 15 seconds
+	OCCUSPACE_FETCH_TIMEOUT: 15000, // 15 seconds
 
 	/* RETRIES */
 	SSO_IDP_ERROR_RETRY_INCREMENT: 10000, // 10 seconds
 	SSO_REFRESH_MAX_RETRIES: 3,
+	MOBILE_PUBLIC_TOKEN_MAX_RETRIES: 3,
 	SSO_REFRESH_RETRY_INCREMENT: 5000, // 5 seconds
+	MOBILE_PUBLIC_TOKEN_RETRY_INCREMENT: 5000, // 5 seconds
 	SSO_REFRESH_RETRY_MULTIPLIER: 3, // Multiplies increment by this amount for next try
+	MOBILE_PUBLIC_TOKEN_RETRY_MULTIPLIER: 3, // Multiplies increment by this amount for next try
 
 	/* UCSD AFFILIATION */
 	UCSD_STUDENT: /(B|G|J|M|U)/
