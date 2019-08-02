@@ -139,7 +139,7 @@ const css = StyleSheet.create({
 	media_detail_container: { width: LAYOUT.WINDOW_WIDTH, paddingHorizontal: 12, paddingVertical: 14 },
 	media_detail_titleRow: { flexDirection: 'row' },
 	media_detail_touchableStar: { paddingHorizontal: 4 },
-	media_detail_titleText: { paddingVertical: 2 },
+	media_detail_titleText: { flex: 1, paddingVertical: 2 },
 	media_detail_image: { width: LAYOUT.WINDOW_WIDTH, height: 200 },
 	media_detail_title: { fontSize: 22, color: COLOR.PRIMARY },
 	media_detail_dateText: { color: COLOR.PRIMARY, paddingTop: 14 },
