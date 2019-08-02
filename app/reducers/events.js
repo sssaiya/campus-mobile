@@ -16,18 +16,28 @@ function events(state = initialState, action) {
 		case 'TOGGLE_STAR_ID': {
 			let temp = [...state.staredEventIds]
 			let tempData = [...state.data]
+			const tempStarData = []
+			const tempUnstaredData = []
 			tempData = tempData.slice()
 			if (temp.includes(action.eventId)) {
 				temp = temp.filter(e => e !== action.eventId)
 			} else {
 				temp.push(action.eventId)
 			}
-			tempData.forEach((element, index) => {
-				tempData[index] = {
-					...element,
-					stared: temp.includes(element.id)
+			tempData.forEach((element) => {
+				if (temp.includes(element.id)) {
+					tempStarData.push({
+						...element,
+						stared: temp.includes(element.id)
+					})
+				} else {
+					tempUnstaredData.push({
+						...element,
+						stared: temp.includes(element.id)
+					})
 				}
 			})
+			tempData = tempStarData.concat(tempUnstaredData)
 			newState.staredEventIds = [...temp]
 			newState.data = [...tempData]
 			return newState

@@ -236,15 +236,27 @@ function* updateEvents() {
 }
 
 function parseEventData( eventsData, staredEventIds) {
-	const parsedEventsData = eventsData.slice()
+	let parsedEventsData = eventsData.slice()
+	const tempStarData = []
+	const tempUnstaredData = []
 	parsedEventsData.forEach((element, index) => {
-		parsedEventsData[index] = {
-			...element,
-			formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-			image: element.imagethumb,
-			stared: staredEventIds.includes(element.id)
+		if (staredEventIds.includes(element.id)) {
+			tempStarData.push({
+				...element,
+				formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
+				image: element.imagethumb,
+				stared: staredEventIds.includes(element.id)
+			})
+		} else {
+			tempUnstaredData.push({
+				...element,
+				formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
+				image: element.imagethumb,
+				stared: staredEventIds.includes(element.id)
+			})
 		}
 	})
+	parsedEventsData = tempStarData.concat(tempUnstaredData)
 	return parsedEventsData
 }
 

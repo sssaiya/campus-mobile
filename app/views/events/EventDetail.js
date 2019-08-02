@@ -3,33 +3,25 @@ import { connect } from 'react-redux'
 import EventDetailPage from './EventDetailPage'
 
 class EventDetail extends Component {
-	componentWillMount() {
-		const { id } = this.props.navigation.state.params.data
-		const { eventsData } = this.props
-		this.findIndex(eventsData, id)
-	}
-
-	findIndex = (eventsData, eventId ) => {
-		eventsData = eventsData.slice()
-		eventsData.forEach((element, index) => {
-			console.log(eventId)
-			if (element.id === eventId) {
-				this.setState({ index })
-			}
-		})
-	}
-
 	_onStarPress = (eventId) => {
 		const { toggleEventStar } = this.props
 		toggleEventStar(eventId)
 	}
 
 	render() {
+		const { id } = this.props.navigation.state.params.data
 		const { eventsData } = this.props
-		const { index } = this.state
+		let data = { }
+		const slicedEventsData = eventsData.slice()
+		slicedEventsData.forEach((element) => {
+			if (element.id === id) {
+				data = element
+			}
+		})
+
 		return (
 			<EventDetailPage
-				data={eventsData[index]}
+				data={data}
 				onStarPress={this._onStarPress}
 			/>
 		)
