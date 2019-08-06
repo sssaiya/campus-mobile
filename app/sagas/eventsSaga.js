@@ -54,21 +54,17 @@ function parseEventData( eventsData, staredEventIds) {
 	let parsedEventsData = eventsData.slice()
 	const tempStarData = []
 	const tempUnstaredData = []
-	parsedEventsData.forEach((element, index) => {
+	parsedEventsData.forEach((element) => {
+		const item = {
+			...element,
+			formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
+			image: element.imagethumb,
+			stared: staredEventIds.includes(element.id)
+		}
 		if (staredEventIds.includes(element.id)) {
-			tempStarData.push({
-				...element,
-				formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-				image: element.imagethumb,
-				stared: staredEventIds.includes(element.id)
-			})
+			tempStarData.push(item)
 		} else {
-			tempUnstaredData.push({
-				...element,
-				formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-				image: element.imagethumb,
-				stared: staredEventIds.includes(element.id)
-			})
+			tempUnstaredData.push(item)
 		}
 	})
 	parsedEventsData = tempStarData.concat(tempUnstaredData)

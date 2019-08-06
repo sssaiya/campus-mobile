@@ -29,21 +29,19 @@ function events(state = initialState, action) {
 				temp.push(action.eventId)
 			}
 			tempData.forEach((element) => {
+				const item = {
+					...element,
+					stared: temp.includes(element.id)
+				}
 				if (temp.includes(element.id)) {
-					tempStarData.push({
-						...element,
-						stared: temp.includes(element.id)
-					})
+					tempStarData.push(item)
 				} else {
-					tempUnstaredData.push({
-						...element,
-						stared: temp.includes(element.id)
-					})
+					tempUnstaredData.push(item)
 				}
 			})
 			tempData = tempStarData.concat(tempUnstaredData)
-			newState.staredEventIds = [...temp]
 			newState.data = [...tempData]
+			newState.staredEventIds = [...temp]
 			return newState
 		}
 		default:
