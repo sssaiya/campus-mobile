@@ -13,6 +13,10 @@ function events(state = initialState, action) {
 			newState.lastUpdated = new Date().getTime()
 			return newState
 		}
+		case 'CLEAR_STARED_EVENTS': {
+			newState.staredEventIds = []
+			return newState
+		}
 		case 'TOGGLE_STAR_ID': {
 			let temp = [...state.staredEventIds]
 			let tempData = [...state.data]

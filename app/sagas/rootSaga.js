@@ -15,6 +15,7 @@ import parkingSaga from './parkingSaga'
 import messagesSaga from './messagesSaga'
 import myStudentProfileSaga from './myStudentProfileSaga'
 import siSessionsSaga from './siSessionsSaga'
+import eventsSaga from './eventsSaga'
 
 // single entry point to start all Sagas at once
 export default function* rootSaga() {
@@ -34,6 +35,7 @@ export default function* rootSaga() {
 		fork(parkingSaga),
 		fork(messagesSaga),
 		fork(myStudentProfileSaga),
-		fork(siSessionsSaga)
+		fork(siSessionsSaga),
+		fork(eventsSaga)
 	])
 }

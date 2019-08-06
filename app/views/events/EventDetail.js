@@ -35,7 +35,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => (
 	{
 		toggleEventStar: (eventId) => {
-			dispatch({ type: 'TOGGLE_STAR_ID', eventId })
+			dispatch({ type: 'TOGGLE_EVENT', eventId })
 		}
 	}
 )

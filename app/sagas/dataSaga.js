@@ -2,22 +2,21 @@
 import { delay } from 'redux-saga'
 import { put, call, select } from 'redux-saga/effects'
 import { Image } from 'react-native'
-import moment from 'moment'
+
 
 import WeatherService from '../services/weatherService'
 import SpecialEventsService from '../services/specialEventsService'
 import LinksService from '../services/quicklinksService'
-import EventService from '../services/eventService'
+
 import NewsService from '../services/newsService'
 import ParkingService from '../services/parkingService'
-import { militaryToAMPM } from '../util/general'
+
 import { fetchMasterStopsNoRoutes, fetchMasterRoutes } from '../services/shuttleService'
 import {
 	WEATHER_API_TTL,
 	SURF_API_TTL,
 	SPECIAL_EVENTS_TTL,
 	QUICKLINKS_API_TTL,
-	EVENTS_API_TTL,
 	NEWS_API_TTL,
 	DATA_SAGA_TTL,
 	SHUTTLE_MASTER_TTL,
@@ -28,7 +27,6 @@ const getWeather = state => (state.weather)
 const getSurf = state => (state.surf)
 const getSpecialEvents = state => (state.specialEvents)
 const getLinks = state => (state.links)
-const getEvents = state => (state.events)
 const getNews = state => (state.news)
 const getCards = state => (state.cards)
 const getShuttle = state => (state.shuttle)
@@ -43,12 +41,12 @@ function* watchData() {
 			yield call(updateSpecialEvents)
 			yield call(updateLinks)
 			yield call(updateParking)
-			yield call(updateEvents)
 			yield call(updateNews)
 			yield call(updateShuttleMaster)
 			yield put({ type: 'UPDATE_DINING' })
 			yield put({ type: 'UPDATE_SCHEDULE' })
 			yield put({ type: 'UPDATE_STUDENT_PROFILE' })
+			yield put({ type: 'UPDATE_EVENTS' })
 			yield put({ type: 'SYNC_USER_PROFILE' })
 		} catch (err) {
 			console.log(err)
@@ -215,49 +213,6 @@ function sortByOldParkingData(parkingData) {
 	return function (a, b) {
 		return parkingData.findIndex(x => x.LocationName === a.LocationName) - parkingData.findIndex(x => x.LocationName === b.LocationName)
 	}
-}
-
-function* updateEvents() {
-	const { lastUpdated, data, staredEventIds } = yield select(getEvents)
-	const nowTime = new Date().getTime()
-	const timeDiff = nowTime - lastUpdated
-	const ttl = EVENTS_API_TTL
-
-	if (timeDiff < ttl && data) {
-		// Do nothing, no need to fetch new data
-	} else {
-		// Fetch for new data
-		const events = yield call(EventService.FetchEvents)
-
-		// Parse events
-		const parsedEvents = parseEventData(events, staredEventIds)
-		yield put({ type: 'SET_EVENTS', parsedEvents })
-	}
-}
-
-function parseEventData( eventsData, staredEventIds) {
-	let parsedEventsData = eventsData.slice()
-	const tempStarData = []
-	const tempUnstaredData = []
-	parsedEventsData.forEach((element, index) => {
-		if (staredEventIds.includes(element.id)) {
-			tempStarData.push({
-				...element,
-				formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-				image: element.imagethumb,
-				stared: staredEventIds.includes(element.id)
-			})
-		} else {
-			tempUnstaredData.push({
-				...element,
-				formattedDate: moment(element.eventdate).format('MMM Do') + ', ' + militaryToAMPM(element.starttime) + ' - ' + militaryToAMPM(element.endtime),
-				image: element.imagethumb,
-				stared: staredEventIds.includes(element.id)
-			})
-		}
-	})
-	parsedEventsData = tempStarData.concat(tempUnstaredData)
-	return parsedEventsData
 }
 
 function* updateNews() {
