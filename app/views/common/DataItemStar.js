@@ -19,7 +19,7 @@ const DataItemStar = ({ data, card, onPress, onStarPress }) => (
 				onPress={() => onStarPress(data.id)}
 				style={css.dataitem_touchableStar}
 			>
-				{data.stared ?  (<Icon name="md-star" size={32} color={COLOR.GOLD} />) : (<Icon name="md-star-outline" size={32} color={COLOR.GOLD} />) }
+				{data.stared ?  (<Icon name="ios-star" size={32} color={COLOR.YELLOW} />) : (<Icon name="ios-star-outline" size={32} color={COLOR.DGREY} />) }
 			</Touchable>
 		</View>
 		<Touchable
