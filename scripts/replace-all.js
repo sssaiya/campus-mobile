@@ -56,9 +56,6 @@ const PH = {
 	GS_ANDROID_API_KEY_PH: 'GS_ANDROID_API_KEY_PH',
 	GS_ANDROID_APP_ID_PH: '1:1:android:1',
 	GS_ANDROID_BUNDLE_ID_PH: 'edu.ucsd',
-	MOBILE_PUBLIC_API_KEY_PH: 'MOBILE_PUBLIC_API_KEY_PH',
-	MOBILE_PUBLIC_API_SECRET_PH: 'MOBILE_PUBLIC_API_SECRET_PH',
-
 }
 
 if (REPLACEMENT_ENV === 'prod' || REPLACEMENT_ENV === 'qa') {
@@ -139,8 +136,8 @@ if (REPLACEMENT_ENV === 'prod' || REPLACEMENT_ENV === 'qa') {
 
 	// mobileAuthSaga.js
 	makeReplacements(MOBILE_AUTH_SAGA_PATH, REPLACEMENT_ENV, [
-		{ prodVal: myEnv.MOBILE_PUBLIC_API_KEY_PROD, qaVal: myEnv.MOBILE_PUBLIC_API_KEY_QA, phVal: PH.MOBILE_PUBLIC_API_KEY_PH },
-		{ prodVal: myEnv.MOBILE_PUBLIC_API_SECRET_PROD, qaVal: myEnv.MOBILE_PUBLIC_API_SECRET_QA, phVal: PH.MOBILE_PUBLIC_API_SECRET_PH },
+		{ prodVal: myEnv.MOBILE_PUBLIC_API_KEY_PROD, qaVal: myEnv.MOBILE_PUBLIC_API_KEY_QA },
+		{ prodVal: myEnv.MOBILE_PUBLIC_API_SECRET_PROD, qaVal: myEnv.MOBILE_PUBLIC_API_SECRET_QA },
 	])
 } else {
 	console.log('Error: Replacement type not specififed.')
