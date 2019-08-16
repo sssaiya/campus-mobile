@@ -31,9 +31,7 @@ const StudentIDCard = ({
 		return (
 			<Card id="studentId" title="Student ID">
 				<View style={css.sid_container}>
-					{studentProfile.image.data.photoUrl ?
-						loadImage(studentProfile.image.data.photoUrl) : loadAvatarIcon()
-					}
+					{loadImage(studentProfile.image.data)}
 					<View style={css.sid_right}>
 						<Text style={css.sid_name}>
 							{studentProfile.name.data.firstName + ' ' + studentProfile.name.data.lastName}
@@ -137,23 +135,14 @@ const avatarIcon = () => (
 	</View>
 )
 
-const loadImage = photoUrl => (
+const loadImage = data => (
 	<View style={css.sid_left}>
 		<SafeImage
-			source={{ uri: photoUrl }}
+			source={{ uri: data ? data.photoUrl : null }}
 			style={css.sid_photo}
 			onFailure={avatarIcon()}
 			resizeMode="contain"
 		/>
-		<Text style={css.sid_affiliation}>
-			student
-		</Text>
-	</View>
-)
-
-const loadAvatarIcon = () => (
-	<View style={css.sid_left}>
-		{avatarIcon()}
 		<Text style={css.sid_affiliation}>
 			student
 		</Text>
