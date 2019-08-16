@@ -31,7 +31,9 @@ const StudentIDCard = ({
 		return (
 			<Card id="studentId" title="Student ID">
 				<View style={css.sid_container}>
-					{loadImage(studentProfile.image.data.photoUrl)}
+					{studentProfile.image.data.photoUrl ?
+						loadImage(studentProfile.image.data.photoUrl) : loadAvatarIcon()
+					}
 					<View style={css.sid_right}>
 						<Text style={css.sid_name}>
 							{studentProfile.name.data.firstName + ' ' + studentProfile.name.data.lastName}
@@ -149,5 +151,13 @@ const loadImage = photoUrl => (
 	</View>
 )
 
+const loadAvatarIcon = () => (
+	<View style={css.sid_left}>
+		{avatarIcon()}
+		<Text style={css.sid_affiliation}>
+			student
+		</Text>
+	</View>
+)
 
 export default StudentIDCard
