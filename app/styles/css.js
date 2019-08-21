@@ -575,7 +575,7 @@ const css = StyleSheet.create({
 	pst_row_text: { flex: 1, paddingRight: 10, paddingLeft: 10, fontSize: 19 },
 
 	po_container: { width: LAYOUT.MAX_CARD_WIDTH, alignItems: 'center' },
-	po_structure_name: { fontSize: 32, marginTop: 4, color: COLOR.VDGREY },
+	po_structure_name: { textAlign: 'center', fontSize: 32, marginTop: 4, color: COLOR.VDGREY },
 	po_structure_context: { fontSize: 18, marginTop: 4, color: COLOR.DGREY },
 	po_structure_spots_available: {  alignSelf: 'center', fontSize: 18, marginTop: 8 },
 	po_circle: { justifyContent: 'space-around', overflow: 'hidden', backgroundColor: COLOR.GREEN },
