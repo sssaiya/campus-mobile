@@ -35,13 +35,13 @@ function* updateEvents() {
 	} else {
 		// Fetch for new data
 		events = yield call(EventService.FetchEvents)
+	}
 
-		// If user is logged in
-		const { isLoggedIn, profile } = yield select(getUserData)
-		if (isLoggedIn) {
-			if (profile.selectedEvents) {
-				eventIds = profile.selectedEvents
-			}
+	// If user is logged in
+	const { isLoggedIn, profile } = yield select(getUserData)
+	if (isLoggedIn) {
+		if (profile.selectedEvents) {
+			eventIds = profile.selectedEvents
 		}
 	}
 
