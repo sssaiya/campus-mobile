@@ -12,7 +12,7 @@ class EventDataListView extends Component {
 		return (
 			<DataListView
 				data={this.props.eventsData}
-				scrollEnabled={false}
+				scrollEnabled={true}
 				item="EventItem"
 				card={false}
 				onStarPress={this._onStarPress}
