@@ -4,6 +4,7 @@ import moment from 'moment'
 import EventService from '../services/eventService'
 import { militaryToAMPM } from '../util/general'
 import { EVENTS_API_TTL } from '../AppSettings'
+import EVENTS_RESPONSE from '../../mockApis/eventsApi'
 
 const getEvents = state => (state.events)
 const getUserData = state => (state.user)
@@ -29,25 +30,24 @@ function* updateEvents() {
 	const timeDiff = nowTime - lastUpdated
 	const ttl = EVENTS_API_TTL
 
-	if (timeDiff < ttl && data) {
+	if (timeDiff < ttl) {
 		// Do nothing, no need to fetch new data
-
 	} else {
 		// Fetch for new data
 		events = yield call(EventService.FetchEvents)
-	}
 
-	// If user is logged in
-	const { isLoggedIn, profile } = yield select(getUserData)
-	if (isLoggedIn) {
-		if (profile.selectedEvents) {
-			eventIds = profile.selectedEvents
+		// If user is logged in
+		const { isLoggedIn, profile } = yield select(getUserData)
+		if (isLoggedIn) {
+			if (profile.selectedEvents) {
+				eventIds = profile.selectedEvents
+			}
 		}
-	}
 
-	// Parse events
-	const parsedEvents = parseEventData(events, eventIds)
-	yield put({ type: 'SET_EVENTS', parsedEvents })
+		// Parse events
+		const parsedEvents = parseEventData(events, eventIds)
+		yield put({ type: 'SET_EVENTS', parsedEvents })
+	}
 }
 
 function parseEventData( eventsData, staredEventIds) {
